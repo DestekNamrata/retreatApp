@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "311341065624",
+    "project_id": "retreat-13537",
+    "storage_bucket": "retreat-13537.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:311341065624:android:90c1fbba812fe0285ff7ed",
+        "android_client_info": {
+          "package_name": "com.retreat_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "311341065624-j8eh4gbp0eqosurvrr2f9hije1rd38cj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.retreat_app",
+            "certificate_hash": "a1aa3cbcd6b28e198618e0975fa267cf31634ef4"
+          }
+        },
+        {
+          "client_id": "311341065624-tckqhlmq7703cio96dp02i25e2qh34ai.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.retreat_app",
+            "certificate_hash": "e0d2306ca17bc317f9e9438737446288045c62b9"
+          }
+        },
+        {
+          "client_id": "311341065624-gne6lmf0clmibmefoohqo0ngvigknuep.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAaYzVUZsQlU6j4dW2f0EuS3WQQnSTUAIU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "311341065624-gne6lmf0clmibmefoohqo0ngvigknuep.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
