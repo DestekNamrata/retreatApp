@@ -20,7 +20,7 @@ class AppTheme {
   static Color textColor=Color(0xFF085775);
   static Color verifyPhone=Color(0xFFFFD8BC);
   static Color bgColor=Color(0xFF00000029);
-  static Color appColor=Color(0xffDF5F00);
+  static Color appColor=Color(0xffEA357C);
 
   ///Default font
   static String currentFont = "Poppins";

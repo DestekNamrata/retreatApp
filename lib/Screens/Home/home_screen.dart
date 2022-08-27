@@ -71,13 +71,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       child:Container(
                           width: 55.0,
                           decoration: BoxDecoration(
-                            border: Border.all(color: Colors.black),
-                            borderRadius: BorderRadius.circular(35.0),
-
+                            // border: Border.all(color: Colors.black),
+                            borderRadius: BorderRadius.circular(5.0),
+                           color: Colors.grey
                           ),
                           child:Padding(
                               padding: EdgeInsets.all(3.0),
-                              child:Text(textAlign: TextAlign.center,"SOS",style: TextStyle(color: Colors.black,fontWeight: FontWeight.w500,fontSize: 14.0),))
+                              child:Text(textAlign: TextAlign.center,"SOS",style: TextStyle(color: AppTheme.appColor,fontWeight: FontWeight.w500,fontSize: 14.0),))
                       )),
 
                   InkWell(
@@ -87,9 +87,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         // IconButton(
                         //   icon:
                         Image.asset(
-                          Images.notiIcon,
-                          width: 37.0,
-                          height: 37.0,
+                          Images.notifi,
+                          width: 25.0,
+                          height: 25.0,
                         ),
                         // tooltip: "Save Todo and Retrun to List",
                         //   onPressed: () {},
@@ -154,7 +154,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       },
                       child: Padding(
                         padding: const EdgeInsets.only(right: 5.0),
-                        child: Icon(Icons.account_circle_rounded,color: Colors.grey,size: 30.0,),
+                        child: Image.asset(
+                          Images.account,
+                          width: 25.0,
+                          height: 25.0,
+                        ),
                       )
 
                   ),

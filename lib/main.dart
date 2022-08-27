@@ -29,8 +29,8 @@ void main() async {
 
   runApp(App());
 
-  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-    statusBarColor: Color(0xffDF5F00),
-  ));
+  // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+  //   statusBarColor: Color(0xffDF5F00),
+  // ));
 }
 

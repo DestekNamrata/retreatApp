@@ -181,7 +181,7 @@ class AgendaState extends State<AgendaScreen> with TickerProviderStateMixin{
                         // IconButton(
                         //   icon:
                         Image.asset(
-                          Images.notiIcon,
+                          Images.notifi,
                           width: 37.0,
                           height: 37.0,
                         ),
@@ -248,7 +248,11 @@ class AgendaState extends State<AgendaScreen> with TickerProviderStateMixin{
                       },
                       child: Padding(
                         padding: const EdgeInsets.only(right: 5.0),
-                        child: Icon(Icons.account_circle_rounded,color: Colors.grey,size: 30.0,),
+                        child: Image.asset(
+                          Images.account,
+                          width: 37.0,
+                          height: 37.0,
+                        ),
                       )
 
                   ),

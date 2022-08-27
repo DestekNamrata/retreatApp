@@ -5,7 +5,7 @@ class CollectionTheme {
   ///
   /// primaryLight/primaryDark/brownLight/brownDark/pinkLight/pinkDark
   static ThemeData getCollectionTheme(
-      {String theme = "primaryLight", String font = "Poppins"}) {
+      {String theme = "primaryLight", String font = "Inter"}) {
     switch (theme) {
       case "primaryLight":
         return ThemeData(
@@ -14,26 +14,26 @@ class CollectionTheme {
             50: Color(0xfffDF5F00),
             100: Color(0xfffDF5F00),
             200: Color(0xfffDF5F00),
-            300: Color(0xffDF5F00),
-            400: Color(0xffDF5F00),
-            500: Color(0xffDF5F00),
-            600: Color(0xffDF5F00),
-            700: Color(0xffDF5F00),
-            800: Color(0xffDF5F00),
-            900: Color(0xffDF5F00)
+            300: Color(0xffEA357C),
+            400: Color(0xffEA357C),
+            500: Color(0xffEA357C),
+            600: Color(0xffEA357C),
+            700: Color(0xffEA357C),
+            800: Color(0xffEA357C),
+            900: Color(0xffEA357C)
           }),
 
           fontFamily: font,
           brightness: Brightness.light,
           // primaryColor: Color(0xff03502B),
-          primaryColor: Color(0xffF58634), //updated on 14/06/2021 for screen updation colors
+          primaryColor: Color(0xffEA357C), //updated on 14/06/2021 for screen updation colors
           primaryColorBrightness: Brightness.dark,
-          primaryColorLight: Color(0xffFF8A65),
+          primaryColorLight: Color(0xffEA357C),
           // darkorangeColor: Color(0xffEF7422),
           // darkgreenColor: Color(0xff509D45),
           // darkblueColor: Color(0xff254EA1),
-          primaryColorDark: Color(0xffDF5F00),
-          accentColor: Color(0xffF58634),
+          primaryColorDark: Color(0xffEA357C),
+          accentColor: Color(0xffFEA357C),
           accentColorBrightness: Brightness.dark,
           canvasColor: Color(0xfffafafa),
           scaffoldBackgroundColor: Color(0xfffafafa),
@@ -66,7 +66,7 @@ class CollectionTheme {
             shape: RoundedRectangleBorder(
               side: BorderSide(
                 // color: Color(0xff000000),
-                color: Color(0xff50AD38),
+                color: Color(0xffFB7723),
                 width: 0,
                 style: BorderStyle.none,
               ),
@@ -75,7 +75,7 @@ class CollectionTheme {
               ),
             ),
             // buttonColor: Color(0xff03502B),
-            buttonColor: Color(0xff50AD38), //updated on 14/06/2021 for screen updation colors
+            buttonColor: Color(0xffFB7723), //updated on 14/06/2021 for screen updation colors
 
             disabledColor: Color(0x61000000),
             highlightColor: Color(0x29000000),
@@ -154,7 +154,7 @@ class CollectionTheme {
           fontFamily: font,
           brightness: Brightness.dark,
           // primaryColor: Color(0xff03502B),
-          primaryColor: Color(0xffDF5F00),
+          primaryColor: Color(0xffEA357C),
           primaryColorBrightness: Brightness.dark,
           primaryColorLight: Color(0xffFF8A65),
           primaryColorDark: Color(0xff000000),
@@ -171,7 +171,7 @@ class CollectionTheme {
           unselectedWidgetColor: Color(0xb3ffffff),
           // unselectedWidgetColor: Color(0xFF1C1E1E),
           disabledColor: Color(0x62ffffff),
-          buttonColor: Color(0xffF58634),
+          buttonColor: Color(0xffEA357C),
           toggleableActiveColor: Color(0xff4A90A4),
           secondaryHeaderColor: Color(0xff616161),
           textSelectionColor: Color(0xff4A90A4),
@@ -202,7 +202,7 @@ class CollectionTheme {
               ),
             ),
             // buttonColor: Color(0xff03502B),
-            buttonColor: Color(0xffF58634),
+            buttonColor: Color(0xffEA357C),
             disabledColor: Color(0x61ffffff),
             highlightColor: Color(0x29ffffff),
             splashColor: Color(0x1fffffff),
@@ -250,7 +250,7 @@ class CollectionTheme {
           ),
           sliderTheme: SliderThemeData.fromPrimaryColors(
             // primaryColor: Color(0xff03502B),
-            primaryColor: Color(0xffF58634),
+            primaryColor: Color(0xffEA357C),
             primaryColorLight: Color(0xfff9d8d3),
             primaryColorDark: Color(0xff862413),
             valueIndicatorTextStyle: TextStyle(
@@ -293,7 +293,7 @@ class CollectionTheme {
           fontFamily: font,
           brightness: Brightness.light,
           // primaryColor: Color(0xff03502B),
-          primaryColor: Color(0xffF58634),
+          primaryColor: Color(0xffEA357C),
           primaryColorBrightness: Brightness.dark,
           primaryColorLight: Color(0xffFF8A65),
           primaryColorDark: Color(0xff862413),
@@ -312,7 +312,7 @@ class CollectionTheme {
 
           disabledColor: Color(0x61000000),
           // buttonColor: Color(0xff03502B),
-          buttonColor: Color(0xffF58634),
+          buttonColor: Color(0xffEA357C),
           toggleableActiveColor: Color(0xff4A90A4),
           secondaryHeaderColor: Color(0xfffcebe9),
           textSelectionColor: Color(0xff4A90A4),
@@ -339,7 +339,7 @@ class CollectionTheme {
               ),
             ),
             // buttonColor: Color(0xff03502B),
-            buttonColor: Color(0xffF58634),
+            buttonColor: Color(0xffEA357C),
             disabledColor: Color(0x61000000),
             highlightColor: Color(0x29000000),
             splashColor: Color(0x1f000000),

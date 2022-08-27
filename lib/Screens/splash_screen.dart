@@ -64,7 +64,7 @@ class _SplashScreenState extends State<SplashScreen> {
         Container(
         decoration: BoxDecoration(
         image: DecorationImage(
-        image: AssetImage(Images.bg),
+        image: AssetImage(Images.splash),
     fit: BoxFit.cover,
     ),
     ),
@@ -80,8 +80,7 @@ class _SplashScreenState extends State<SplashScreen> {
               mainAxisSize: MainAxisSize.max,
               children: <Widget>[
                 // Icon(Icons.ac_unit,size: 40.0,)
-                // Image.asset(Images.logo, width: 300, height: 300),
-                Text("INFOCEPT",style: TextStyle(fontSize: 60.0,fontWeight: FontWeight.w600,color:AppTheme.textColor),)
+                Image.asset(Images.logo, width: 300, height: 300),
               ],
             ),
           ),
@@ -95,21 +94,24 @@ class _SplashScreenState extends State<SplashScreen> {
           ),
           Positioned(
             bottom: 15.0,
-              child:Platform.isAndroid
-              ?
-              Text("version "+Application.version,style: TextStyle(
-                fontSize: 16.0,
-                fontFamily: 'Poppins',
-                fontWeight: FontWeight.w500,
-                color: AppTheme.textColor
-              ),)
-              :
-              Text("version "+Application.Iosversion,style: TextStyle(
-                  fontSize: 16.0,
-                  fontFamily: 'Poppins',
-                  fontWeight: FontWeight.w500,
-                  color: AppTheme.textColor
-              ),)
+              child:
+              // Platform.isAndroid
+              // ?
+              // Text("version "+Application.version,style: TextStyle(
+              //   fontSize: 16.0,
+              //   fontFamily: 'Poppins',
+              //   fontWeight: FontWeight.w500,
+              //   color: AppTheme.textColor
+              // ),)
+              // :
+              // Text("version "+Application.Iosversion,style: TextStyle(
+              //     fontSize: 16.0,
+              //     fontFamily: 'Poppins',
+              //     fontWeight: FontWeight.w500,
+              //     color: AppTheme.textColor
+              // ),)
+              Image.asset(Images.infoceptText, width: 100, height: 100),
+
           )
         ],
       )),

@@ -139,178 +139,178 @@ class _SignInScreenState extends State<SignInScreen>{
     // TODO: implement build
     return Scaffold(
       key:scaffoldKey,
-      appBar: AppBar(),
+      // appBar: AppBar(),
       body: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(Images.bg),
-            fit: BoxFit.cover,
-          ),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // Image.asset(Images.logo,height: 180.0,width:180.0),
-            Text("INFOCEPT",style: TextStyle(fontSize: 40.0,fontWeight: FontWeight.w600,color:AppTheme.textColor),),
-            SizedBox(height: 20.0,),
-            Text(
-              Translate.of(context)!.translate('input_mobile'),
-              style: TextStyle(fontFamily: 'Poppins',fontWeight:FontWeight.normal,fontSize: 14.0,color: AppTheme.textColor),
-            ),
-            // Row(
-            //   children: [
-            CountryListPick(
-              // appBar: AppBar(
-              //   backgroundColor: Colors.amber,
-              //   title: Text('Pick your country'),
-              // ),
-              // if you need custome picker use this
-              pickerBuilder: (context, CountryCode? countryCode) {
-                countrycode=countryCode!.dialCode.toString();
-                return
-                  Row(
-                    children: [
-                      Container(
-                          margin: EdgeInsets.only(left: 25.0),
-                          child:
-                          Container(
-                              padding: EdgeInsets.all(8.0),
-                              height: 45.0,
-                              decoration: const BoxDecoration(
-                                color: Color(0xFFF58634),
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(5.0),
-                                  bottomLeft: Radius.circular(5.0),
+        child: Padding(
+          padding: EdgeInsets.only(left:15.0,right: 8.0,top:15.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Image.asset(Images.retreatImage,height: 150.0,width:150.0),
+              SizedBox(height: 20.0,),
+              Padding(
+                padding: const EdgeInsets.only(left:35.0),
+                child: Text(
+                  Translate.of(context)!.translate('input_mobile'),
+                  style: TextStyle(fontFamily: 'Inter-Regular',fontWeight:FontWeight.normal,fontSize: 14.0,color: Colors.black),
+                ),
+              ),
+              // Row(
+              //   children: [
+              CountryListPick(
+                // appBar: AppBar(
+                //   backgroundColor: Colors.amber,
+                //   title: Text('Pick your country'),
+                // ),
+                // if you need custome picker use this
+                pickerBuilder: (context, CountryCode? countryCode) {
+                  countrycode=countryCode!.dialCode.toString();
+                  return
+                    Row(
+                      children: [
+                        Container(
+                            margin: EdgeInsets.only(left: 25.0),
+                            child:
+                            Container(
+                                padding: EdgeInsets.all(8.0),
+                                height: 45.0,
+                                decoration: const BoxDecoration(
+                                  color: Color(0xffEA357C),
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(5.0),
+                                    bottomLeft: Radius.circular(5.0),
+                                  ),
                                 ),
-                              ),
 
-                              child:
-                              Align(
-                                  alignment: Alignment.center,
-                                  child:Text(countryCode.dialCode.toString(),
-                                    style: TextStyle(
-                                        color: Colors.white
-                                    ),
-
-                                  )))),
-                      Expanded(
-                          child:
-                          Container(
-                              height: 45.0,
-                              margin: EdgeInsets.only(right: 25.0),
-                              decoration: BoxDecoration(
-                                color: AppTheme.verifyPhone,
-                                borderRadius:   BorderRadius.only(
-                                  topRight: Radius.circular(5.0),
-                                  bottomRight: Radius.circular(5.0),
-                                ),
-                                border: Border.all(
-
-                                  color: Theme.of(context).primaryColor,  // red as border color
-                                ),
-                              ),
-                              child:
-                              Align(
-                                alignment: Alignment.center,
                                 child:
-                                TextFormField(
-                                  controller:_mobilecontroller,
-                                  style: TextStyle(
-                                      fontFamily: 'Poppins-Regular',color: Colors.black,fontSize: 14.0
+                                Align(
+                                    alignment: Alignment.center,
+                                    child:Text(countryCode.dialCode.toString(),
+                                      style: TextStyle(
+                                          color: Colors.white
+                                      ),
+
+                                    )))),
+                        Expanded(
+                            child:
+                            Container(
+                                height: 45.0,
+                                margin: EdgeInsets.only(right: 25.0),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius:   BorderRadius.only(
+                                    topRight: Radius.circular(5.0),
+                                    bottomRight: Radius.circular(5.0),
                                   ),
-                                  keyboardType: TextInputType.phone,
-                                  decoration: InputDecoration(
-                                    border: InputBorder.none,
-                                    hintText: "Phone Number",
+                                  border: Border.all(
+
+                                    color: Theme.of(context).primaryColor,  // red as border color
                                   ),
-                                  onChanged: (value) {
-                                    // this.phoneNo=value;
-                                    print(value);
-                                  },
                                 ),
-                              )
-                          )
-                      ),
-                    ],
-                  );
-              },
-              // theme: CountryTheme(
-              //   isShowFlag: true,
-              //   isShowTitle: true,
-              //   isShowCode: true,
-              //   isDownIcon: false,
-              //   showEnglishName: true,
-              // ),
-              initialSelection: '+91',
-              // or
-              // initialSelection: 'US'
-              onChanged: (CountryCode? code) {
-                print(code!.name);
-                print(code.code);
-                print(code.dialCode);
-                print(code.flagUri);
-              },
-            ),
+                                child:
+                                Align(
+                                  alignment: Alignment.center,
+                                  child:
+                                  TextFormField(
+                                    controller:_mobilecontroller,
+                                    style: TextStyle(
+                                        fontFamily: 'Poppins-Regular',color: Colors.black,fontSize: 14.0
+                                    ),
+                                    keyboardType: TextInputType.phone,
+                                    decoration: InputDecoration(
+                                      border: InputBorder.none,
+                                      hintText: "Phone Number",
+                                    ),
+                                    onChanged: (value) {
+                                      // this.phoneNo=value;
+                                      print(value);
+                                    },
+                                  ),
+                                )
+                            )
+                        ),
+                      ],
+                    );
+                },
+                // theme: CountryTheme(
+                //   isShowFlag: true,
+                //   isShowTitle: true,
+                //   isShowCode: true,
+                //   isDownIcon: false,
+                //   showEnglishName: true,
+                // ),
+                initialSelection: '+91',
+                // or
+                // initialSelection: 'US'
+                onChanged: (CountryCode? code) {
+                  print(code!.name);
+                  print(code.code);
+                  print(code.dialCode);
+                  print(code.flagUri);
+                },
+              ),
 
-            //verify phone
-            Padding(padding: EdgeInsets.all(25.0),
-                child:
-                AppButton(
-                  onPressed: (){
+              //verify phone
+              Padding(padding: EdgeInsets.all(25.0),
+                  child:
+                  AppButton(
+                    onPressed: (){
 
-                    if(_mobilecontroller.text.isEmpty){
-                      _showMessage('Please enter mobile number');
-                    }else if(_mobilecontroller.text.length!=10){
-                      _showMessage('Please enter valid number');
+                      if(_mobilecontroller.text.isEmpty){
+                        _showMessage('Please enter mobile number');
+                      }else if(_mobilecontroller.text.length!=10){
+                        _showMessage('Please enter valid number');
 
-                    }else{
-                      // otpVerify.phone=_mobilecontroller.text;
-                      // otpVerify.countrycode=countrycode.toString();
-                      // otpVerify.flagRoleType=widget.flagRoleType.toString();
-                      // // Navigator.pushNamed(context, Routes.otp);
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //     builder: (context) => OtpScreen(),
-                      //   ),
-                      // );
-                      verifyPhoneNumber(context, _mobilecontroller.text);
-                    }
+                      }else{
+                        // otpVerify.phone=_mobilecontroller.text;
+                        // otpVerify.countrycode=countrycode.toString();
+                        // otpVerify.flagRoleType=widget.flagRoleType.toString();
+                        // // Navigator.pushNamed(context, Routes.otp);
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //     builder: (context) => OtpScreen(),
+                        //   ),
+                        // );
+                        verifyPhoneNumber(context, _mobilecontroller.text);
+                      }
 
-                  },
-                  shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(50))),
-                  text: Translate.of(context)!.translate('proceed'),
-                  loading: loading,
-                  // disableTouchWhenLoading: true,
-                )
-            ),
+                    },
+                    shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(50))),
+                    text: Translate.of(context)!.translate('proceed'),
+                    loading: loading,
+                    // disableTouchWhenLoading: true,
+                  )
+              ),
 
-            //terms and conditions
-           Column(
-             mainAxisAlignment: MainAxisAlignment.center,
-
-             children: [
-             Text(Translate.of(context)!.translate("tnc"),style: TextStyle(fontSize: 12.0),),
-             SizedBox(height: 3.0,),
-             Row(
+              //terms and conditions
+             Column(
                mainAxisAlignment: MainAxisAlignment.center,
-               children: [
-               Text("Terms of use ",style: TextStyle(decoration: TextDecoration.underline,fontSize: 12.0,fontWeight: FontWeight.w500),),
-               Text(Translate.of(context)!.translate("tnc1"),style: TextStyle(fontSize: 12.0),)
 
-             ],),
+               children: [
+               Text(Translate.of(context)!.translate("tnc"),style: TextStyle(fontSize: 12.0),),
                SizedBox(height: 3.0,),
                Row(
                  mainAxisAlignment: MainAxisAlignment.center,
                  children: [
-                   Text("our",style: TextStyle(fontSize: 12.0,),),
-                   Text(" Privacy Policy",style: TextStyle(decoration: TextDecoration.underline,fontSize: 12.0,fontWeight: FontWeight.w500),)
+                 Text("Terms of use ",style: TextStyle(decoration: TextDecoration.underline,fontSize: 12.0,fontWeight: FontWeight.w500),),
+                 Text(Translate.of(context)!.translate("tnc1"),style: TextStyle(fontSize: 12.0),)
 
-                 ],)
-           ],)
+               ],),
+                 SizedBox(height: 3.0,),
+                 Row(
+                   mainAxisAlignment: MainAxisAlignment.center,
+                   children: [
+                     Text("our",style: TextStyle(fontSize: 12.0,),),
+                     Text(" Privacy Policy",style: TextStyle(decoration: TextDecoration.underline,fontSize: 12.0,fontWeight: FontWeight.w500),)
 
-          ],
+                   ],)
+             ],)
+
+            ],
+          ),
         ),
       ),
     );

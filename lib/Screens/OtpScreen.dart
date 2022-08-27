@@ -414,12 +414,8 @@ class _OtpScreenState extends State<OtpScreen>{
       ),
       body: Container(
         height: MediaQuery.of(context).size.height,
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(Images.bg),
-            fit: BoxFit.cover,
-          ),
-        ),
+
+
         child: Container(
           margin: EdgeInsets.only(left: 20.0,right: 20.0),
      child:SingleChildScrollView(
@@ -430,7 +426,7 @@ class _OtpScreenState extends State<OtpScreen>{
     crossAxisAlignment: CrossAxisAlignment.center,
     children: [
       SizedBox(height: 10.0,),
-      Image.asset(Images.logo,height: 180.0,width:180.0),
+      Image.asset(Images.retreatImage,height: 180.0,width:180.0),
       Text(Translate.of(context)!.translate('otp_verification'),style: TextStyle(color:AppTheme.textColor,
           fontFamily: 'Poppins',fontWeight:FontWeight.w400,fontSize: 14.0),),
       // Text(widget.otpVerify.countrycode+" "+widget.otpVerify.phone,style: TextStyle(color:AppTheme.textColor,
