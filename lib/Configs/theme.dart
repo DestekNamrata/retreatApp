@@ -16,6 +16,8 @@ class AppTheme {
   static Color bgColor=Color(0xFF00000029);
   static const dayColor=Color(0xFFFB7723);
   static Color appColor=Color(0xffEA357C);
+  static Color textHighlight=Color(0xff889DAC);
+
 
   ///Default font
   static String currentFont = "Inter";
