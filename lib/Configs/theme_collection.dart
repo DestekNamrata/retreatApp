@@ -5,36 +5,40 @@ class CollectionTheme {
   ///
   /// primaryLight/primaryDark/brownLight/brownDark/pinkLight/pinkDark
   static ThemeData getCollectionTheme(
-      {String theme = "primaryLight", String font = "Poppins"}) {
+      {String theme = "primaryLight", String font = "Inter"}) {
     switch (theme) {
       case "primaryLight":
         return ThemeData(
           primarySwatch:
           MaterialColor(4293223245, {
-            50: Color(0xfffDF5F00),
-            100: Color(0xfffDF5F00),
-            200: Color(0xfffDF5F00),
-            300: Color(0xffDF5F00),
-            400: Color(0xffDF5F00),
-            500: Color(0xffDF5F00),
-            600: Color(0xffDF5F00),
-            700: Color(0xffDF5F00),
-            800: Color(0xffDF5F00),
-            900: Color(0xffDF5F00)
+            50: Color(0xffEA357C),
+            100: Color(0xffEA357C),
+            200: Color(0xffEA357C),
+            300: Color(0xffEA357C),
+            400: Color(0xffEA357C),
+            500: Color(0xffEA357C),
+            600: Color(0xffEA357C),
+            700: Color(0xffEA357C),
+            800: Color(0xffEA357C),
+            900: Color(0xffEA357C)
           }),
 
           fontFamily: font,
           brightness: Brightness.light,
           // primaryColor: Color(0xff03502B),
-          primaryColor: Color(0xffF58634), //updated on 14/06/2021 for screen updation colors
+          primaryColor: Color(0xffEA357C), //updated on 14/06/2021 for screen updation colors
           primaryColorBrightness: Brightness.dark,
-          primaryColorLight: Color(0xffFF8A65),
+          primaryColorLight: Color(0xffEA357C),
           // darkorangeColor: Color(0xffEF7422),
           // darkgreenColor: Color(0xff509D45),
           // darkblueColor: Color(0xff254EA1),
-          primaryColorDark: Color(0xffDF5F00),
-          accentColor: Color(0xffF58634),
-          accentColorBrightness: Brightness.dark,
+          primaryColorDark: Color(0xffEA357C),
+          //imp
+          colorScheme: ColorScheme.fromSwatch(primarySwatch:Colors.pink,
+              accentColor:Color(0xffEA357C),brightness: Brightness.light ),
+
+          // accentColor: Color(0xffEA357C),
+          // accentColorBrightness: Brightness.dark,
           canvasColor: Color(0xfffafafa),
           scaffoldBackgroundColor: Color(0xfffafafa),
           bottomAppBarColor: Color(0xffffffff),
@@ -43,7 +47,8 @@ class CollectionTheme {
           highlightColor: Color(0x66bcbcbc),
           splashColor: Color(0x66c8c8c8),
           selectedRowColor: Color(0xfff5f5f5),
-          unselectedWidgetColor: Color(0xFF085775),
+          unselectedWidgetColor: Color(0xFF889DAC),
+
           // unselectedWidgetColor: Color(0xFF1C1E1E),
 
           disabledColor: Color(0x61000000),
@@ -51,7 +56,7 @@ class CollectionTheme {
           toggleableActiveColor: Color(0xff4A90A4),
           secondaryHeaderColor: Color(0xfffcebe9),
           textSelectionColor: Color(0xff4A90A4),
-          cursorColor: Color(0xff4285f4),
+          cursorColor: Color(0xffEA357C),
           textSelectionHandleColor: Color(0xff4A90A4),
           backgroundColor: Color(0xfff2b1a6),
           dialogBackgroundColor: Color(0xffffffff),
@@ -66,7 +71,7 @@ class CollectionTheme {
             shape: RoundedRectangleBorder(
               side: BorderSide(
                 // color: Color(0xff000000),
-                color: Color(0xff50AD38),
+                color: Color(0xffFB7723),
                 width: 0,
                 style: BorderStyle.none,
               ),
@@ -75,7 +80,7 @@ class CollectionTheme {
               ),
             ),
             // buttonColor: Color(0xff03502B),
-            buttonColor: Color(0xff50AD38), //updated on 14/06/2021 for screen updation colors
+            buttonColor: Color(0xffFB7723), //updated on 14/06/2021 for screen updation colors
 
             disabledColor: Color(0x61000000),
             highlightColor: Color(0x29000000),
@@ -94,7 +99,7 @@ class CollectionTheme {
           chipTheme: ChipThemeData(
             backgroundColor: Color(0x1f000000),
             brightness: Brightness.light,
-            deleteIconColor: Color(0xffdf3c20),
+            deleteIconColor: Color(0xffd32f2f),
             disabledColor: Color(0x0c000000),
             labelPadding: EdgeInsets.only(left: 8, right: 8),
             labelStyle: TextStyle(
@@ -154,12 +159,14 @@ class CollectionTheme {
           fontFamily: font,
           brightness: Brightness.dark,
           // primaryColor: Color(0xff03502B),
-          primaryColor: Color(0xffDF5F00),
+          primaryColor: Color(0xffEA357C),
           primaryColorBrightness: Brightness.dark,
-          primaryColorLight: Color(0xffFF8A65),
+          primaryColorLight: Color(0xffEA357C),
           primaryColorDark: Color(0xff000000),
-          accentColor: Color(0xff4A90A4),
-          accentColorBrightness: Brightness.light,
+          colorScheme: ColorScheme.fromSwatch(primarySwatch:Colors.pink,
+              accentColor:Color(0xffEA357C),brightness: Brightness.dark ),
+          // accentColor: Color(0xff4A90A4),
+          // accentColorBrightness: Brightness.light,
           canvasColor: Colors.grey[900],
           scaffoldBackgroundColor: Color(0xff303030),
           bottomAppBarColor: Color(0xff424242),
@@ -171,11 +178,11 @@ class CollectionTheme {
           unselectedWidgetColor: Color(0xb3ffffff),
           // unselectedWidgetColor: Color(0xFF1C1E1E),
           disabledColor: Color(0x62ffffff),
-          buttonColor: Color(0xffF58634),
+          buttonColor: Color(0xffEA357C),
           toggleableActiveColor: Color(0xff4A90A4),
           secondaryHeaderColor: Color(0xff616161),
           textSelectionColor: Color(0xff4A90A4),
-          cursorColor: Color(0xff4285f4),
+          cursorColor: Color(0xffEA357C),
           textSelectionHandleColor: Color(0xff4A90A4),
           backgroundColor: Color(0xff616161),
           dialogBackgroundColor: Color(0xff424242),
@@ -202,7 +209,7 @@ class CollectionTheme {
               ),
             ),
             // buttonColor: Color(0xff03502B),
-            buttonColor: Color(0xffF58634),
+            buttonColor: Color(0xffEA357C),
             disabledColor: Color(0x61ffffff),
             highlightColor: Color(0x29ffffff),
             splashColor: Color(0x1fffffff),
@@ -250,7 +257,7 @@ class CollectionTheme {
           ),
           sliderTheme: SliderThemeData.fromPrimaryColors(
             // primaryColor: Color(0xff03502B),
-            primaryColor: Color(0xffF58634),
+            primaryColor: Color(0xffEA357C),
             primaryColorLight: Color(0xfff9d8d3),
             primaryColorDark: Color(0xff862413),
             valueIndicatorTextStyle: TextStyle(
@@ -281,9 +288,9 @@ class CollectionTheme {
             50: Color(0xfffcebe9),
             100: Color(0xfff9d8d3),
             200: Color(0xfff2b1a6),
-            300: Color(0xffec8a79),
+            300: Color(0xffEA357C),
             400: Color(0xff03502B),
-            500: Color(0xffdf3c20),
+            500: Color(0xffEA357C),
             600: Color(0xffb2301a),
             700: Color(0xff862413),
             800: Color(0xff59180d),
@@ -293,12 +300,14 @@ class CollectionTheme {
           fontFamily: font,
           brightness: Brightness.light,
           // primaryColor: Color(0xff03502B),
-          primaryColor: Color(0xffF58634),
+          primaryColor: Color(0xffEA357C),
           primaryColorBrightness: Brightness.dark,
-          primaryColorLight: Color(0xffFF8A65),
+          primaryColorLight: Color(0xffEA357C),
           primaryColorDark: Color(0xff862413),
-          accentColor: Color(0xff4A90A4),
-          accentColorBrightness: Brightness.dark,
+          colorScheme: ColorScheme.fromSwatch(primarySwatch:Colors.pink,
+              accentColor:Color(0xffEA357C),brightness: Brightness.dark ),
+          // accentColor: Color(0xff4A90A4),
+          // accentColorBrightness: Brightness.dark,
           canvasColor: Color(0xfffafafa),
           scaffoldBackgroundColor: Color(0xfffafafa),
           bottomAppBarColor: Color(0xffffffff),
@@ -307,16 +316,16 @@ class CollectionTheme {
           highlightColor: Color(0x66bcbcbc),
           splashColor: Color(0x66c8c8c8),
           selectedRowColor: Color(0xfff5f5f5),
-          unselectedWidgetColor: Color(0xFF085775),
+          unselectedWidgetColor: Color(0xFF889DAC),
           // unselectedWidgetColor: Color(0xFF1C1E1E),
 
           disabledColor: Color(0x61000000),
           // buttonColor: Color(0xff03502B),
-          buttonColor: Color(0xffF58634),
+          buttonColor: Color(0xffEA357C),
           toggleableActiveColor: Color(0xff4A90A4),
           secondaryHeaderColor: Color(0xfffcebe9),
           textSelectionColor: Color(0xff4A90A4),
-          cursorColor: Color(0xff4285f4),
+          cursorColor: Color(0xffEA357C),
           textSelectionHandleColor: Color(0xff4A90A4),
           backgroundColor: Color(0xfff2b1a6),
           dialogBackgroundColor: Color(0xffffffff),
@@ -339,7 +348,7 @@ class CollectionTheme {
               ),
             ),
             // buttonColor: Color(0xff03502B),
-            buttonColor: Color(0xffF58634),
+            buttonColor: Color(0xffEA357C),
             disabledColor: Color(0x61000000),
             highlightColor: Color(0x29000000),
             splashColor: Color(0x1f000000),

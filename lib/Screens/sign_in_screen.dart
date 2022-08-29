@@ -33,7 +33,7 @@ class _SignInScreenState extends State<SignInScreen>{
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text(
-            Translate.of(context)!.translate('verify_number'),
+            "Sign In",
           ),
           content: SingleChildScrollView(
             child: ListBody(
@@ -100,11 +100,11 @@ class _SignInScreenState extends State<SignInScreen>{
           // Helper.hideLoader(loader);
           // this.verificationId = verId;
           setState(() {
-            authStatus = "OTP has been successfully sent";
-            // user.deviceToken = verId;
+            // authStatus = "OTP has been successfully sent";
+            // // user.deviceToken = verId;
             verificationId = verId;
             loading=false;
-            Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>
+            Navigator.push(context,MaterialPageRoute(builder: (context)=>
                 OtpScreen(
                     mobileNum:_mobilecontroller.text,
                   verificationId:verificationId.toString(),
@@ -112,11 +112,11 @@ class _SignInScreenState extends State<SignInScreen>{
 
             //  users.deviceToken = verId;
           });
-          if (authStatus != "") {
-            scaffoldKey.currentState!.showSnackBar(SnackBar(
-              content: Text(authStatus),
-            ));
-          }
+          // if (authStatus != "") {
+          //   scaffoldKey.currentState!.showSnackBar(SnackBar(
+          //     content: Text(authStatus),
+          //   ));
+          // }
         },
         codeAutoRetrievalTimeout: (String verId) {
           // user.deviceToken = verId;
@@ -139,23 +139,32 @@ class _SignInScreenState extends State<SignInScreen>{
     // TODO: implement build
     return Scaffold(
       key:scaffoldKey,
-      appBar: AppBar(),
+      // appBar: AppBar(),
       body: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(Images.bg),
-            fit: BoxFit.cover,
-          ),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+
+        child: SingleChildScrollView(child:
+        Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Image.asset(Images.logo,height: 180.0,width:180.0),
-            Text("INFOCEPT",style: TextStyle(fontSize: 40.0,fontWeight: FontWeight.w600,color:AppTheme.textColor),),
-            SizedBox(height: 20.0,),
-            Text(
-              Translate.of(context)!.translate('input_mobile'),
-              style: TextStyle(fontFamily: 'Poppins',fontWeight:FontWeight.normal,fontSize: 14.0,color: AppTheme.textColor),
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Image.asset(Images.retreatImage,height: 150.0,width:150.0),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 20.0),
+              child: Text(
+                "Login",
+                style: TextStyle(fontFamily: 'Inter-Bold',fontWeight:FontWeight.w600,fontSize: 30.0,color: AppTheme.appColor),
+              ),
+            ),
+            SizedBox(height: 40.0,),
+            Padding(
+              padding: const EdgeInsets.only(left: 20.0),
+              child: Text(
+                Translate.of(context)!.translate('input_mobile'),
+                style: TextStyle(fontFamily: 'Inter-Regular',fontWeight:FontWeight.normal,fontSize: 14.0,color: Colors.black),
+              ),
             ),
             // Row(
             //   children: [
@@ -168,70 +177,71 @@ class _SignInScreenState extends State<SignInScreen>{
               pickerBuilder: (context, CountryCode? countryCode) {
                 countrycode=countryCode!.dialCode.toString();
                 return
-                  Row(
-                    children: [
-                      Container(
-                          margin: EdgeInsets.only(left: 25.0),
-                          child:
-                          Container(
-                              padding: EdgeInsets.all(8.0),
-                              height: 45.0,
-                              decoration: const BoxDecoration(
-                                color: Color(0xFFF58634),
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(5.0),
-                                  bottomLeft: Radius.circular(5.0),
-                                ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15.0,right: 15.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Container(
+                            padding: EdgeInsets.all(8.0),
+                            height: 45.0,
+                            decoration: const BoxDecoration(
+                              color: Color(0xffEA357C),
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(5.0),
+                                bottomLeft: Radius.circular(5.0),
                               ),
+                            ),
 
-                              child:
-                              Align(
-                                  alignment: Alignment.center,
-                                  child:Text(countryCode.dialCode.toString(),
-                                    style: TextStyle(
-                                        color: Colors.white
-                                    ),
-
-                                  )))),
-                      Expanded(
-                          child:
-                          Container(
-                              height: 45.0,
-                              margin: EdgeInsets.only(right: 25.0),
-                              decoration: BoxDecoration(
-                                color: AppTheme.verifyPhone,
-                                borderRadius:   BorderRadius.only(
-                                  topRight: Radius.circular(5.0),
-                                  bottomRight: Radius.circular(5.0),
-                                ),
-                                border: Border.all(
-
-                                  color: Theme.of(context).primaryColor,  // red as border color
-                                ),
-                              ),
-                              child:
-                              Align(
+                            child:
+                            Align(
                                 alignment: Alignment.center,
-                                child:
-                                TextFormField(
-                                  controller:_mobilecontroller,
+                                child:Text(countryCode.dialCode.toString(),
                                   style: TextStyle(
-                                      fontFamily: 'Poppins-Regular',color: Colors.black,fontSize: 14.0
+                                      color: Colors.white
                                   ),
-                                  keyboardType: TextInputType.phone,
-                                  decoration: InputDecoration(
-                                    border: InputBorder.none,
-                                    hintText: "Phone Number",
+
+                                ))),
+                        Expanded(
+                            child:
+                            Container(
+                                height: 45.0,
+                                // margin: EdgeInsets.only(right: 25.0),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius:   BorderRadius.only(
+                                    topRight: Radius.circular(5.0),
+                                    bottomRight: Radius.circular(5.0),
                                   ),
-                                  onChanged: (value) {
-                                    // this.phoneNo=value;
-                                    print(value);
-                                  },
+                                  border: Border.all(
+
+                                    color: Theme.of(context).primaryColor,  // red as border color
+                                  ),
                                 ),
-                              )
-                          )
-                      ),
-                    ],
+                                child:
+                                Align(
+                                  alignment: Alignment.center,
+                                  child:
+                                  TextFormField(
+                                    controller:_mobilecontroller,
+                                    style: TextStyle(
+                                        fontFamily: 'Poppins-Regular',color: Colors.black,fontSize: 14.0
+                                    ),
+                                    keyboardType: TextInputType.phone,
+                                    decoration: InputDecoration(
+                                      border: InputBorder.none,
+                                      hintText: "Phone Number",
+                                    ),
+                                    onChanged: (value) {
+                                      // this.phoneNo=value;
+                                      print(value);
+                                    },
+                                  ),
+                                )
+                            )
+                        ),
+                      ],
+                    ),
                   );
               },
               // theme: CountryTheme(
@@ -253,7 +263,7 @@ class _SignInScreenState extends State<SignInScreen>{
             ),
 
             //verify phone
-            Padding(padding: EdgeInsets.all(25.0),
+            Padding(padding: EdgeInsets.only(top:25.0,left:20.0,right: 20.0),
                 child:
                 AppButton(
                   onPressed: (){
@@ -274,44 +284,54 @@ class _SignInScreenState extends State<SignInScreen>{
                       //     builder: (context) => OtpScreen(),
                       //   ),
                       // );
+                      setState(() {
+                        loading=true;
+                      });
                       verifyPhoneNumber(context, _mobilecontroller.text);
                     }
 
                   },
                   shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(50))),
+                      borderRadius: BorderRadius.all(Radius.circular(10))),
                   text: Translate.of(context)!.translate('proceed'),
                   loading: loading,
-                  // disableTouchWhenLoading: true,
+                  disableTouchWhenLoading: true,
                 )
             ),
+            // loading==true
+            // ?
+            // Align(
+            //     alignment:Alignment.center,child:CircularProgressIndicator())
+            // :
+            //     Container(),
+            // SizedBox(height: 20.0,),
 
             //terms and conditions
-           Column(
-             mainAxisAlignment: MainAxisAlignment.center,
-
-             children: [
-             Text(Translate.of(context)!.translate("tnc"),style: TextStyle(fontSize: 12.0),),
-             SizedBox(height: 3.0,),
-             Row(
-               mainAxisAlignment: MainAxisAlignment.center,
-               children: [
-               Text("Terms of use ",style: TextStyle(decoration: TextDecoration.underline,fontSize: 12.0,fontWeight: FontWeight.w500),),
-               Text(Translate.of(context)!.translate("tnc1"),style: TextStyle(fontSize: 12.0),)
-
-             ],),
-               SizedBox(height: 3.0,),
-               Row(
-                 mainAxisAlignment: MainAxisAlignment.center,
-                 children: [
-                   Text("our",style: TextStyle(fontSize: 12.0,),),
-                   Text(" Privacy Policy",style: TextStyle(decoration: TextDecoration.underline,fontSize: 12.0,fontWeight: FontWeight.w500),)
-
-                 ],)
-           ],)
+           // Column(
+           //   mainAxisAlignment: MainAxisAlignment.center,
+           //
+           //   children: [
+           //   Text(Translate.of(context)!.translate("tnc"),style: TextStyle(fontSize: 12.0),),
+           //   SizedBox(height: 3.0,),
+           //   Row(
+           //     mainAxisAlignment: MainAxisAlignment.center,
+           //     children: [
+           //     Text("Terms of use ",style: TextStyle(decoration: TextDecoration.underline,fontSize: 12.0,fontWeight: FontWeight.w500),),
+           //     Text(Translate.of(context)!.translate("tnc1"),style: TextStyle(fontSize: 12.0),)
+           //
+           //   ],),
+           //     SizedBox(height: 3.0,),
+           //     Row(
+           //       mainAxisAlignment: MainAxisAlignment.center,
+           //       children: [
+           //         Text("our",style: TextStyle(fontSize: 12.0,),),
+           //         Text(" Privacy Policy",style: TextStyle(decoration: TextDecoration.underline,fontSize: 12.0,fontWeight: FontWeight.w500),)
+           //
+           //       ],)
+           // ],)
 
           ],
-        ),
+        )),
       ),
     );
   }

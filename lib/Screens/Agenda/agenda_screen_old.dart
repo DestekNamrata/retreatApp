@@ -1,29 +1,26 @@
+import 'package:expand_widget/expand_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:expand_widget/expand_widget.dart';
 import 'package:flutter_app/Configs/image.dart';
-import 'package:flutter_app/Configs/theme.dart';
-import 'package:flutter_app/Screens/Infobeats/detailsTab.dart';
-import 'package:flutter_app/Screens/Infobeats/stallTab.dart';
 import 'package:flutter_app/Screens/Profile/profile_screen.dart';
 import '../sos_screen.dart';
 
-import '../../Utils/translate.dart';
+import '../../Configs/theme.dart';
+import 'package:flutter_app/Utils/translate.dart';
 
 
-class InfobeatsScreen extends StatefulWidget{
-  InfobeatsState createState()=>InfobeatsState();
+class AgendaScreenOld extends StatefulWidget {
+  AgendaOldState createState()=>AgendaOldState();
 }
 
-class InfobeatsState extends State<InfobeatsScreen> with TickerProviderStateMixin{
+class AgendaOldState extends State<AgendaScreenOld> with TickerProviderStateMixin{
   List<Tab> _tabs = [];
   // List<ComboPack> mArrayListTab = [];
   List<Widget> _generalWidgets = [];
   TabController? _tabController;
-
   @override
   void initState() {
-    _tabController = new TabController(length: 2, vsync: this);
+    _tabController = new TabController(length: 6, vsync: this);
     super.initState();
   }
 
@@ -51,7 +48,7 @@ class InfobeatsState extends State<InfobeatsScreen> with TickerProviderStateMixi
 
   List<Widget> getWidgets() {
     _generalWidgets.clear();
-    for (int i = 0; i < 3; i++) {
+    for (int i = 0; i < 6; i++) {
       _generalWidgets.add(getWidget());
     }
     return _generalWidgets;
@@ -91,18 +88,18 @@ class InfobeatsState extends State<InfobeatsScreen> with TickerProviderStateMixi
                             Text("August 31"),
                           ],
                         ),
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Expand Child',
-                                style: Theme.of(context).textTheme.headline6,
-                              ),
-                              Text(
-                                '11:00:06',
-                                style: Theme.of(context).textTheme.headline6,
-                              ),
-                            ]),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Expand Child',
+                          style: Theme.of(context).textTheme.headline6,
+                        ),
+                        Text(
+                          '11:00:06',
+                          style: Theme.of(context).textTheme.headline6,
+                        ),
+                        ]),
                         SizedBox(height: 8),
                         Text(
                           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
@@ -146,14 +143,17 @@ class InfobeatsState extends State<InfobeatsScreen> with TickerProviderStateMixi
       );
   }
 
+
   @override
   Widget build(BuildContext context) {
-    return  DefaultTabController(
-      length: 2,
-      child: Scaffold(
-
-        appBar: AppBar(
-          title: Text(Translate.of(context)!.translate("infobeats"),style: TextStyle(color: Colors.black),),
+    // TODO: implement build
+    return
+      Scaffold(
+          appBar: AppBar(
+            // toolbarHeight: 10.0,
+            // backgroundColor: Colors.white,
+            // elevation: 0,
+            title: Text(Translate.of(context)!.translate("agenda"),style: TextStyle(color: Colors.black),),
             // automaticallyImplyLeading: false,
             actions: [
               Row(
@@ -260,38 +260,52 @@ class InfobeatsState extends State<InfobeatsScreen> with TickerProviderStateMixi
                 ],
               )
             ],
-          bottom: const TabBar(
-            labelColor: Colors.white,
-                  unselectedLabelColor: Colors.black,
-            tabs: [
-            Tab(
-                      text: "Details",
-                    ),
-                    Tab(
-                      text: "Stalls",
-                    ),
-              // Tab(icon: Icon(Icons.camera_alt)),
-              // Tab(icon: Icon(Icons.grade)),
-              // Tab(icon: Icon(Icons.email)),
-            ],
-          ), // TabBar
-          // toolbarHeight: 10.0,
-          backgroundColor: Colors.grey,
-          elevation: 0,
-        ), // AppBar
-        body:TabBarView(
-          children: [
-            // Icon(Icons.music_note),
-            // Icon(Icons.music_video),
-            // Icon(Icons.camera_alt),
-            // Icon(Icons.grade),
-            // Icon(Icons.email),
-            DetailsTab(),
-            StallsTabScreen()
-          ],
-        ), // TabBarView
-      ), // Scaffold
-    );
+            bottom: TabBar(
+              labelColor: Colors.black,
+              unselectedLabelColor: AppTheme.textColor,
+              // tabs: _tabs,
+              tabs: <Widget>[
+                Tab(
+                  text: "Day 1",
+                ),
+                Tab(
+                  text: "Day 2",
+                ),
+                Tab(
+                  text: "Day 3",
+                ),
+                Tab(
+                  text: "Day 4",
+                ),
+                Tab(
+                  text: "Day 5",
+                ),
+                Tab(
+                  text: "Day 6",
+                )
+              ],
+              isScrollable: true,
+              indicatorColor: Colors.blue,
+              controller: _tabController,
+            ),
+
+          ),
+    body: Container(
+    // color: Colors.white,
+    child: Column(
+    children: <Widget>[
+    Expanded(
+    child: TabBarView(
+    physics: NeverScrollableScrollPhysics(),
+    controller: _tabController,
+    children:
+      getWidgets()
+    ),
+    ),
+
+    ],
+    ),
+    ));
   }
 
 }

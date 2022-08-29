@@ -31,7 +31,7 @@ class _OtpScreenState extends State<OtpScreen>{
    var _fourthDigit;
    var _fifthDigit;
    var _sixthDigit;
-
+   var verificationId;
   int? _currentDigit;
   String authStatus="",deviceId="",token="";
   var otp;
@@ -50,8 +50,8 @@ class _OtpScreenState extends State<OtpScreen>{
   }
 
   //check otp
-  Future<dynamic> checkotp(dynamic phone) async {
-    if (widget.verificationId != null && otp != null) {
+  Future<dynamic> checkotp(dynamic phone,String verificationId) async {
+    if (verificationId != null && otp != null) {
       try {
         // authservice =await FirebaseAuth.instance(
         //     PhoneAuthProvider.credential(
@@ -118,7 +118,74 @@ class _OtpScreenState extends State<OtpScreen>{
     );
   }
 
-  ///On show message fail
+   Future<void> verifyPhoneNumber(BuildContext context,String number) async {
+
+     try {
+       await FirebaseAuth.instance.verifyPhoneNumber(
+         phoneNumber: "+91"+number,
+         timeout: const Duration(seconds: 15),
+         verificationCompleted: (AuthCredential authCredential) {
+           //  signIn(authCredential);
+           print('verfication completed called sent called');
+           //commented on 14/062021
+           // setState(() {
+           //   authStatus = "sucess";
+           // });
+           // if (authStatus != "") {
+           //   scaffoldKey?.currentState?.showSnackBar(SnackBar(
+           //     content: Text(authStatus),
+           //   ));
+           // }
+         },
+         verificationFailed: (FirebaseAuthException authException) {
+           print(authException.message.toString() + "Inside auth failed");
+           setState(() {
+             // authStatus = "Authentication failed";
+             authStatus = authException.message!;
+           });
+           // loader.remove();
+           // Helper.hideLoader(loader);
+           if (authStatus != "") {
+             // scaffoldKey.currentState.showSnackBar(SnackBar(
+             //   content: Text(authStatus),
+             // ));
+             Fluttertoast.showToast(msg: authStatus);
+
+           }
+         },
+         codeSent: (String? verId, [int? forceCodeResent]) {
+           // loader.remove();
+           // Helper.hideLoader(loader);
+           // this.verificationId = verId;
+           setState(() {
+
+
+           checkotp(widget.mobileNum,verId!);
+
+             //  users.deviceToken = verId;
+           });
+           // if (authStatus != "") {
+           //   scaffoldKey.currentState!.showSnackBar(SnackBar(
+           //     content: Text(authStatus),
+           //   ));
+           // }
+         },
+         codeAutoRetrievalTimeout: (String verId) {
+           // user.deviceToken = verId;
+           //    print('coderetreival sent called' + verificationId);
+           setState(() {
+             authStatus = "TIMEOUT";
+           });
+         },
+       );
+     }catch(e){
+       print(e);
+     }
+
+   }
+
+
+   ///On show message fail
   Future<void> _showMessage(String message,int? role) async {
     return showDialog<void>(
       context: context,
@@ -126,11 +193,11 @@ class _OtpScreenState extends State<OtpScreen>{
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text(
-            "OTP Verification",
+            Translate.of(context)!.translate("otp_verification_text"),
             style:TextStyle(
-              fontFamily: 'Poppins',
-              fontWeight: FontWeight.w400,
-              color: AppTheme.textColor
+              fontFamily: 'Inter-SemiBold',
+              fontWeight: FontWeight.w500,
+              color: Colors.black
             )
           ),
           content: SingleChildScrollView(
@@ -146,7 +213,7 @@ class _OtpScreenState extends State<OtpScreen>{
           actions: <Widget>[
             FlatButton(
               child: Text(
-                Translate.of(context)!.translate('close'),
+               "OK",
               ),
               onPressed: () {
         Navigator.push(context, MaterialPageRoute(builder: (context)=>MainNavigation(userType:role.toString())));
@@ -173,8 +240,8 @@ class _OtpScreenState extends State<OtpScreen>{
               digit != null ? digit.toString() : "",
               style: TextStyle(
                   fontSize: 18.0,
-                  color: AppTheme.textColor,
-                  fontFamily: 'Poppins',
+                  color:Theme.of(context).cardColor,
+                  fontFamily: 'Inter-SemiBold',
                 fontWeight: FontWeight.w600
               ),
             ),
@@ -182,14 +249,14 @@ class _OtpScreenState extends State<OtpScreen>{
             borderRadius: BorderRadius.circular(5),
             border: Border.all(
               color: digit==null?
-              Color(0xFFFFD8BC)
+              AppTheme.appColor
               :
               Theme.of(context).primaryColor,  // red as border color
             ),
             color:digit==null?
-            Color(0xFFFFD8BC)
+            Colors.white
                 :
-            Colors.white,
+            AppTheme.appColor,
 
           ),
             ),
@@ -406,89 +473,109 @@ class _OtpScreenState extends State<OtpScreen>{
       key: scaffoldKey,
 
       appBar: AppBar(
-        centerTitle: true,
-
-              title:Text('OTP Verification',style: TextStyle(
-              fontFamily: 'Poppins',fontWeight: FontWeight.w600
+        backgroundColor: AppTheme.appColor,
+               title:Text('OTP Verification',style: TextStyle(
+              fontFamily: 'Inter-SemiBold',fontWeight: FontWeight.w600
             ),)
       ),
       body: Container(
         height: MediaQuery.of(context).size.height,
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(Images.bg),
-            fit: BoxFit.cover,
-          ),
-        ),
+
+
         child: Container(
           margin: EdgeInsets.only(left: 20.0,right: 20.0),
      child:SingleChildScrollView(
   child:
-  Column(
-    mainAxisSize: MainAxisSize.max,
-    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    crossAxisAlignment: CrossAxisAlignment.center,
-    children: [
-      SizedBox(height: 10.0,),
-      Image.asset(Images.logo,height: 180.0,width:180.0),
-      Text(Translate.of(context)!.translate('otp_verification'),style: TextStyle(color:AppTheme.textColor,
-          fontFamily: 'Poppins',fontWeight:FontWeight.w400,fontSize: 14.0),),
-      // Text(widget.otpVerify.countrycode+" "+widget.otpVerify.phone,style: TextStyle(color:AppTheme.textColor,
-      //     fontFamily: 'Poppins',fontWeight:FontWeight.w400,fontSize: 14.0),),
-      SizedBox(height: 15.0,),
-      Padding(
-        padding:EdgeInsets.only(left:25.0,right:25.0),
-          child:_getInputField),
+  Padding(
+    padding: const EdgeInsets.all(10.0),
+    child: Column(
+      mainAxisSize: MainAxisSize.max,
+      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Image.asset(Images.retreatImage,height: 150.0,width:150.0),
 
-      //for login api call
-      BlocBuilder<LoginBloc,LoginState>(builder: (context,login){
-        return BlocListener<LoginBloc,LoginState>(listener: (context,state){
-          if (state is LoginFail) {
-            // _showMessage(
-            //   // Translate.of(context).translate(state.code), //commented on 9/12/2020
-            //   Translate.of(context)!.translate(state.msg!),//added on 9/12/2020
-            // );
-            Fluttertoast.showToast(msg: Translate.of(context)!.translate(state.msg!));
-          }
-          if (state is LoginSuccess) {
-            _showMessage(
-              "Logged in successfully",state.userModel!.role//added on 9/12/2020
-            );
-          }
+        Text(Translate.of(context)!.translate('otp_verification_text'),style: TextStyle(color:Colors.black,
+            fontFamily: 'Inter-SemiBold',fontWeight:FontWeight.w600,fontSize: 18.0),),
+        SizedBox(height: 40.0,),
 
-        },
-          child:Padding(padding: EdgeInsets.only(left:10.0,right: 10.0,top:15.0),
-              child:
-              AppButton(
-                onPressed: (){
-                  if(_firstDigit!=null && _secondDigit!=null && _thirdDigit!=null &&
-                      _fourthDigit!=null && _fifthDigit!=null && _sixthDigit!=null){
-                    checkotp(widget.mobileNum);
+        Text(Translate.of(context)!.translate('otp_verification'),style: TextStyle(color:Colors.black,
+            fontFamily: 'Inter-Regular',fontWeight:FontWeight.w500,fontSize: 12.0),),
+        Text("+91 "+widget.mobileNum.toString()+" number",style: TextStyle(color:Colors.black,
+            fontFamily: 'Inter-Regular',fontWeight:FontWeight.w500,fontSize: 12.0),),
+        SizedBox(height: 10.0,),
+        _getInputField,
+        SizedBox(height: 5.0,),
 
-                  }else{
-                    Fluttertoast.showToast(msg: "Please enter Otp");
-                  }
-                },
-                shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50))),
-                text: 'Verify',
-                loading: login is LoginLoading,
-                disableTouchWhenLoading: true,
-              )
-          ),
-        );
-      }),
-      SizedBox(height: 15.0,),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-        Text(Translate.of(context)!.translate("otp_resend"),style: TextStyle(fontSize: 14.0),),
-        Text(Translate.of(context)!.translate("resend"),style: TextStyle(fontSize: 14.0,fontWeight: FontWeight.w600),),
-      ],),
-      SizedBox(height: 15.0,),
+        // Row(
+        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //   children: [
+        //   Text("Expired in 20 sec",style: TextStyle(color:Colors.black,
+        //       fontFamily: 'Inter-Regular',fontWeight:FontWeight.w500,fontSize: 12.0),),
+        // ],),
+        // SizedBox(height: 10.0,),
 
-      _getOtpKeyboard
+        //for login api call
+        BlocBuilder<LoginBloc,LoginState>(builder: (context,login){
+          return BlocListener<LoginBloc,LoginState>(listener: (context,state){
+            if (state is LoginFail) {
+              // _showMessage(
+              //   // Translate.of(context).translate(state.code), //commented on 9/12/2020
+              //   Translate.of(context)!.translate(state.msg!),//added on 9/12/2020
+              // );
+              // Fluttertoast.showToast(msg: "Account does nor exists");
+              _showMessage(
+                  "Logged in successfully",0//added on 9/12/2020
+              );
+            }
+            if (state is LoginSuccess) {
+              _showMessage(
+                "Logged in successfully",state.userModel!.role//added on 9/12/2020
+              );
+            }
 
-    ],
+          },
+            child:
+            Padding(padding: EdgeInsets.only(top:15.0),
+                child:
+                AppButton(
+                  onPressed: (){
+                    if(_firstDigit!=null && _secondDigit!=null && _thirdDigit!=null &&
+                        _fourthDigit!=null && _fifthDigit!=null && _sixthDigit!=null){
+                      checkotp(widget.mobileNum,widget.verificationId.toString());
+
+                    }else{
+                      Fluttertoast.showToast(msg: "Please enter Otp");
+                    }
+                  },
+                  shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
+                  text: 'Verify',
+                  loading: login is LoginLoading,
+                  disableTouchWhenLoading: true,
+                )
+            ),
+          );
+        }),
+        SizedBox(height: 15.0,),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+         Text(Translate.of(context)!.translate("otp_resend"),style: TextStyle(fontSize: 12.0,
+              fontFamily: 'Inter-SemiBold',fontWeight: FontWeight.w500),),
+            InkWell(
+              onTap: (){
+
+                verifyPhoneNumber(context, widget.mobileNum.toString());
+              },
+              child:Text(Translate.of(context)!.translate("resend"),
+                style: TextStyle(fontSize: 14.0,fontWeight: FontWeight.w600,fontFamily:'Inter-Bold',color: AppTheme.appColor),)),
+        ],),
+        SizedBox(height: 15.0,),
+
+        _getOtpKeyboard
+
+      ],
+    ),
   ),
 )),
         )

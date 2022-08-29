@@ -11,27 +11,22 @@ class AppTheme {
   static Color blueColor = Color.fromRGBO(93, 173, 226, 1);
   static Color pinkColor = Color.fromRGBO(165, 105, 189, 1);
   static Color greenColor = Color.fromRGBO(88, 214, 141, 1);
-  static Color yellowColor = Color.fromRGBO(253, 198, 10, 1);
-  static Color kashmirColor = Color.fromRGBO(93, 109, 126, 1);
-  static Color greenDarkColor = Color.fromRGBO(3, 80, 43, 1);
-  static Color facebookColor=Color(0xFF3B5998);
-  static Color googleColor=Color(0xFFEF1C1C);
-  static Color phoneColor=Color(0xFF19B3FE);
+
   static Color textColor=Color(0xFF085775);
-  static Color verifyPhone=Color(0xFFFFD8BC);
   static Color bgColor=Color(0xFF00000029);
-  static Color appColor=Color(0xffDF5F00);
+  static const dayColor=Color(0xFFFB7723);
+  static Color appColor=Color(0xffEA357C);
 
   ///Default font
-  static String currentFont = "Poppins";
+  static String currentFont = "Inter";
 
   ///List Font support
   static List<String> fontSupport = ["Raleway", "Roboto", "Merriweather"];
 
   ///Default Theme
   static ThemeModel currentTheme = ThemeModel.fromJson({
-    "name": "darkorange",
-    "color": Color(0xffDF5F00),
+    "name": "darkpink",
+    "color": Color(0xffEA357C),
     "light": "primaryLight",
     "dark": "primaryDark",
   });
@@ -41,7 +36,7 @@ class AppTheme {
     {
       "name": "default",
       // "color": Color(0xff03502B),
-      "color": Color(0xffDF5F00),
+      "color": Color(0xffEA357C),
       "light": "primaryLight",
       "dark": "primaryDark",
     },

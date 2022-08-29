@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/Configs/image.dart';
 import 'package:flutter_app/Configs/theme.dart';
 import 'package:flutter_app/Screens/Agenda/agenda_screen.dart';
+import 'package:flutter_app/Screens/Agenda/agenda_screen_old.dart';
 import 'package:flutter_app/Screens/Conference/conference_screen.dart';
 import 'package:flutter_app/Screens/GenerateQR/generateQrCode.dart';
 import 'package:flutter_app/Screens/GenerateQR/scanQrCode.dart';
@@ -38,21 +39,22 @@ class _MainNavigationState extends State<MainNavigation> {
           height: 20.0,
         ),
         activeIcon: Image.asset(
-          Images.homeActive,
+          Images.home1,
           width: 20.0,
           height: 20.0,
         ),
         label: Translate.of(context)!.translate('home'),
 
+
       ),
       BottomNavigationBarItem(
         icon: Image.asset(
-          Images.producer,
+          Images.agenda,
           width: 20.0,
           height: 20.0,
         ),
         activeIcon: Image.asset(
-          Images.producerActive,
+          Images.agenda1,
           width: 20.0,
           height: 20.0,
         ),
@@ -61,12 +63,12 @@ class _MainNavigationState extends State<MainNavigation> {
       ),
       BottomNavigationBarItem(
         icon: Image.asset(
-          Images.order,
+          Images.unconference,
           width: 20.0,
           height: 20.0,
         ),
         activeIcon: Image.asset(
-          Images.orderActive,
+          Images.unconference1,
           width: 20.0,
           height: 20.0,
         ),
@@ -75,12 +77,12 @@ class _MainNavigationState extends State<MainNavigation> {
       ),
       BottomNavigationBarItem(
         icon: Image.asset(
-          Images.profile,
+          Images.inforte1,
           width: 20.0,
           height: 20.0,
         ),
         activeIcon: Image.asset(
-          Images.profileActive,
+          Images.inforte1,
           width: 20.0,
           height: 20.0,
         ),
@@ -89,19 +91,22 @@ class _MainNavigationState extends State<MainNavigation> {
       ),
       BottomNavigationBarItem(
         icon: Image.asset(
-          Images.profile,
+          Images.breather,
           width: 20.0,
           height: 20.0,
         ),
         activeIcon: Image.asset(
-          Images.profileActive,
+          Images.breather1,
           width: 20.0,
           height: 20.0,
         ),
         label: Translate.of(context)!.translate('breakout'),
 
       ),
+
+
     ];
+
   }
 
 
@@ -290,6 +295,7 @@ class _MainNavigationState extends State<MainNavigation> {
 
         BottomNavigationBar(
           items: _bottomBarItem(context),
+          selectedLabelStyle: TextStyle(fontSize: 12.0,fontFamily: 'Inter-Regular',fontWeight: FontWeight.w500),
           currentIndex: _selectedIndex,
           type: BottomNavigationBarType.fixed,
           unselectedItemColor: Theme
