@@ -120,7 +120,6 @@ flutter:
         - asset: assets/fonts/Inter-Bold.ttf
           weight: 600
         - asset: assets/fonts/Inter-SemiBold.ttf
-          weight: 500
         - asset: assets/fonts/Inter-Black.ttf
 
   #    - family: Trajan Pro

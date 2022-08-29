@@ -33,7 +33,7 @@ class _SignInScreenState extends State<SignInScreen>{
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text(
-            Translate.of(context)!.translate('verify_number'),
+            "Sign In",
           ),
           content: SingleChildScrollView(
             child: ListBody(
@@ -100,11 +100,11 @@ class _SignInScreenState extends State<SignInScreen>{
           // Helper.hideLoader(loader);
           // this.verificationId = verId;
           setState(() {
-            authStatus = "OTP has been successfully sent";
-            // user.deviceToken = verId;
+            // authStatus = "OTP has been successfully sent";
+            // // user.deviceToken = verId;
             verificationId = verId;
             loading=false;
-            Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>
+            Navigator.push(context,MaterialPageRoute(builder: (context)=>
                 OtpScreen(
                     mobileNum:_mobilecontroller.text,
                   verificationId:verificationId.toString(),
@@ -112,11 +112,11 @@ class _SignInScreenState extends State<SignInScreen>{
 
             //  users.deviceToken = verId;
           });
-          if (authStatus != "") {
-            scaffoldKey.currentState!.showSnackBar(SnackBar(
-              content: Text(authStatus),
-            ));
-          }
+          // if (authStatus != "") {
+          //   scaffoldKey.currentState!.showSnackBar(SnackBar(
+          //     content: Text(authStatus),
+          //   ));
+          // }
         },
         codeAutoRetrievalTimeout: (String verId) {
           // user.deviceToken = verId;
@@ -141,62 +141,72 @@ class _SignInScreenState extends State<SignInScreen>{
       key:scaffoldKey,
       // appBar: AppBar(),
       body: Container(
-        child: Padding(
-          padding: EdgeInsets.only(left:15.0,right: 8.0,top:15.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Image.asset(Images.retreatImage,height: 150.0,width:150.0),
-              SizedBox(height: 20.0,),
-              Padding(
-                padding: const EdgeInsets.only(left:35.0),
-                child: Text(
-                  Translate.of(context)!.translate('input_mobile'),
-                  style: TextStyle(fontFamily: 'Inter-Regular',fontWeight:FontWeight.normal,fontSize: 14.0,color: Colors.black),
-                ),
+
+        child: SingleChildScrollView(child:
+        Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Image.asset(Images.retreatImage,height: 150.0,width:150.0),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 20.0),
+              child: Text(
+                "Login",
+                style: TextStyle(fontFamily: 'Inter-Bold',fontWeight:FontWeight.w600,fontSize: 30.0,color: AppTheme.appColor),
               ),
-              // Row(
-              //   children: [
-              CountryListPick(
-                // appBar: AppBar(
-                //   backgroundColor: Colors.amber,
-                //   title: Text('Pick your country'),
-                // ),
-                // if you need custome picker use this
-                pickerBuilder: (context, CountryCode? countryCode) {
-                  countrycode=countryCode!.dialCode.toString();
-                  return
-                    Row(
+            ),
+            SizedBox(height: 40.0,),
+            Padding(
+              padding: const EdgeInsets.only(left: 20.0),
+              child: Text(
+                Translate.of(context)!.translate('input_mobile'),
+                style: TextStyle(fontFamily: 'Inter-Regular',fontWeight:FontWeight.normal,fontSize: 14.0,color: Colors.black),
+              ),
+            ),
+            // Row(
+            //   children: [
+            CountryListPick(
+              // appBar: AppBar(
+              //   backgroundColor: Colors.amber,
+              //   title: Text('Pick your country'),
+              // ),
+              // if you need custome picker use this
+              pickerBuilder: (context, CountryCode? countryCode) {
+                countrycode=countryCode!.dialCode.toString();
+                return
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15.0,right: 15.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Container(
-                            margin: EdgeInsets.only(left: 25.0),
+                            padding: EdgeInsets.all(8.0),
+                            height: 45.0,
+                            decoration: const BoxDecoration(
+                              color: Color(0xffEA357C),
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(5.0),
+                                bottomLeft: Radius.circular(5.0),
+                              ),
+                            ),
+
                             child:
-                            Container(
-                                padding: EdgeInsets.all(8.0),
-                                height: 45.0,
-                                decoration: const BoxDecoration(
-                                  color: Color(0xffEA357C),
-                                  borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(5.0),
-                                    bottomLeft: Radius.circular(5.0),
+                            Align(
+                                alignment: Alignment.center,
+                                child:Text(countryCode.dialCode.toString(),
+                                  style: TextStyle(
+                                      color: Colors.white
                                   ),
-                                ),
 
-                                child:
-                                Align(
-                                    alignment: Alignment.center,
-                                    child:Text(countryCode.dialCode.toString(),
-                                      style: TextStyle(
-                                          color: Colors.white
-                                      ),
-
-                                    )))),
+                                ))),
                         Expanded(
                             child:
                             Container(
                                 height: 45.0,
-                                margin: EdgeInsets.only(right: 25.0),
+                                // margin: EdgeInsets.only(right: 25.0),
                                 decoration: BoxDecoration(
                                   color: Colors.white,
                                   borderRadius:   BorderRadius.only(
@@ -231,87 +241,97 @@ class _SignInScreenState extends State<SignInScreen>{
                             )
                         ),
                       ],
-                    );
-                },
-                // theme: CountryTheme(
-                //   isShowFlag: true,
-                //   isShowTitle: true,
-                //   isShowCode: true,
-                //   isDownIcon: false,
-                //   showEnglishName: true,
-                // ),
-                initialSelection: '+91',
-                // or
-                // initialSelection: 'US'
-                onChanged: (CountryCode? code) {
-                  print(code!.name);
-                  print(code.code);
-                  print(code.dialCode);
-                  print(code.flagUri);
-                },
-              ),
+                    ),
+                  );
+              },
+              // theme: CountryTheme(
+              //   isShowFlag: true,
+              //   isShowTitle: true,
+              //   isShowCode: true,
+              //   isDownIcon: false,
+              //   showEnglishName: true,
+              // ),
+              initialSelection: '+91',
+              // or
+              // initialSelection: 'US'
+              onChanged: (CountryCode? code) {
+                print(code!.name);
+                print(code.code);
+                print(code.dialCode);
+                print(code.flagUri);
+              },
+            ),
 
-              //verify phone
-              Padding(padding: EdgeInsets.all(25.0),
-                  child:
-                  AppButton(
-                    onPressed: (){
+            //verify phone
+            Padding(padding: EdgeInsets.only(top:25.0,left:20.0,right: 20.0),
+                child:
+                AppButton(
+                  onPressed: (){
 
-                      if(_mobilecontroller.text.isEmpty){
-                        _showMessage('Please enter mobile number');
-                      }else if(_mobilecontroller.text.length!=10){
-                        _showMessage('Please enter valid number');
+                    if(_mobilecontroller.text.isEmpty){
+                      _showMessage('Please enter mobile number');
+                    }else if(_mobilecontroller.text.length!=10){
+                      _showMessage('Please enter valid number');
 
-                      }else{
-                        // otpVerify.phone=_mobilecontroller.text;
-                        // otpVerify.countrycode=countrycode.toString();
-                        // otpVerify.flagRoleType=widget.flagRoleType.toString();
-                        // // Navigator.pushNamed(context, Routes.otp);
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //     builder: (context) => OtpScreen(),
-                        //   ),
-                        // );
-                        verifyPhoneNumber(context, _mobilecontroller.text);
-                      }
+                    }else{
+                      // otpVerify.phone=_mobilecontroller.text;
+                      // otpVerify.countrycode=countrycode.toString();
+                      // otpVerify.flagRoleType=widget.flagRoleType.toString();
+                      // // Navigator.pushNamed(context, Routes.otp);
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //     builder: (context) => OtpScreen(),
+                      //   ),
+                      // );
+                      setState(() {
+                        loading=true;
+                      });
+                      verifyPhoneNumber(context, _mobilecontroller.text);
+                    }
 
-                    },
-                    shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(50))),
-                    text: Translate.of(context)!.translate('proceed'),
-                    loading: loading,
-                    // disableTouchWhenLoading: true,
-                  )
-              ),
+                  },
+                  shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10))),
+                  text: Translate.of(context)!.translate('proceed'),
+                  loading: loading,
+                  disableTouchWhenLoading: true,
+                )
+            ),
+            // loading==true
+            // ?
+            // Align(
+            //     alignment:Alignment.center,child:CircularProgressIndicator())
+            // :
+            //     Container(),
+            // SizedBox(height: 20.0,),
 
-              //terms and conditions
-             Column(
-               mainAxisAlignment: MainAxisAlignment.center,
+            //terms and conditions
+           // Column(
+           //   mainAxisAlignment: MainAxisAlignment.center,
+           //
+           //   children: [
+           //   Text(Translate.of(context)!.translate("tnc"),style: TextStyle(fontSize: 12.0),),
+           //   SizedBox(height: 3.0,),
+           //   Row(
+           //     mainAxisAlignment: MainAxisAlignment.center,
+           //     children: [
+           //     Text("Terms of use ",style: TextStyle(decoration: TextDecoration.underline,fontSize: 12.0,fontWeight: FontWeight.w500),),
+           //     Text(Translate.of(context)!.translate("tnc1"),style: TextStyle(fontSize: 12.0),)
+           //
+           //   ],),
+           //     SizedBox(height: 3.0,),
+           //     Row(
+           //       mainAxisAlignment: MainAxisAlignment.center,
+           //       children: [
+           //         Text("our",style: TextStyle(fontSize: 12.0,),),
+           //         Text(" Privacy Policy",style: TextStyle(decoration: TextDecoration.underline,fontSize: 12.0,fontWeight: FontWeight.w500),)
+           //
+           //       ],)
+           // ],)
 
-               children: [
-               Text(Translate.of(context)!.translate("tnc"),style: TextStyle(fontSize: 12.0),),
-               SizedBox(height: 3.0,),
-               Row(
-                 mainAxisAlignment: MainAxisAlignment.center,
-                 children: [
-                 Text("Terms of use ",style: TextStyle(decoration: TextDecoration.underline,fontSize: 12.0,fontWeight: FontWeight.w500),),
-                 Text(Translate.of(context)!.translate("tnc1"),style: TextStyle(fontSize: 12.0),)
-
-               ],),
-                 SizedBox(height: 3.0,),
-                 Row(
-                   mainAxisAlignment: MainAxisAlignment.center,
-                   children: [
-                     Text("our",style: TextStyle(fontSize: 12.0,),),
-                     Text(" Privacy Policy",style: TextStyle(decoration: TextDecoration.underline,fontSize: 12.0,fontWeight: FontWeight.w500),)
-
-                   ],)
-             ],)
-
-            ],
-          ),
-        ),
+          ],
+        )),
       ),
     );
   }

@@ -17,7 +17,7 @@ class AppButton extends StatelessWidget {
     this.shape,
   }) : super(key: key);
 
-  Widget _buildLoading() {
+  Widget _buildLoading(BuildContext context) {
     if (!loading!) {
       return Container();
     }
@@ -25,7 +25,7 @@ class AppButton extends StatelessWidget {
       margin: EdgeInsets.only(left: 10, right: 10),
       width: 14,
       height: 14,
-      child: CircularProgressIndicator(strokeWidth: 2),
+      child: CircularProgressIndicator(strokeWidth: 2,color:Theme.of(context).cardColor),
     );
   }
 
@@ -55,9 +55,9 @@ class AppButton extends StatelessWidget {
             style: Theme.of(context)
                 .textTheme
                 .button!
-                .copyWith(color: Colors.white, fontWeight: FontWeight.w600),
+                .copyWith(color: Colors.white, fontWeight: FontWeight.w600,fontFamily: 'Inter-SemiBold'),
           ),
-          _buildLoading()
+          _buildLoading(context)
         ],
       ),
     )

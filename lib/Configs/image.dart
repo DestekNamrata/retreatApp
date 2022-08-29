@@ -13,12 +13,17 @@ class Images {
   static const String breather1="assets/images/breather1.png";
   static const String inforte1="assets/images/inforte1.png";
   static const String notifi="assets/images/notify.png";
+  static const String notifiHome="assets/images/notify_home.png";
   static const String account="assets/images/account.png";
   static const String agendaImage="assets/images/agenda_image.png";
   static const String unconfImage="assets/images/unconf_image.png";
   static const String inforteImage="assets/images/inforte_image.png";
   static const String breatherImage="assets/images/breather_image.png";
   static const String travelImage="assets/images/travel_image.png";
+  static const String homeTop="assets/images/home_top.png";
+  static const String day1="assets/images/23Sept.png";
+  static const String day2="assets/images/24Sept.png";
+  static const String day3="assets/images/25Sept.png";
 
 
   ///Singleton factory

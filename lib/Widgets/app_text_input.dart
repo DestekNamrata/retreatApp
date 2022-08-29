@@ -74,7 +74,7 @@ class AppTextInput extends StatelessWidget {
       alignment: Alignment.center,
       decoration: BoxDecoration(
         border: Border.all(color: Theme.of(context).primaryColor),
-        color: AppTheme.verifyPhone.withOpacity(0.4),
+        color: AppTheme.appColor.withOpacity(0.4),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Stack(

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/Configs/image.dart';
 import 'package:flutter_app/Configs/theme.dart';
 import 'package:flutter_app/Screens/Agenda/agenda_screen.dart';
+import 'package:flutter_app/Screens/Agenda/agenda_screen_old.dart';
 import 'package:flutter_app/Screens/Conference/conference_screen.dart';
 import 'package:flutter_app/Screens/GenerateQR/generateQrCode.dart';
 import 'package:flutter_app/Screens/GenerateQR/scanQrCode.dart';
@@ -43,6 +44,7 @@ class _MainNavigationState extends State<MainNavigation> {
           height: 20.0,
         ),
         label: Translate.of(context)!.translate('home'),
+
 
       ),
       BottomNavigationBarItem(
@@ -101,7 +103,10 @@ class _MainNavigationState extends State<MainNavigation> {
         label: Translate.of(context)!.translate('breakout'),
 
       ),
+
+
     ];
+
   }
 
 
@@ -290,6 +295,7 @@ class _MainNavigationState extends State<MainNavigation> {
 
         BottomNavigationBar(
           items: _bottomBarItem(context),
+          selectedLabelStyle: TextStyle(fontSize: 12.0,fontFamily: 'Inter-Regular',fontWeight: FontWeight.w500),
           currentIndex: _selectedIndex,
           type: BottomNavigationBarType.fixed,
           unselectedItemColor: Theme

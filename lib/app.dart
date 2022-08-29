@@ -113,7 +113,9 @@ class _AppState extends State<App> {
                 return MainNavigation();
               }
               if (app is AuthenticationFail) {
-                return SignInScreen();
+                // return SignInScreen();
+                return MainNavigation();
+
               }
               return SplashScreen();
               // return MainNavigation();
