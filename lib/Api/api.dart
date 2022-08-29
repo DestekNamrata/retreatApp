@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter_app/Models/model_attendance_det.dart';
 import 'package:flutter_app/Models/model_login.dart';
 import 'package:flutter_app/Utils/application.dart';
 import 'package:flutter_app/Utils/util_preferences.dart';
@@ -37,23 +38,21 @@ class Api {
     // }
   }
 
-  //scan qr code api
-  static Future<dynamic> scanQrCode(params) async {
+  //get attendance data api
+  static Future<dynamic> getAttendanceDeta(params) async {
     final response = await http.post(
-      Uri.parse(signIn),
+      Uri.parse(GET_ATTENDANCE),
       body: params,
       headers: {
         "Content-Type": "application/json",
-        "Authorization":
-       UtilPreferences.getString("token").toString(),
+        "Authorization":"Bearer "+ UtilPreferences.getString("token").toString(),
       },
-      //
+
     );
-    // if (response.statusCode == 200) {
     final responseJson = json.decode(response.body);
     print(responseJson);
-    return ResultLogin.fromJson(responseJson);
-    // }
+    return AttendanceDateResp.fromJson(responseJson);
+
   }
 
 }

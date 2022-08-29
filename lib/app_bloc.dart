@@ -1,5 +1,6 @@
 import 'package:flutter_app/Bloc/authentication/authentication_bloc.dart';
 import 'package:flutter_app/Bloc/login/login_bloc.dart';
+import 'package:flutter_app/Bloc/scanAndGetData/bloc.dart';
 import 'package:flutter_app/Bloc/theme/theme_bloc.dart';
 import 'package:flutter_app/Repository/UserRepository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,6 +12,7 @@ class AppBloc {
 
   static final authBloc = AuthBloc(userRepository: userRepository);
   static final loginBloc = LoginBloc(userRepository: userRepository);
+  static final scanAndGetDataBloc = ScanAndGetDataBloc(userRepository: userRepository);
   // //customer
   // static final userRegBloc = UserRegBloc(userRepository: userRepository);
   // static final homeBloc = HomeBloc(homeRepository: userRepository);
@@ -39,6 +41,10 @@ class AppBloc {
       create: (context) => loginBloc,
     ),
 
+    BlocProvider<ScanAndGetDataBloc>(
+      create: (context) => scanAndGetDataBloc,
+    ),
+
 
   ];
   //
@@ -48,6 +54,7 @@ class AppBloc {
     themeBloc.close();
     authBloc.close();
     loginBloc.close();
+    scanAndGetDataBloc.close();
     // userRegBloc.close();
     // homeBloc.close();
     // cartBloc.close();

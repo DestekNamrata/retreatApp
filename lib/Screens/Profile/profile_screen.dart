@@ -170,7 +170,7 @@ class _ProfileState extends State<ProfileScreen> {
                             trailing: Icon(Icons.arrow_forward_ios))),
 
                     //scan qr code
-                    if (Application.user!.role == "1") //0 for regular 1=scanner
+                    if (Application.user!.role == 1) //0 for regular 1=scanner
                       InkWell(
                           onTap: () {
                             Navigator.push(
@@ -198,15 +198,18 @@ class _ProfileState extends State<ProfileScreen> {
                           }
                         },
                         child:
-                        AppButton(
-                          onPressed: () async{
-                            await FirebaseAuth.instance.signOut();
-                            _loginBloc!.add(OnLogout());
-                          },
-                          shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50))),
-                          text: 'Logout',
-                          loading: logout is LogoutLoading,
-                          disableTouchWhenLoading: true,
+                        Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: AppButton(
+                            onPressed: () async{
+                              await FirebaseAuth.instance.signOut();
+                              _loginBloc!.add(OnLogout());
+                            },
+                            shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
+                            text: 'Logout',
+                            loading: logout is LogoutLoading,
+                            disableTouchWhenLoading: true,
+                          ),
                         )
                       );
                     })

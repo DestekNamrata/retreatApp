@@ -523,10 +523,8 @@ class _OtpScreenState extends State<OtpScreen>{
               //   // Translate.of(context).translate(state.code), //commented on 9/12/2020
               //   Translate.of(context)!.translate(state.msg!),//added on 9/12/2020
               // );
-              // Fluttertoast.showToast(msg: "Account does nor exists");
-              _showMessage(
-                  "Logged in successfully",0//added on 9/12/2020
-              );
+              Fluttertoast.showToast(msg: "Account does nor exists");
+
             }
             if (state is LoginSuccess) {
               _showMessage(

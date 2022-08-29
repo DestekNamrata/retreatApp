@@ -84,7 +84,8 @@ class _DayWiseState extends State<DayWiseScreen>{
                        child:
                 ListTileTheme(
                 dense: true,
-                    child:ExpansionTile(
+                    child:
+                    ExpansionTile(
                          // trailing: Icon(
                          //
                          //   _customTileExpanded
