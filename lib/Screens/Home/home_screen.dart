@@ -234,7 +234,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 color: AppTheme.appColor,
                                                 fontWeight: FontWeight.w500,
                                                 fontSize: 14.0),
-                                          )))),
+                                          )))
+                              ),
                               SizedBox(
                                 width: 8.0,
                               ),
@@ -278,7 +279,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                         ),
                                       ),
                                     ],
-                                  )),
+                                  )
+                              ),
                               SizedBox(
                                 width: 8.0,
                               ),

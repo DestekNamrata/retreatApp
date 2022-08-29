@@ -13,6 +13,7 @@ import 'package:flutter_app/Screens/Home/home_screen.dart';
 import 'package:flutter_app/Screens/Infobeats/infobeats_screen.dart';
 import 'package:flutter_app/Screens/Profile/profile_screen.dart';
 import 'package:flutter_app/Utils/translate.dart';
+import 'Breather/breather_screen.dart';
 import 'sos_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -283,10 +284,11 @@ class _MainNavigationState extends State<MainNavigation> {
           children: <Widget>[
             HomeScreen(),
             AgendaScreen(),
-            GenerateQR(),
+            ConferenceScreen(),
+            // GenerateQR(),
             // ScanQR(),
             InfobeatsScreen(),
-            HomeScreen()
+            BreatherScreen()
 
 
           ],
