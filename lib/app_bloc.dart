@@ -1,3 +1,4 @@
+import 'package:flutter_app/Bloc/attendanceHistory/attendanceHistory_bloc.dart';
 import 'package:flutter_app/Bloc/authentication/authentication_bloc.dart';
 import 'package:flutter_app/Bloc/login/login_bloc.dart';
 import 'package:flutter_app/Bloc/theme/theme_bloc.dart';
@@ -11,6 +12,7 @@ class AppBloc {
 
   static final authBloc = AuthBloc(userRepository: userRepository);
   static final loginBloc = LoginBloc(userRepository: userRepository);
+  static final attendenceHistoryBloc = AttendenceHistoryBloc(attendenceHistoryRepo: userRepository);
   // //customer
   // static final userRegBloc = UserRegBloc(userRepository: userRepository);
   // static final homeBloc = HomeBloc(homeRepository: userRepository);
@@ -38,6 +40,9 @@ class AppBloc {
     BlocProvider<LoginBloc>(
       create: (context) => loginBloc,
     ),
+    BlocProvider<AttendenceHistoryBloc>(
+      create: (context) => attendenceHistoryBloc,
+    ),
 
 
   ];
@@ -48,6 +53,7 @@ class AppBloc {
     themeBloc.close();
     authBloc.close();
     loginBloc.close();
+    attendenceHistoryBloc.close();
     // userRegBloc.close();
     // homeBloc.close();
     // cartBloc.close();

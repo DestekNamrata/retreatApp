@@ -32,6 +32,17 @@ class UserRepository {
       jsonEncode(user.toJson()),
     );
   }
+  //Payment History
+  Future<dynamic> fetchAttendanceHistory({String? userId}) async {
+    final params = {"user_id":userId};
+    return await Api.getAttendanceHistory(params);
+  }
+
+  Future<dynamic> fetchAgendaList({String? agendaDay}) async {
+    final params = {"agenda_day":agendaDay};
+    return await Api.getAgenta(params);
+  }
+
   //
   // //save image
   // Future<dynamic> saveImage(String image) async {

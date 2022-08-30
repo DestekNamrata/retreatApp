@@ -24,6 +24,19 @@ class Images {
   static const String day1="assets/images/23Sept.png";
   static const String day2="assets/images/24Sept.png";
   static const String day3="assets/images/25Sept.png";
+  static const String AH="assets/images/Group_48995.png";
+  static const String TS="assets/images/Group_48998.png";
+  static const String TC="assets/images/Group_49004.png";
+  static const String PP="assets/images/Group_49004.png";
+  static const String SS="assets/images/Group_49001.png";
+  static const String Feedback="assets/images/Group_49010.png";
+  static const String Logout="assets/images/Group_49018.png";
+  static const String EditProfile="assets/images/Group_49023.png";
+
+
+
+
+
 
 
   ///Singleton factory

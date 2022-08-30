@@ -6,22 +6,19 @@ import 'package:flutter_app/Configs/image.dart';
 import 'package:flutter_app/Configs/theme.dart';
 import 'package:flutter_app/Screens/Profile/profile_screen.dart';
 import 'package:flutter_app/Widgets/app_button.dart';
-import '../mainNavigation.dart';
 import '../sos_screen.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../Utils/translate.dart';
-import 'breather_scanner.dart';
+import 'breather_detail.dart';
+import 'breather_screen.dart';
 
-class BreatherScreen extends StatefulWidget{
-  BreatherState createState()=> BreatherState();
+class BreatherScanner extends StatefulWidget{
+  BreatherScannerState createState()=> BreatherScannerState();
 }
 
-class BreatherState extends State<BreatherScreen>{
+class BreatherScannerState extends State<BreatherScanner>{
 
-  final List<Map> myProducts =
-  List.generate(8, (index) => {"id": index, "name": "Product $index"})
-      .toList();
 
   @override
   Widget build(BuildContext context) {
@@ -34,10 +31,10 @@ class BreatherState extends State<BreatherScreen>{
           backgroundColor: Colors.white,
           elevation: 0,
           leading: InkWell(
-              onTap: (){
-                Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>MainNavigation(userType: "0")));
+            onTap: (){
 
-              },
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>BreatherScreen()));
+            },
               child: Icon(Icons.arrow_back_rounded,color: Colors.black,)),
           // title: Text(Translate.of(context)!.translate("conference"),style: TextStyle(color: Colors.black),),
           // automaticallyImplyLeading: false,
@@ -184,53 +181,101 @@ class BreatherState extends State<BreatherScreen>{
 
           ),
           body: SafeArea(
-            child: Container(
-              child:
-              Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: GridView.builder(
-                    gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                        maxCrossAxisExtent: 200,
-                        childAspectRatio: 3 / 2,
-                        crossAxisSpacing: 20,
-                        mainAxisSpacing: 20),
-                    itemCount: myProducts.length,
-                    itemBuilder: (BuildContext ctx, index) {
-                      return InkWell(
+              child: Container(
+                child:
+                Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Column(
+
+                    children: [
+                      SizedBox(height: 10,),
+
+                      //Venue
+                      Row(
+                        children: [
+
+                          Text("Venue:",style: TextStyle(
+                            fontSize: 20,
+                              fontWeight: FontWeight.w700,
+                            color: AppTheme.textHighlight
+                          ),),
+                          SizedBox(width: 5,),
+                          Text("Deewan-E-Khas",style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w400,
+                              color: AppTheme.textHighlight
+                          ),),
+
+                        ],
+                      ),
+
+
+                      SizedBox(
+                        height: 10,
+                      ),
+
+                      //SPOC
+                      Row(
+                        children: [
+
+                          Text("SPOC:",style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w700,
+                              color: AppTheme.textHighlight
+                          ),),
+                          SizedBox(width: 5,),
+                          Text("Tushar Matetwar",style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w400,
+                              color: AppTheme.textHighlight
+                          ),),
+
+
+                        ],
+                      ),
+
+                      SizedBox(
+                        height: 10,
+                      ),
+
+                      //Contact
+                      Row(
+                        children: [
+
+                          Text("Contact:",style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w700,
+                              color: AppTheme.textHighlight
+                          ),),
+                          SizedBox(width: 5,),
+                          Text("9876543210",style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w400,
+                              color: AppTheme.textHighlight
+                          ),),
+
+
+                        ],
+                      ),
+
+                      SizedBox(
+                        height: 350,
+                      ),
+
+                      InkWell(
                         onTap: (){
-                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>BreatherScanner()));
-
+                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>BreatherDetail()));
                         },
-                        child: Card(
-                          elevation: 5,
-                          child: Column(
-                            children: [
-                              ListTile(
-                                title: Text("Booth 1", style: TextStyle(color: AppTheme.textHighlight,fontWeight: FontWeight.w500),),
-
-                                subtitle: Text(myProducts[index]["name"],style: TextStyle(fontSize: 17,fontWeight: FontWeight.w600,
-                                color: Colors.black),),
-                              )
-                            ],
-                          ),
-                        ),
-                      );
-                      //   Container(
-                      //     alignment: Alignment.topLeft,
-                      //   decoration: BoxDecoration(
-                      //       color: Colors.amber,
-                      //       borderRadius: BorderRadius.circular(15)),
-                      //   child: Column(
-                      //     mainAxisAlignment: MainAxisAlignment.start,
-                      //     children: [
-                      //       Text("Booth 1"),
-                      //       Text(myProducts[index]["name"]),
-                      //     ],
-                      //   ),
-                      // );
-                    }),
-              ),
-            )
+                        child: Text("Scan to enter",style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w700,
+                            color: AppTheme.textHighlight
+                        ),),
+                      )
+                    ],
+                  ),
+                ),
+              )
           ),
         )
 

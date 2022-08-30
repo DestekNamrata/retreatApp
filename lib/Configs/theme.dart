@@ -17,6 +17,7 @@ class AppTheme {
   static const dayColor=Color(0xFFFB7723);
   static Color appColor=Color(0xffEA357C);
   static Color textHighlight=Color(0xff889DAC);
+  static Color backgroundColor=Color(0xFFE2E7EE);
 
 
   ///Default font
