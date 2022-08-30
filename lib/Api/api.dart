@@ -17,6 +17,8 @@ class Api {
   static const signIn=HOST_URL+"login";
   static const SCAN_QR=HOST_URL+"attendance";
   static const GET_ATTENDANCE=HOST_URL+"get_attendance";
+  static const GET_ATTENDANCE_HISTORY=HOST_URL+"get_attendance_history";
+  static const GET_AGENDA_DETAIL=HOST_URL+"get_agenda";
 
 
   ///Login api
@@ -53,6 +55,42 @@ class Api {
     print(responseJson);
     return AttendanceDateResp.fromJson(responseJson);
 
+  }
+
+  //Payment History
+  static Future<dynamic> getAttendanceHistory(params) async {
+    final response = await http.post(
+      Uri.parse(GET_ATTENDANCE_HISTORY),
+      body: params,
+      headers: {
+        "Authorization": "Bearer"+
+        UtilPreferences.getString("token").toString(),
+      },
+      //
+    );
+    // if (response.statusCode == 200) {
+    final responseJson = json.decode(response.body);
+    print(responseJson);
+    return ResultLogin.fromJson(responseJson);
+    // }
+  }
+
+  //Payment History
+  static Future<dynamic> getAgenta(params) async {
+    final response = await http.post(
+      Uri.parse(GET_AGENDA_DETAIL),
+      body: params,
+      headers: {
+        "Authorization":
+        UtilPreferences.getString("token").toString(),
+      },
+      //
+    );
+    // if (response.statusCode == 200) {
+    final responseJson = json.decode(response.body);
+    print(responseJson);
+    return ResultLogin.fromJson(responseJson);
+    // }
   }
 
 }
