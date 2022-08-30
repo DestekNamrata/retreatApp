@@ -32,6 +32,8 @@ class Images {
   static const String Feedback="assets/images/Group_49010.png";
   static const String Logout="assets/images/Group_49018.png";
   static const String EditProfile="assets/images/Group_49023.png";
+  static const String Ticket22Sept="assets/images/Group_49130.png";
+  static const String Ticket25Sept="assets/images/Group_49131.png";
 
 
 

@@ -8,6 +8,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_app/Configs/image.dart';
+import 'package:intl/intl.dart';
 
 import '../../../Bloc/attendanceHistory/attendanceHistory_bloc.dart';
 import '../../../Configs/theme.dart';
@@ -147,6 +148,8 @@ class _AttendanceState extends State<AttendanceHistory>{
     );
   }
 
+
+
   Widget getAttendanceList(BuildContext context, List<AttendanceHistoryModel> attendenceHistoryList){
     if(attendenceHistoryList.length <= 0) {
       return
@@ -284,9 +287,31 @@ class _AttendanceState extends State<AttendanceHistory>{
                       SizedBox(width: 10,),
                       Align(
                         alignment: Alignment.topLeft,
-                        child: Text("InForte",
-                          style: TextStyle(fontSize: 18.0,
-                              fontWeight: FontWeight.w600),),
+                        child: (() {
+                          if(attendenceHistoryList[index].attendanceType.toString() == "1"){
+                            return Text("Hotel",
+                                  style: TextStyle(fontSize: 18.0,
+                                      fontWeight: FontWeight.w600),);
+                          }
+                          else if(attendenceHistoryList[index].attendanceType.toString() == "2"){
+                            return Text("InForte",
+                              style: TextStyle(fontSize: 18.0,
+                                  fontWeight: FontWeight.w600),);
+                          }
+                          else if(attendenceHistoryList[index].attendanceType.toString() == "3"){
+                            return Text("UnConference",
+                              style: TextStyle(fontSize: 18.0,
+                                  fontWeight: FontWeight.w600),);
+                          }
+                          else if(attendenceHistoryList[index].attendanceType.toString() == "4"){
+                            return Text("Breather",
+                              style: TextStyle(fontSize: 18.0,
+                                  fontWeight: FontWeight.w600),);
+                          }
+                        }())
+                        // Text(attendenceHistoryList[index].roomNo.toString(),
+                        //   style: TextStyle(fontSize: 18.0,
+                        //       fontWeight: FontWeight.w600),),
                       ),
                       SizedBox(height: 10.0,),
                     ],
@@ -312,12 +337,15 @@ class _AttendanceState extends State<AttendanceHistory>{
                         child: Column(
                           children: [
                             Text("Punch In", textAlign: TextAlign.center,
-                              style: TextStyle(fontWeight: FontWeight.w400,
-                                  fontSize: 14.0,color: Colors.white),),
-                            Text("12:30 pm", textAlign: TextAlign.center,
+                              style: TextStyle(fontWeight: FontWeight.w500,
+                                  fontSize: 12.0,color: Colors.white),),
+                            SizedBox(
+                              height: 3,
+                            ),
+                            Text(attendenceHistoryList[index].checkinTime.toString(), textAlign: TextAlign.center,
                               style:
-                              TextStyle(fontWeight: FontWeight.w600,
-                                  fontSize: 14.0,color: Colors.white),),
+                              TextStyle(fontWeight: FontWeight.w700,
+                                  fontSize: 15.0,color: Colors.white),),
                           ],
                         ),
                       ),
@@ -334,12 +362,15 @@ class _AttendanceState extends State<AttendanceHistory>{
                         child: Column(
                           children: [
                             Text("Punch Out", textAlign: TextAlign.center,
-                              style: TextStyle(fontWeight: FontWeight.w400,
-                                  fontSize: 14.0,color: Colors.white),),
+                              style: TextStyle(fontWeight: FontWeight.w500,
+                                  fontSize: 12.0,color: Colors.white),),
+                            SizedBox(
+                              height: 3,
+                            ),
                             Text(
-                              "2:30 pm", textAlign: TextAlign.center, style:
-                            TextStyle(fontWeight: FontWeight.w600,
-                                fontSize: 14.0,color: Colors.white),),
+                              attendenceHistoryList[index].checkoutTime.toString(), textAlign: TextAlign.center, style:
+                            TextStyle(fontWeight: FontWeight.w700,
+                                fontSize: 15.0,color: Colors.white),),
                           ],
                         ),
                       ),),
@@ -356,12 +387,15 @@ class _AttendanceState extends State<AttendanceHistory>{
                         child: Column(
                           children: [
                             Text(
-                              "Duration(hrs)", textAlign: TextAlign.center,
-                              style: TextStyle(fontWeight: FontWeight.w400,
-                                  fontSize: 14.0,color: Colors.white),),
-                            Text("2:00", textAlign: TextAlign.center, style:
-                            TextStyle(fontWeight: FontWeight.w600,
-                                fontSize: 14.0,color: Colors.white),),
+                              "Duration", textAlign: TextAlign.center,
+                              style: TextStyle(fontWeight: FontWeight.w500,
+                                  fontSize: 12.0,color: Colors.white),),
+                            SizedBox(
+                              height: 3,
+                            ),
+                            Text(attendenceHistoryList[index].duration.toString()+"hrs", textAlign: TextAlign.center, style:
+                            TextStyle(fontWeight: FontWeight.w700,
+                                fontSize: 15.0,color: Colors.white),),
                           ],
                         ),
                       ),)
@@ -374,7 +408,7 @@ class _AttendanceState extends State<AttendanceHistory>{
           ),
         );
       },
-      itemCount: 6,
+      itemCount: attendenceHistoryList.length,
     );
   }
 
@@ -386,7 +420,7 @@ class _AttendanceState extends State<AttendanceHistory>{
         // automaticallyImplyLeading: false,
         // toolbarHeight: 10.0,
         backgroundColor: AppTheme.backgroundColor,
-        elevation: 0,
+        elevation: 5,
         leading: InkWell(
             onTap: (){
               Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>ProfileScreen()));
@@ -520,7 +554,6 @@ class _AttendanceState extends State<AttendanceHistory>{
                 child: Column(
 
                   children: [
-                    // getAttendanceList(context, attendenceHistoryList),
 
 
                     Padding(
@@ -555,7 +588,8 @@ class _AttendanceState extends State<AttendanceHistory>{
                               // ),),
                               Container(
                                 height: MediaQuery.of(context).size.height,
-                                  child: data(),),
+                                  child: getAttendanceList(context, attendenceHistoryList),
+                              ),
 
 
                             ],

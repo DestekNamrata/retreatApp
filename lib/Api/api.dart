@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_app/Models/model_login.dart';
+import 'package:flutter_app/Models/model_paymentHistory.dart';
 import 'package:flutter_app/Utils/application.dart';
 import 'package:flutter_app/Utils/util_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -72,7 +73,7 @@ class Api {
     // if (response.statusCode == 200) {
     final responseJson = json.decode(response.body);
     print(responseJson);
-    return ResultLogin.fromJson(responseJson);
+    return AttendanceHistoryRepo.fromJson(responseJson);
     // }
   }
 

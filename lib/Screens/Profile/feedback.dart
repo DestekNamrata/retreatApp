@@ -1,21 +1,23 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/Screens/Profile/profile_screen.dart';
 import 'package:flutter_app/Widgets/app_button.dart';
 
-import '../Configs/image.dart';
-import '../Configs/theme.dart';
-import 'Profile/profile_screen.dart';
+import '../../Configs/image.dart';
+import '../../Configs/theme.dart';
+import '../sos_screen.dart';
 
-class SOSScreen extends StatefulWidget{
-  _SOSState createState()=>_SOSState();
+class FeedbackScreen extends StatefulWidget{
+  _FeedbackScreenState createState()=>_FeedbackScreenState();
 }
 
-class _SOSState extends State<SOSScreen>{
+class _FeedbackScreenState extends State<FeedbackScreen>{
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
       backgroundColor: AppTheme.backgroundColor,
+
       appBar: AppBar(
         // automaticallyImplyLeading: false,
         // toolbarHeight: 10.0,
@@ -144,23 +146,23 @@ class _SOSState extends State<SOSScreen>{
                 padding: const EdgeInsets.only(left: 20.0,right: 20.0,top: 20.0),
                 child: Align(
                     alignment: Alignment.topLeft,
-                    child: Text("Save Our Soul (SOS)",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 22,color: Colors.black),)),
+                    child: Text("Feedback",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 22,color: Colors.black),)),
               ),
-              //contact us
+
               Card(
                   margin: EdgeInsets.only(left: 20.0,right: 20.0,top: 20.0),
                   elevation: 6,
                   child:Column(
                     children: [
-
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text("Contact Us",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18,color: Colors.black),),
+                        padding: const EdgeInsets.all(18.0),
+                        //child: Text("Contact Us",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18,color: Colors.black),),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left: 8.0,right: 8.0,bottom: 15.0),
-                        child: Text("Please find the details below",style: TextStyle(fontSize: 14,color: Color(0xff889DAC)),),
+                        //child: Text("Please find the details below",style: TextStyle(fontSize: 14,color: Color(0xff889DAC)),),
                       ),
+
                       Container(
                         height: 60.0,
                         decoration: BoxDecoration(
@@ -179,9 +181,9 @@ class _SOSState extends State<SOSScreen>{
                                 crossAxisAlignment: CrossAxisAlignment.start,
 
                                 children: [
-                                  Text("Mobile number",style: TextStyle(fontSize: 10,color: Colors.white),),
-                                  SizedBox(height: 5,),
-                                  Text("+91 9876543456",style: TextStyle(fontSize: 14,color: Colors.white),),
+                                  // Text("Mobile number",style: TextStyle(fontSize: 10,color: Colors.white),),
+                                  // SizedBox(height: 5,),
+                                  // Text("+91 9876543456",style: TextStyle(fontSize: 14,color: Colors.white),),
                                 ],
                               ),
                             )),
@@ -196,9 +198,9 @@ class _SOSState extends State<SOSScreen>{
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text("Sent message at",style: TextStyle(fontSize: 10,color: Colors.white)),
-                                  SizedBox(height: 5,),
-                                  Text("+91 9876543456",style: TextStyle(fontSize: 14,color: Colors.white),),
+                                  // Text("Sent message at",style: TextStyle(fontSize: 10,color: Colors.white)),
+                                  // SizedBox(height: 5,),
+                                  // Text("+91 9876543456",style: TextStyle(fontSize: 14,color: Colors.white),),
                                 ],
                               ),
                             ))
@@ -208,28 +210,7 @@ class _SOSState extends State<SOSScreen>{
                     ],
                   )),
 
-              //for emergency
-              Card(
-                  margin: EdgeInsets.only(left: 20.0,right: 20.0,top: 20.0),
-                  elevation: 6,
-                  child:Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left:8.0,right: 8.0,top:20.0),
-                        child: Text("For Emergency",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18,color: Colors.black)),
-                      ),
 
-                      Padding(
-                          padding: EdgeInsets.all(15.0),
-                          child: AppButton(
-                            onPressed: (){},
-                            text: "Send SOS Now",
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.0)
-                            ),
-                          ))
-                    ],
-                  )),
 
             ],
           )

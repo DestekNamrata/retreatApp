@@ -1,16 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/Screens/Profile/profile_screen.dart';
 import 'package:flutter_app/Widgets/app_button.dart';
 
-import '../Configs/image.dart';
-import '../Configs/theme.dart';
-import 'Profile/profile_screen.dart';
+import '../../Configs/image.dart';
+import '../../Configs/theme.dart';
+import '../sos_screen.dart';
 
-class SOSScreen extends StatefulWidget{
-  _SOSState createState()=>_SOSState();
+class YoursTicketScreen extends StatefulWidget{
+  _YoursTicketScreenState createState()=>_YoursTicketScreenState();
 }
 
-class _SOSState extends State<SOSScreen>{
+class _YoursTicketScreenState extends State<YoursTicketScreen>{
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -138,98 +139,50 @@ class _SOSState extends State<SOSScreen>{
 
       ),
       body: Container(
-          child: Column(
+          child: ListView(
             children: [
               Padding(
                 padding: const EdgeInsets.only(left: 20.0,right: 20.0,top: 20.0),
                 child: Align(
                     alignment: Alignment.topLeft,
-                    child: Text("Save Our Soul (SOS)",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 22,color: Colors.black),)),
+                    child: Text("Your Tickets",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 22,color: Colors.black),)),
               ),
-              //contact us
-              Card(
-                  margin: EdgeInsets.only(left: 20.0,right: 20.0,top: 20.0),
-                  elevation: 6,
-                  child:Column(
-                    children: [
 
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text("Contact Us",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18,color: Colors.black),),
+              Container(
+                width: 265,
+                height: 265,
+                alignment: Alignment.center,
+                child: Stack(
+                  children: [
+                    Center(
+                      child: Image.asset(
+                        Images.Ticket22Sept,
+                        width: 260.0,
+                        height: 260.0,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 8.0,right: 8.0,bottom: 15.0),
-                        child: Text("Please find the details below",style: TextStyle(fontSize: 14,color: Color(0xff889DAC)),),
+                    ),
+                  ],
+                ),
+              ),
+
+              // For Ticket 25
+              Container(
+                width: 265,
+                height: 265,
+                alignment: Alignment.center,
+                child: Stack(
+                  children: [
+                    Center(
+                      child: Image.asset(
+                        Images.Ticket25Sept,
+                        width: 260.0,
+                        height: 260.0,
                       ),
-                      Container(
-                        height: 60.0,
-                        decoration: BoxDecoration(
-                          color: Color(0xff8018BB),
+                    ),
+                  ],
+                ),
+              ),
 
-                          borderRadius: BorderRadius.only(
-                              bottomRight: Radius.circular(5), bottomLeft: Radius.circular(5)),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Expanded(child: Padding(
-                              padding: const EdgeInsets.only(left: 18.0),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-
-                                children: [
-                                  Text("Mobile number",style: TextStyle(fontSize: 10,color: Colors.white),),
-                                  SizedBox(height: 5,),
-                                  Text("+91 9876543456",style: TextStyle(fontSize: 14,color: Colors.white),),
-                                ],
-                              ),
-                            )),
-                            Text("|",style: TextStyle(fontSize: 14,color: Colors.white,fontWeight: FontWeight.bold),),
-                            // VerticalDivider(
-                            //   color: Colors.black,
-                            //   thickness: 2,
-                            // ),
-                            Expanded(child:Padding(
-                              padding: const EdgeInsets.only(left: 18.0),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text("Sent message at",style: TextStyle(fontSize: 10,color: Colors.white)),
-                                  SizedBox(height: 5,),
-                                  Text("+91 9876543456",style: TextStyle(fontSize: 14,color: Colors.white),),
-                                ],
-                              ),
-                            ))
-                          ],
-                        ),
-                      )
-                    ],
-                  )),
-
-              //for emergency
-              Card(
-                  margin: EdgeInsets.only(left: 20.0,right: 20.0,top: 20.0),
-                  elevation: 6,
-                  child:Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left:8.0,right: 8.0,top:20.0),
-                        child: Text("For Emergency",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18,color: Colors.black)),
-                      ),
-
-                      Padding(
-                          padding: EdgeInsets.all(15.0),
-                          child: AppButton(
-                            onPressed: (){},
-                            text: "Send SOS Now",
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.0)
-                            ),
-                          ))
-                    ],
-                  )),
 
             ],
           )

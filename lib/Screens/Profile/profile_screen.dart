@@ -7,6 +7,7 @@ import 'package:flutter_app/Screens/GenerateQR/scanQrCode.dart';
 import 'package:flutter_app/Screens/Profile/AttendanceHistory/attendance_history.dart';
 import 'package:flutter_app/Screens/Profile/privacy_policy.dart';
 import 'package:flutter_app/Screens/Profile/ticket_screen.dart';
+import 'package:flutter_app/Screens/Profile/yours_ticket_screen.dart';
 import 'package:flutter_app/Screens/sign_in_screen.dart';
 import 'package:flutter_app/Utils/application.dart';
 import 'package:flutter_app/Utils/translate.dart';
@@ -18,6 +19,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 import '../../Configs/image.dart';
+import '../mainNavigation.dart';
+import '../sos_screen.dart';
+import 'feedback.dart';
 
 class ProfileScreen extends StatefulWidget {
   _ProfileState createState() => _ProfileState();
@@ -45,7 +49,8 @@ class _ProfileState extends State<ProfileScreen> {
         actions: <Widget>[
           new IconButton(
             icon: new Icon(Icons.close,color: Colors.black,),
-            onPressed: () => Navigator.of(context).pop(null),
+            onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context)=> MainNavigation())),
+            
           ),
         ],
       ),
@@ -217,32 +222,40 @@ class _ProfileState extends State<ProfileScreen> {
                       title: Text(
                           Translate.of(context)!.translate('statistics')),
                     ),
-                    ListTile(
-                      title: Text(Translate.of(context)!.translate('sos')),
-                      leading: Container(
-                        width: 40,
-                        height: 35,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.rectangle,
-                          borderRadius:  BorderRadius.circular(5.0),
-                          color: Color(0xffE2E7EE),
-                          //color: Colors.indigo,
-                          // border: Border.all(color: Colors.black, width: 1)
-                        ),
-                        child: Container(
-                          width: 35,
+                    InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => SOSScreen()));
+                      },
+                      child: ListTile(
+                        title: Text(Translate.of(context)!.translate('sos')),
+                        leading: Container(
+                          width: 40,
                           height: 35,
-                          alignment: Alignment.center,
-                          child: Stack(
-                            children: [
-                              Center(
-                                child: Image.asset(
-                                  Images.SS,
-                                  width: 20.0,
-                                  height: 20.0,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.rectangle,
+                            borderRadius:  BorderRadius.circular(5.0),
+                            color: Color(0xffE2E7EE),
+                            //color: Colors.indigo,
+                            // border: Border.all(color: Colors.black, width: 1)
+                          ),
+                          child: Container(
+                            width: 35,
+                            height: 35,
+                            alignment: Alignment.center,
+                            child: Stack(
+                              children: [
+                                Center(
+                                  child: Image.asset(
+                                    Images.SS,
+                                    width: 20.0,
+                                    height: 20.0,
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -315,33 +328,41 @@ class _ProfileState extends State<ProfileScreen> {
                             ),
                           ),
                         )),
-                    ListTile(
-                      title:
-                      Text(Translate.of(context)!.translate('feedback')),
-                      leading: Container(
-                        width: 40,
-                        height: 35,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.rectangle,
-                          borderRadius:  BorderRadius.circular(5.0),
-                          color: Color(0xffE2E7EE),
-                          //color: Colors.indigo,
-                          // border: Border.all(color: Colors.black, width: 1)
-                        ),
-                        child: Container(
-                          width: 35,
+                    InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => FeedbackScreen()));
+                      },
+                      child: ListTile(
+                        title:
+                        Text(Translate.of(context)!.translate('feedback')),
+                        leading: Container(
+                          width: 40,
                           height: 35,
-                          alignment: Alignment.center,
-                          child: Stack(
-                            children: [
-                              Center(
-                                child: Image.asset(
-                                  Images.Feedback,
-                                  width: 20.0,
-                                  height: 20.0,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.rectangle,
+                            borderRadius:  BorderRadius.circular(5.0),
+                            color: Color(0xffE2E7EE),
+                            //color: Colors.indigo,
+                            // border: Border.all(color: Colors.black, width: 1)
+                          ),
+                          child: Container(
+                            width: 35,
+                            height: 35,
+                            alignment: Alignment.center,
+                            child: Stack(
+                              children: [
+                                Center(
+                                  child: Image.asset(
+                                    Images.Feedback,
+                                    width: 20.0,
+                                    height: 20.0,
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -351,7 +372,7 @@ class _ProfileState extends State<ProfileScreen> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => TicketScreen()));
+                                  builder: (context) => YoursTicketScreen()));
                         },
                         child: ListTile(
                           title: Text(
