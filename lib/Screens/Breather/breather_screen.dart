@@ -39,9 +39,6 @@ class BreatherState extends State<BreatherScreen>{
                 Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>MainNavigation(userType: "0")));
               },
               child:Icon(Icons.arrow_back,size:20.0,color: Colors.black,)),
-        ),
-          // title: Text(Translate.of(context)!.translate("conference"),style: TextStyle(color: Colors.black),),
-          // automaticallyImplyLeading: false,
           actions: [
             Row(
               children: [

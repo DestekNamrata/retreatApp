@@ -1,34 +1,30 @@
 class AgendaRepo {
-  bool? success;
+  dynamic success;
   dynamic data;
 
   AgendaRepo({this.success, this.data});
 
-  AgendaRepo.fromJson(Map<String, dynamic> json) {
-    success = json['success'];
-    if (json['data'] != null) {
-      data = <AgendaModel>[];
-      json['data'].forEach((v) {
-        data!.add(new AgendaModel.fromJson(v));
-      });
+  factory AgendaRepo.fromJson(Map<dynamic, dynamic> json) {
+    try {
+      return AgendaRepo(
+        success: json['success'],
+        data: json['data'],
+      );
+    } catch (error) {
+      return AgendaRepo(
+        success: false,
+        data: null,
+      );
     }
   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['success'] = this.success;
-    if (this.data != null) {
-      data['data'] = this.data!.map((v) => v.toJson()).toList();
-    }
-    return data;
-  }
 }
 
 class AgendaModel {
   int? id;
-  Null? roomId;
-  Null? referenceId;
-  Null? eventTypeId;
+  dynamic roomId;
+  dynamic referenceId;
+  dynamic eventTypeId;
   String? activity;
   String? description;
   String? eventDate;

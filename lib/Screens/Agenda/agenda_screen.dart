@@ -154,14 +154,14 @@ class _AgendaState extends State<AgendaScreen>{
             //23Sept
             InkWell(
               onTap: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context)=>DayWiseScreen(title: "Day 1",)));
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>DayWiseScreen(title: "Day 1",attendanceDay:"1")));
               },
               child:Image.asset(Images.day1),
             ),
              //24Sept
             InkWell(
               onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>DayWiseScreen(title: "Day 2",)));
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>DayWiseScreen(title: "Day 2",attendanceDay:"2")));
 
               },
               child:Image.asset(Images.day2),
@@ -169,7 +169,7 @@ class _AgendaState extends State<AgendaScreen>{
             //25Sept
             InkWell(
               onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>DayWiseScreen(title: "Day 3",)));
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>DayWiseScreen(title: "Day 3",attendanceDay:"3")));
 
               },
               child:Image.asset(Images.day3),

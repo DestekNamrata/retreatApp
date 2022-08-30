@@ -469,15 +469,18 @@ class _ProfileState extends State<ProfileScreen> {
                               //                         ),
                               //                         ),
                               //                     ),
-                              child: AppButton(
-                                onPressed: () async{
-                                  await FirebaseAuth.instance.signOut();
-                                  _loginBloc!.add(OnLogout());
-                                },
-                                shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50))),
-                                text: 'Logout',
-                                loading: logout is LogoutLoading,
-                                disableTouchWhenLoading: true,
+                              child: Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: AppButton(
+                                  onPressed: () async{
+                                    await FirebaseAuth.instance.signOut();
+                                    _loginBloc!.add(OnLogout());
+                                  },
+                                  shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50))),
+                                  text: 'Logout',
+                                  loading: logout is LogoutLoading,
+                                  disableTouchWhenLoading: true,
+                                ),
                               )
                             //                   child: AppButton(
                             //                       onPressed: () async{

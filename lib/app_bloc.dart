@@ -1,3 +1,4 @@
+import 'package:flutter_app/Bloc/agenda/agenda_bloc.dart';
 import 'package:flutter_app/Bloc/attendanceHistory/attendanceHistory_bloc.dart';
 import 'package:flutter_app/Bloc/authentication/authentication_bloc.dart';
 import 'package:flutter_app/Bloc/login/login_bloc.dart';
@@ -15,6 +16,7 @@ class AppBloc {
   static final loginBloc = LoginBloc(userRepository: userRepository);
   static final scanAndGetDataBloc = ScanAndGetDataBloc(userRepository: userRepository);
   static final attendenceHistoryBloc = AttendenceHistoryBloc(attendenceHistoryRepo: userRepository);
+  static final agendaDataBloc = AgendaBloc(agendaRepo: userRepository);
   // //customer
   // static final userRegBloc = UserRegBloc(userRepository: userRepository);
   // static final homeBloc = HomeBloc(homeRepository: userRepository);
@@ -49,7 +51,9 @@ class AppBloc {
     BlocProvider<ScanAndGetDataBloc>(
       create: (context) => scanAndGetDataBloc,
     ),
-
+    BlocProvider<AgendaBloc>(
+      create: (context) => agendaDataBloc,
+    ),
 
   ];
   //
@@ -61,6 +65,7 @@ class AppBloc {
     loginBloc.close();
     scanAndGetDataBloc.close();
     attendenceHistoryBloc.close();
+    agendaDataBloc.close();
     // userRegBloc.close();
     // homeBloc.close();
     // cartBloc.close();

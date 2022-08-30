@@ -1,16 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:expand_widget/expand_widget.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_app/Configs/image.dart';
 import 'package:flutter_app/Configs/theme.dart';
 import 'package:flutter_app/Screens/Profile/profile_screen.dart';
-import 'package:flutter_app/Widgets/app_button.dart';
 import '../sos_screen.dart';
-import 'package:shimmer/shimmer.dart';
 import '../../Utils/translate.dart';
 import 'breather_screen.dart';
-import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 
 
 class BreatherDetail extends StatefulWidget{

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter_app/Models/model_agenda.dart';
 import 'package:flutter_app/Models/model_attendance_det.dart';
 import 'package:flutter_app/Models/model_login.dart';
 import 'package:flutter_app/Utils/application.dart';
@@ -46,7 +47,7 @@ class Api {
       Uri.parse(GET_ATTENDANCE),
       body: params,
       headers: {
-        "Content-Type": "application/json",
+        // "Content-Type": "application/json",
         "Authorization":"Bearer "+ UtilPreferences.getString("token").toString(),
       },
 
@@ -63,7 +64,7 @@ class Api {
       Uri.parse(GET_ATTENDANCE_HISTORY),
       body: params,
       headers: {
-        "Authorization": "Bearer"+
+        "Authorization": "Bearer "+
         UtilPreferences.getString("token").toString(),
       },
       //
@@ -71,7 +72,7 @@ class Api {
     // if (response.statusCode == 200) {
     final responseJson = json.decode(response.body);
     print(responseJson);
-    return ResultLogin.fromJson(responseJson);
+    return AttendanceDateResp.fromJson(responseJson);
     // }
   }
 
@@ -81,15 +82,14 @@ class Api {
       Uri.parse(GET_AGENDA_DETAIL),
       body: params,
       headers: {
-        "Authorization":
-        UtilPreferences.getString("token").toString(),
+        "Authorization":"Bearer "+UtilPreferences.getString("token").toString(),
       },
       //
     );
     // if (response.statusCode == 200) {
     final responseJson = json.decode(response.body);
     print(responseJson);
-    return ResultLogin.fromJson(responseJson);
+    return AgendaRepo.fromJson(responseJson);
     // }
   }
 
