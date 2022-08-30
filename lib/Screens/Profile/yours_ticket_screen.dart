@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/Screens/Profile/pdf_viewer_page.dart';
 import 'package:flutter_app/Screens/Profile/profile_screen.dart';
 import 'package:flutter_app/Widgets/app_button.dart';
 
@@ -7,21 +8,57 @@ import '../../Configs/image.dart';
 import '../../Configs/theme.dart';
 import '../sos_screen.dart';
 
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
+import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:http/http.dart' as http;
+
+
 class YoursTicketScreen extends StatefulWidget{
   _YoursTicketScreenState createState()=>_YoursTicketScreenState();
 }
 
 class _YoursTicketScreenState extends State<YoursTicketScreen>{
   @override
+
+  Future<File> loadPdfFromNetwork(String url) async {
+    final response = await http.get(Uri.parse(url));
+    final bytes = response.bodyBytes;
+    return _storeFile(url, bytes);
+  }
+
+  Future<File> _storeFile(String url, List<int> bytes) async {
+    final filename = basename(url);
+    final dir = await getApplicationDocumentsDirectory();
+    final file = File('${dir.path}/$filename');
+    await file.writeAsBytes(bytes, flush: true);
+    if (kDebugMode) {
+      print('$file');
+    }
+    return file;
+  }
+
+  void openPdf(BuildContext context, File file, String url) =>
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => PdfViewerPage(
+            file: file,
+            url: url,
+          ),
+        ),
+      );
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      backgroundColor: AppTheme.backgroundColor,
       appBar: AppBar(
         // automaticallyImplyLeading: false,
         // toolbarHeight: 10.0,
-        backgroundColor: AppTheme.backgroundColor,
-        elevation: 5,
+        backgroundColor: Colors.white,
+        elevation: 0,
         leading: InkWell(
             onTap: (){
               Navigator.push(
@@ -45,8 +82,8 @@ class _YoursTicketScreenState extends State<YoursTicketScreen>{
                         // border: Border.all(color: Colors.black),
                           borderRadius:
                           BorderRadius.circular(5.0),
-                          // color: Theme.of(context)
-                          //     .dividerColor
+                          color: Theme.of(context)
+                              .dividerColor
                       ),
                       child: Padding(
                           padding: EdgeInsets.all(3.0),
@@ -148,20 +185,28 @@ class _YoursTicketScreenState extends State<YoursTicketScreen>{
                     child: Text("Your Tickets",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 22,color: Colors.black),)),
               ),
 
-              Container(
-                width: 265,
-                height: 265,
-                alignment: Alignment.center,
-                child: Stack(
-                  children: [
-                    Center(
-                      child: Image.asset(
-                        Images.Ticket22Sept,
-                        width: 260.0,
-                        height: 260.0,
+              InkWell(
+                onTap: () async {
+                  const url =
+                      "http://www.africau.edu/images/default/sample.pdf";
+                  final file = await loadPdfFromNetwork(url);
+                  openPdf(context, file, url);
+                },
+                child: Container(
+                  width: 265,
+                  height: 265,
+                  alignment: Alignment.center,
+                  child: Stack(
+                    children: [
+                      Center(
+                        child: Image.asset(
+                          Images.Ticket22Sept,
+                          width: 260.0,
+                          height: 260.0,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
 

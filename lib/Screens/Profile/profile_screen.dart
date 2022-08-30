@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/Bloc/login/login_bloc.dart';
 import 'package:flutter_app/Bloc/login/login_event.dart';
 import 'package:flutter_app/Bloc/login/login_state.dart';
+import 'package:flutter_app/Configs/theme.dart';
 import 'package:flutter_app/Screens/GenerateQR/scanQrCode.dart';
 import 'package:flutter_app/Screens/Profile/AttendanceHistory/attendance_history.dart';
 import 'package:flutter_app/Screens/Profile/privacy_policy.dart';
@@ -17,6 +18,7 @@ import 'package:shimmer/shimmer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_initicon/flutter_initicon.dart';
 
 import '../../Configs/image.dart';
 import '../mainNavigation.dart';
@@ -31,12 +33,20 @@ class _ProfileState extends State<ProfileScreen> {
   LoginBloc? _loginBloc;
 
 
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     _loginBloc = BlocProvider.of<LoginBloc>(context);
   }
+
+  // UserName(){
+  //   if(Application.user!=null){
+  //     userName = Application.user!.name.toString();
+  //     nameparts = userName!.split(" ");
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -73,75 +83,81 @@ class _ProfileState extends State<ProfileScreen> {
                     //   imageUrl: 'https://via.placeholder.com/200x150',
                     //
                     // ),
-                    CachedNetworkImage(
-                      filterQuality: FilterQuality.medium,
-                      // imageUrl: Api.PHOTO_URL + widget.users.avatar,
-                      // imageUrl:"https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80",
-                      imageUrl:
-                      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80",
-                      placeholder: (context, url) {
-                        return Shimmer.fromColors(
-                          baseColor: Theme.of(context).hoverColor,
-                          highlightColor: Theme.of(context).highlightColor,
-                          enabled: true,
-                          child: Container(
-                            height: 120,
-                            width: 120,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(60),
-                            ),
-                          ),
-                        );
-                      },
-                      imageBuilder: (context, imageProvider) {
-                        return Container(
-                          height: 120,
-                          width: 120,
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: imageProvider,
-                              fit: BoxFit.cover,
-                            ),
-                            borderRadius: BorderRadius.circular(60),
-                          ),
-                        );
-                      },
-                      errorWidget: (context, url, error) {
-                        return Shimmer.fromColors(
-                          baseColor: Theme.of(context).hoverColor,
-                          highlightColor: Theme.of(context).highlightColor,
-                          enabled: true,
-                          child: Container(
-                            height: 120,
-                            width: 120,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(60),
-                            ),
-                            child: Icon(Icons.error),
-                          ),
-                        );
-                      },
-                    ),
+                    // CachedNetworkImage(
+                    //   filterQuality: FilterQuality.medium,
+                    //   // imageUrl: Api.PHOTO_URL + widget.users.avatar,
+                    //   // imageUrl:"https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80",
+                    //   imageUrl:
+                    //   "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80",
+                    //   placeholder: (context, url) {
+                    //     return Shimmer.fromColors(
+                    //       baseColor: Theme.of(context).hoverColor,
+                    //       highlightColor: Theme.of(context).highlightColor,
+                    //       enabled: true,
+                    //       child: Container(
+                    //         height: 120,
+                    //         width: 120,
+                    //         decoration: BoxDecoration(
+                    //           color: Colors.white,
+                    //           borderRadius: BorderRadius.circular(60),
+                    //         ),
+                    //       ),
+                    //     );
+                    //   },
+                    //   imageBuilder: (context, imageProvider) {
+                    //     return Container(
+                    //       height: 120,
+                    //       width: 120,
+                    //       decoration: BoxDecoration(
+                    //         image: DecorationImage(
+                    //           image: imageProvider,
+                    //           fit: BoxFit.cover,
+                    //         ),
+                    //         borderRadius: BorderRadius.circular(60),
+                    //       ),
+                    //     );
+                    //   },
+                    //   errorWidget: (context, url, error) {
+                    //     return Shimmer.fromColors(
+                    //       baseColor: Theme.of(context).hoverColor,
+                    //       highlightColor: Theme.of(context).highlightColor,
+                    //       enabled: true,
+                    //       child: Container(
+                    //         height: 120,
+                    //         width: 120,
+                    //         decoration: BoxDecoration(
+                    //           color: Colors.white,
+                    //           borderRadius: BorderRadius.circular(60),
+                    //         ),
+                    //         child: Icon(Icons.error),
+                    //       ),
+                    //     );
+                    //   },
+                    // ),
+
+                   Initicon(
+                     text: Application.user!.name.toString(),
+                     backgroundColor: AppTheme.appColor,
+                     size: 130,
+                   ),
                     SizedBox(
                       height: 8.0,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text("Vaibhav Thakare",
+                        Text(Application.user!.name.toString(),
                           style: TextStyle(fontSize: 16,color: Color(0xFFEA357C),fontWeight:FontWeight.bold),),
-                        SizedBox(width: 10,),
-                        Image.asset(
-                          Images.EditProfile,
-                          width: 20.0,
-                          height: 20.0,
-                        ),
+                        // SizedBox(width: 10,),
+                        // Image.asset(
+                        //   Images.EditProfile,
+                        //   width: 20.0,
+                        //   height: 20.0,
+                        // ),
                       ],
                     ),
                     SizedBox(height: 10,),
-                    Text('+91 9876543210'),
+                    Text(Application.user!.mobile.toString()),
                   ],
                 ),
               ),
