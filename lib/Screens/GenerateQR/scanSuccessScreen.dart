@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/Screens/GenerateQR/scanQrCode.dart';
+import 'package:flutter_app/Widgets/app_button.dart';
 
 class ScanSuccessScreen extends StatefulWidget{
   String? msg;
@@ -28,6 +30,19 @@ class _ScanSuccessState extends State<ScanSuccessScreen>{
                 ),
                 textAlign: TextAlign.center,
               ),
+              SizedBox(height: 20.0,),
+              //continue
+              Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: AppButton(
+                  onPressed: () async{
+                   Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>ScanQR()));
+                  },
+                  shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
+                  text: 'Continue to Scan',
+                  disableTouchWhenLoading: true,
+                ),
+              )
             ],
           ),
         ),

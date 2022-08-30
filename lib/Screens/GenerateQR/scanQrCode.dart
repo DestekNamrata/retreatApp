@@ -39,6 +39,8 @@ class _ScanQRState extends State<ScanQR> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    dropdownValue=null;
+
     scanAndGetDataBloc = BlocProvider.of<ScanAndGetDataBloc>(context);
   }
 

@@ -5,6 +5,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_app/Configs/image.dart';
 import 'package:flutter_app/Configs/theme.dart';
 import 'package:flutter_app/Screens/Profile/profile_screen.dart';
+import 'package:flutter_app/Screens/mainNavigation.dart';
 import 'package:flutter_app/Widgets/app_button.dart';
 import '../sos_screen.dart';
 import 'package:shimmer/shimmer.dart';
@@ -31,7 +32,11 @@ class BreatherState extends State<BreatherScreen>{
           // toolbarHeight: 10.0,
           backgroundColor: Colors.white,
           elevation: 0,
-          leading: Icon(Icons.arrow_back_rounded,color: Colors.black,),
+          leading:InkWell(
+              onTap: (){
+                Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>MainNavigation(userType: "0")));
+              },
+              child:Icon(Icons.arrow_back,size:20.0,color: Colors.black,)),
           // title: Text(Translate.of(context)!.translate("conference"),style: TextStyle(color: Colors.black),),
           // automaticallyImplyLeading: false,
           actions: [
@@ -137,8 +142,6 @@ class BreatherState extends State<BreatherScreen>{
               ],
             )
           ],
-
-
         ),
         body: Scaffold(
           appBar: AppBar(

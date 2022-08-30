@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/Configs/image.dart';
 import 'package:flutter_app/Configs/theme.dart';
+import 'package:flutter_app/Screens/Conference/conference_screen.dart';
+import 'package:flutter_app/Screens/Infobeats/infobeats_screen.dart';
 import 'package:flutter_app/Screens/Profile/profile_screen.dart';
 import 'package:flutter_app/Screens/mainNavigation.dart';
 import 'package:flutter_app/Screens/sos_screen.dart';
@@ -36,10 +38,10 @@ class _GenerateQRState extends State<GenerateQR> {
     // TODO: implement initState
     super.initState();
     scanAndGetDataBloc = BlocProvider.of<ScanAndGetDataBloc>(context);
-    // const fiveSeconds = const Duration(seconds: 5);
-    // // _fetchData() is your function to fetch data
-    //
-    // timer=Timer.periodic(fiveSeconds, (Timer t) => setBlocData());
+    const fiveSeconds = const Duration(seconds: 10);
+    // _fetchData() is your function to fetch data
+
+    timer=Timer.periodic(fiveSeconds, (Timer t) => setBlocData());
   }
 
   @override
@@ -69,32 +71,29 @@ class _GenerateQRState extends State<GenerateQR> {
       appBar: AppBar(
         // toolbarHeight: 10.0,
         backgroundColor: Colors.white,
-        // elevation: 0,
-        title:
-        InkWell(
+        elevation: 0,
+        leading:InkWell(
             onTap: (){
               Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>MainNavigation(userType: "0")));
             },
             child:Icon(Icons.arrow_back,size:20.0,color: Colors.black,)),
-        // automaticallyImplyLeading: false,
+
         actions: [
           Row(
             children: [
               InkWell(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => SOSScreen()));
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>SOSScreen()));
                   },
-                  child: Container(
+                  child:Container(
                       width: 40.0,
                       decoration: BoxDecoration(
                         // border: Border.all(color: Colors.black),
                           borderRadius:
                           BorderRadius.circular(5.0),
                           color: Theme.of(context)
-                              .dividerColor),
+                              .dividerColor
+                      ),
                       child: Padding(
                           padding: EdgeInsets.all(3.0),
                           child: Text(
@@ -104,12 +103,17 @@ class _GenerateQRState extends State<GenerateQR> {
                                 color: AppTheme.appColor,
                                 fontWeight: FontWeight.w500,
                                 fontSize: 14.0),
-                          )))),
+                          )))
+              ),
+
+
+
               SizedBox(
-                width: 8.0,
+                width: 20.0,
               ),
               InkWell(
-                  onTap: () {},
+                  onTap: () {
+                  },
                   child: Stack(
                     children: [
                       // IconButton(
@@ -137,21 +141,24 @@ class _GenerateQRState extends State<GenerateQR> {
                             minHeight: 4,
                           ),
                           child: Text(
-                            "1",
+                            "0",
                             style: new TextStyle(
                                 color: Colors.white,
-                                fontSize: 9,
-                                fontWeight: FontWeight.w500,
+                                fontSize: 10,
+                                fontWeight: FontWeight.w400,
                                 fontFamily: 'Inter-Regular'),
                             textAlign: TextAlign.center,
                           ),
                         ),
                       ),
                     ],
-                  )),
-              SizedBox(
-                width: 8.0,
+                  )
               ),
+
+              SizedBox(
+                width: 20.0,
+              ),
+
               //profile
               InkWell(
                   onTap: () {
@@ -169,6 +176,8 @@ class _GenerateQRState extends State<GenerateQR> {
                       height: 25.0,
                     ),
                   )),
+              SizedBox(width: 15,)
+
             ],
           )
         ],
@@ -179,6 +188,17 @@ class _GenerateQRState extends State<GenerateQR> {
 
           if (state is GetAttendanceDataSuccess)
           {
+            if(state.data!.checkOut==0){ //0=checked in and 1=checkout
+          if(widget.attendanceType=="2"){ //unconference
+          Navigator.push(context, MaterialPageRoute(builder: (context)=>ConferenceScreen()));
+          }else if(widget.attendanceType=="3"){//inforte
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>InfobeatsScreen()));
+          }
+          }else{
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>MainNavigation(userType: Application.user!.role.toString())));
+
+
+            }
 
           }
 
@@ -187,15 +207,44 @@ class _GenerateQRState extends State<GenerateQR> {
           Container(
             padding: EdgeInsets.all(20),
             child:
-            Column(
+           SingleChildScrollView(child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(widget.title.toString(),style: TextStyle(fontSize: 25,fontFamily: 'Inter-Bold',fontWeight: FontWeight.w600),),
                 SizedBox(height: 20.0,),
-                Text("Scan QR Code",textAlign:TextAlign.center,style: TextStyle(fontSize: 20),),
-                SizedBox(height: 20),
-                QrImage(data: qrData,size:300.0),
+                //venue
+                Row(
+                  children: [
+                    Text("Venue: ",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500,fontFamily: 'Inter-SemiBold',color: AppTheme.textColor),),
+                    Text("Deewan-E-Khas",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w400,fontFamily: 'Inter-Regular',color: AppTheme.textColor),),
+                  ],
+                ),
+                //spoc
+                Row(
+                  children: [
+                    Text("SPOC: ",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500,fontFamily: 'Inter-SemiBold',color: AppTheme.textColor),),
+                    Text("Tushar Matewar",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w400,fontFamily: 'Inter-Regular',color: AppTheme.textColor),),
+                  ],
+                ),
+                //contact
+                Row(
+                  children: [
+                    Text("Contact: ",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500,fontFamily: 'Inter-SemiBold',color: AppTheme.textColor),),
+                    Text("9876543210",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w400,fontFamily: 'Inter-Regular',color: AppTheme.textColor),),
+                  ],
+                ),
+                SizedBox(height: 70),
+                Align(
+                  alignment: Alignment.center,
+                    child:QrImage(data: qrData,size:300.0)),
+                SizedBox(height: 10),
+
+          Align(
+            alignment: Alignment.center,
+            child:Text("Scan to enter",
+              style: TextStyle(fontSize: 16,fontWeight: FontWeight.w600,fontFamily: 'Inter-SemiBold',color: AppTheme.textColor),)),
+
                 // SizedBox(height: 20),
                 // Text("Generate QR Code",style: TextStyle(fontSize: 20),),
                 //
@@ -232,7 +281,7 @@ class _GenerateQRState extends State<GenerateQR> {
               ],
             ),
           )
-        );
+        ));
       }),
 
     );

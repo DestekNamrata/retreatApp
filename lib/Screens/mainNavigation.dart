@@ -81,6 +81,7 @@ class _MainNavigationState extends State<MainNavigation> {
           Images.inforte1,
           width: 20.0,
           height: 20.0,
+          color: AppTheme.textColor,
         ),
         activeIcon: Image.asset(
           Images.inforte1,
@@ -284,11 +285,14 @@ class _MainNavigationState extends State<MainNavigation> {
           children: <Widget>[
             HomeScreen(),
             AgendaScreen(),
-            ConferenceScreen(),
-            // GenerateQR(),
-            // ScanQR(),
-            InfobeatsScreen(),
+            GenerateQR(title: "UnConferrence", attendanceType: "2", roomNo: ""),//unconference
+            GenerateQR(title: "Inforte", attendanceType: "3", roomNo: ""),//inforte
             BreatherScreen()
+            // ConferenceScreen(),
+            // // GenerateQR(),
+            // // ScanQR(),
+            // InfobeatsScreen(),
+            // BreatherScreen()
 
 
           ],
