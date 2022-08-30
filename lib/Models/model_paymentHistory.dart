@@ -4,24 +4,39 @@ class AttendanceHistoryRepo {
 
   AttendanceHistoryRepo({this.success, this.data});
 
-  AttendanceHistoryRepo.fromJson(Map<String, dynamic> json) {
-    success = json['success'];
-    if (json['data'] != null) {
-      data = <AttendanceHistoryModel>[];
-      json['data'].forEach((v) {
-        data!.add(new AttendanceHistoryModel.fromJson(v));
-      });
+
+  factory AttendanceHistoryRepo.fromJson(Map<dynamic, dynamic> json) {
+    try {
+      return AttendanceHistoryRepo(
+        success: json['success'],
+        data: json['data'],
+      );
+    } catch (error) {
+      return AttendanceHistoryRepo(
+        success: false,
+        data: null,
+      );
     }
   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['success'] = this.success;
-    if (this.data != null) {
-      data['data'] = this.data!.map((v) => v.toJson()).toList();
-    }
-    return data;
-  }
+  // AttendanceHistoryRepo.fromJson(Map<String, dynamic> json) {
+  //   success = json['success'];
+  //   if (json['data'] != null) {
+  //     data = <AttendanceHistoryModel>[];
+  //     json['data'].forEach((v) {
+  //       data!.add(new AttendanceHistoryModel.fromJson(v));
+  //     });
+  //   }
+  // }
+  //
+  // Map<String, dynamic> toJson() {
+  //   final Map<String, dynamic> data = new Map<String, dynamic>();
+  //   data['success'] = this.success;
+  //   if (this.data != null) {
+  //     data['data'] = this.data!.map((v) => v.toJson()).toList();
+  //   }
+  //   return data;
+  // }
 }
 
 class AttendanceHistoryModel {
@@ -33,6 +48,9 @@ class AttendanceHistoryModel {
   int? checkOut;
   String? createdAt;
   String? updatedAt;
+  String? checkinTime;
+  String? checkoutTime;
+  String? duration;
 
   AttendanceHistoryModel(
       {this.id,
@@ -42,7 +60,10 @@ class AttendanceHistoryModel {
         this.checkIn,
         this.checkOut,
         this.createdAt,
-        this.updatedAt});
+        this.updatedAt,
+        this.checkinTime,
+        this.checkoutTime,
+        this.duration});
 
   AttendanceHistoryModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -53,6 +74,9 @@ class AttendanceHistoryModel {
     checkOut = json['check_out'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
+    checkinTime = json['checkin_time'];
+    checkoutTime = json['checkout_time'];
+    duration = json['duration'];
   }
 
   Map<String, dynamic> toJson() {
@@ -65,6 +89,9 @@ class AttendanceHistoryModel {
     data['check_out'] = this.checkOut;
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
+    data['checkin_time'] = this.checkinTime;
+    data['checkout_time'] = this.checkoutTime;
+    data['duration'] = this.duration;
     return data;
   }
 }
