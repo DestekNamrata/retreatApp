@@ -403,7 +403,7 @@ class _ProfileState extends State<ProfileScreen> {
                         )),
 
                     //scan qr code
-                    // if (Application.user!.role == "1") //0 for regular 1=scanner
+                    if (Application.user!.role == 1) //0 for regular 1=scanner
                     InkWell(
                         onTap: () {
                           Navigator.push(

@@ -39,7 +39,6 @@ class ScanAndGetDataBloc extends Bloc<ScanAndGetDataEvent, ScanAndGetDataState> 
          Uri.parse(Api.SCAN_QR),
          body:params,
          headers: {
-           "Content-Type": "application/json",
            "Authorization":"Bearer "+UtilPreferences.getString("token").toString(),
          },
        );
@@ -60,7 +59,7 @@ class ScanAndGetDataBloc extends Bloc<ScanAndGetDataEvent, ScanAndGetDataState> 
 
     //for attendance type
     if(event is OnGetAttendanceData){
-      yield ScanDataLoading();
+      yield GetScanDataLoading();
 
       final AttendanceDateResp result = await userRepository!.getAttendanceData(
           attendanceType: event.attendanceType,
@@ -68,12 +67,15 @@ class ScanAndGetDataBloc extends Bloc<ScanAndGetDataEvent, ScanAndGetDataState> 
       );
       if (result.success==true) {
         ///Login API success
-        final Data data = Data.fromJson(result.data);
-        try {
-          yield GetAttendanceDataSuccess(data: data);
-        } catch (error) {
-          print(error);
+        if(result.data!=""){
+          final Data data = Data.fromJson(result.data);
+          try {
+            yield GetAttendanceDataSuccess(data: data);
+          } catch (error) {
+            print(error);
+          }
         }
+
       }
     }
   }

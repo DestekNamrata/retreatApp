@@ -169,7 +169,8 @@ class _SOSState extends State<SOSScreen>{
                           borderRadius: BorderRadius.only(
                               bottomRight: Radius.circular(5), bottomLeft: Radius.circular(5)),
                         ),
-                        child: Row(
+                        child:
+                        Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Expanded(child: Padding(
@@ -185,11 +186,15 @@ class _SOSState extends State<SOSScreen>{
                                 ],
                               ),
                             )),
-                            Text("|",style: TextStyle(fontSize: 14,color: Colors.white,fontWeight: FontWeight.bold),),
-                            // VerticalDivider(
-                            //   color: Colors.black,
-                            //   thickness: 2,
-                            // ),
+                            // Text("|",style: TextStyle(fontSize: 14,color: Colors.white,fontWeight: FontWeight.bold),),
+                            Container(
+                              margin: EdgeInsets.only(top: 10,bottom: 10.0),
+                              child: VerticalDivider(
+
+                                color: Colors.white,
+                                thickness: 1,
+                              ),
+                            ),
                             Expanded(child:Padding(
                               padding: const EdgeInsets.only(left: 18.0),
                               child: Column(

@@ -27,6 +27,8 @@ class _ScanSuccessState extends State<ScanSuccessScreen>{
                 widget.msg!,
                 style: TextStyle(
                   fontSize: 20.0,
+                  fontWeight: FontWeight.w600,
+                  fontFamily: 'Inter-Bold'
                 ),
                 textAlign: TextAlign.center,
               ),

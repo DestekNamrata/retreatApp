@@ -9,6 +9,7 @@ abstract class ScanAndGetDataState {}
 class InitialScanState extends ScanAndGetDataState {}
 
 class ScanDataLoading extends ScanAndGetDataState {}
+class GetScanDataLoading extends ScanAndGetDataState {}
 
 
 class ScanQrCodeSuccess extends ScanAndGetDataState {

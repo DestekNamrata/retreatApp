@@ -40,8 +40,7 @@ class _GenerateQRState extends State<GenerateQR> {
     scanAndGetDataBloc = BlocProvider.of<ScanAndGetDataBloc>(context);
     const fiveSeconds = const Duration(seconds: 10);
     // _fetchData() is your function to fetch data
-
-    timer=Timer.periodic(fiveSeconds, (Timer t) => setBlocData());
+  setBlocData(fiveSeconds);
   }
 
   @override
@@ -52,12 +51,16 @@ class _GenerateQRState extends State<GenerateQR> {
 
   }
 
-  void setBlocData() async {
+  void setBlocData(Duration fiveSeconds) async {
     isconnectedToInternet = await ConnectivityCheck.checkInternetConnectivity();
     if (isconnectedToInternet == true) {
-      scanAndGetDataBloc!.add(
-          OnGetAttendanceData(attendanceType: widget.attendanceType.toString(),
-              room_no: widget.roomNo.toString()));
+      timer=Timer.periodic(fiveSeconds, (Timer t) {
+        scanAndGetDataBloc!.add(
+            OnGetAttendanceData(attendanceType: widget.attendanceType.toString(),
+                room_no: widget.roomNo.toString()));
+      });
+
+
     } else {
       CustomDialogs.showDialogCustom(
           "Internet", "Please check your Internet Connection!", context);

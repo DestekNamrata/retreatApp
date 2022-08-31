@@ -81,7 +81,7 @@ class _MainNavigationState extends State<MainNavigation> {
           Images.inforte1,
           width: 20.0,
           height: 20.0,
-          color: AppTheme.textColor,
+          color: Theme.of(context).unselectedWidgetColor,
         ),
         activeIcon: Image.asset(
           Images.inforte1,
