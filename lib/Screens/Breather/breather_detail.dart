@@ -16,6 +16,10 @@ import 'breather_screen.dart';
 
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shimmer/shimmer.dart';
+import 'package:flutter_html/flutter_html.dart';
+
+
 class BreatherDetail extends StatefulWidget{
   String? eventType,roomNo;
   BreatherDetail({Key? key, @required this.eventType,@required this.roomNo});
@@ -58,6 +62,233 @@ class BreatherDetailState extends State<BreatherDetail>{
   }
   final testData = ["Example1", "Example2", "Example3", "Example100"];
 
+  Widget getAgendaList(List<UnConfAgendaData> unconfAgendaList, int index){
+    if (unconfAgendaList.length <= 0) {
+
+      return ListView.builder(
+        padding: EdgeInsets.all(0),
+        shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: EdgeInsets.only(bottom: 15),
+            child: Shimmer.fromColors(
+              child: Row(
+                children: <Widget>[
+                  Container(
+                    width: 80,
+                    height: 80,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      color: Colors.white,
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                      left: 10,
+                      right: 10,
+                      top: 5,
+                      bottom: 5,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Container(
+                          height: 10,
+                          width: 180,
+                          color: Colors.white,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: 5),
+                        ),
+                        Container(
+                          height: 10,
+                          width: 150,
+                          color: Colors.white,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              baseColor: Theme.of(context).hoverColor,
+              highlightColor: Theme.of(context).highlightColor,
+            ),
+          );
+        },
+        itemCount: 6,
+      );
+    }
+   return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(unconfAgendaList[index].activity!.toString(), style: TextStyle(
+              fontSize: 15,
+              fontWeight: FontWeight.w400,
+              color: AppTheme.textHighlight
+          ),),
+          SizedBox(
+            height: 5,
+          ),
+          // Text("Rise",style: TextStyle(
+          //     fontSize: 18,
+          //     fontWeight: FontWeight.w700
+          // ),),
+
+          SizedBox(height: 5,),
+
+          Row(
+            children: [
+
+              Text("SPOC: ", style: TextStyle(
+                  fontSize: 11,
+                  fontWeight: FontWeight.w600
+              ),),
+              Text(unconfAgendaList[index].spocName!, style: TextStyle(
+                  fontSize: 11,
+                  fontWeight: FontWeight.w600
+              ),),
+              SizedBox(
+                width: 3,
+              ),
+              Text("|"),
+              SizedBox(
+                width: 3,
+              ),
+              Text("Contact: ", style: TextStyle(
+                  fontSize: 11,
+                  fontWeight: FontWeight.w600
+              ),),
+              Text(unconfAgendaList[index].contact!, style: TextStyle(
+                  fontSize: 11,
+                  fontWeight: FontWeight.w600
+              ),),
+            ],
+          ),
+          SizedBox(height: 5,),
+
+          Row(
+            children: [
+              Text("Venue: ", style: TextStyle(
+                  fontSize: 11,
+                  fontWeight: FontWeight.w600
+              ),),
+              Text(unconfAgendaList[index].venue!, style: TextStyle(
+                  fontSize: 11,
+                  fontWeight: FontWeight.w600
+              ),),
+            ],
+          ),
+
+
+          SizedBox(
+            height: 10,
+          ),
+         Container(
+           child:Html(data: unconfAgendaList[index].description!.toString()),
+
+         )
+          // Container(
+          //   width: 300,
+          //   child: Padding(
+          //     padding: const EdgeInsets.all(10.0),
+          //     child: Column(
+          //       children: [
+          //         Row(
+          //           crossAxisAlignment: CrossAxisAlignment.start,
+          //
+          //           children:  [
+          //             Text("•",style: TextStyle(color: AppTheme.textHighlight),),
+          //             SizedBox(
+          //               width: 5,
+          //             ),
+          //             Expanded(
+          //               child: Text("Advanced analytics capabilities suppressed, and opportunities lost due to entry barriers,"
+          //                   "high cost, probability of failures.",
+          //                 maxLines: 3,
+          //                 style: TextStyle(fontSize: 11,
+          //                     color: AppTheme.textHighlight),
+          //               ),
+          //             ),
+          //           ],
+          //         ),
+          //
+          //         SizedBox(
+          //           height: 10,
+          //         ),
+          //         Row(
+          //           crossAxisAlignment: CrossAxisAlignment.start,
+          //
+          //           children:  [
+          //             Text("•",style: TextStyle(color: AppTheme.textHighlight)),
+          //             SizedBox(
+          //               width: 5,
+          //             ),
+          //             Expanded(
+          //               child: Text("Advanced analytics capabilities suppressed, and opportunities lost due to entry barriers,"
+          //                   "high cost, probability of failures.",
+          //                 maxLines: 3,
+          //                 style: TextStyle(fontSize: 11,
+          //                     color: AppTheme.textHighlight),
+          //               ),
+          //             ),
+          //           ],
+          //         ),
+          //         SizedBox(
+          //           height: 10,
+          //         ),
+          //         Row(
+          //           crossAxisAlignment: CrossAxisAlignment.start,
+          //
+          //           children:  [
+          //             Text("•",style: TextStyle(color: AppTheme.textHighlight)),
+          //             SizedBox(
+          //               width: 5,
+          //             ),
+          //             Expanded(
+          //               child: Text("Advanced analytics capabilities suppressed, and opportunities lost due to entry barriers,"
+          //                   "high cost, probability of failures.",
+          //                 maxLines: 3,
+          //                 style: TextStyle(fontSize: 11,
+          //                     color: AppTheme.textHighlight),
+          //               ),
+          //             ),
+          //           ],
+          //         ),
+          //
+          //         SizedBox(
+          //           height: 10,
+          //         ),
+          //         Row(
+          //           crossAxisAlignment: CrossAxisAlignment.start,
+          //
+          //           children:  [
+          //             Text("•",style: TextStyle(color: AppTheme.textHighlight)),
+          //             SizedBox(
+          //               width: 5,
+          //             ),
+          //             Expanded(
+          //               child: Text("Advanced analytics capabilities suppressed, and opportunities lost due to entry barriers,"
+          //                   "high cost, probability of failures.",
+          //                 maxLines: 3,
+          //                 style: TextStyle(fontSize: 11,
+          //                     color: AppTheme.textHighlight),
+          //               ),
+          //             ),
+          //           ],
+          //         ),
+          //       ],
+          //     ),
+          //   ),
+          // ),
+
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -250,173 +481,20 @@ class BreatherDetailState extends State<BreatherDetail>{
                               ),
                             ],
                           ),
-                          child:
-                          Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text("Biz Market 1", style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w400,
-                                  color: AppTheme.textHighlight
-                                ),),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Text("Rise",style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w700
-                                ),),
+                          child:ListView.builder(
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              scrollDirection: Axis.vertical,
+                              padding: EdgeInsets.all(5.0),
+                              itemCount:
+                              unconfAgendaList.length > 0
+                                  ? unconfAgendaList.length
+                                  : 3,
+                              itemBuilder: (context, index) {
+                                return getAgendaList(
+                                    unconfAgendaList, index);
+                              })
 
-                                SizedBox(height: 5,),
-
-                                Row(
-                                  children: [
-
-                                    Text("SPOC: ", style: TextStyle(
-                                        fontSize: 11,
-                                      fontWeight: FontWeight.w600
-                                    ),),
-                                    Text("Tushar Mathewar", style: TextStyle(
-                                        fontSize: 11,
-                                        fontWeight: FontWeight.w600
-                                    ),),
-                                    SizedBox(
-                                      width: 3,
-                                    ),
-                                    Text("|"),
-                                    SizedBox(
-                                      width: 3,
-                                    ),
-                                    Text("Contact: ", style: TextStyle(
-                                        fontSize: 11,
-                                        fontWeight: FontWeight.w600
-                                    ),),
-                                    Text("9876543210", style: TextStyle(
-                                        fontSize: 11,
-                                        fontWeight: FontWeight.w600
-                                    ),),
-                                  ],
-                                ),
-                                SizedBox(height: 5,),
-
-                                Row(
-                                  children: [
-                                    Text("Venue: ", style: TextStyle(
-                                        fontSize: 11,
-                                        fontWeight: FontWeight.w600
-                                    ),),
-                                    Text("Dewan-E-Khass", style: TextStyle(
-                                        fontSize: 11,
-                                        fontWeight: FontWeight.w600
-                                    ),),
-                                  ],
-                                ),
-
-
-                                SizedBox(
-                                  height: 10,
-                                ),
-
-                                Container(
-                                  width: 300,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(10.0),
-                                    child: Column(
-                                      children: [
-                                        Row(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-
-                                          children:  [
-                                            Text("•",style: TextStyle(color: AppTheme.textHighlight),),
-                                            SizedBox(
-                                              width: 5,
-                                            ),
-                                            Expanded(
-                                              child: Text("Advanced analytics capabilities suppressed, and opportunities lost due to entry barriers,"
-                                                  "high cost, probability of failures.",
-                                                maxLines: 3,
-                                                style: TextStyle(fontSize: 11,
-                                                color: AppTheme.textHighlight),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        Row(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-
-                                          children:  [
-                                            Text("•",style: TextStyle(color: AppTheme.textHighlight)),
-                                            SizedBox(
-                                              width: 5,
-                                            ),
-                                            Expanded(
-                                              child: Text("Advanced analytics capabilities suppressed, and opportunities lost due to entry barriers,"
-                                                  "high cost, probability of failures.",
-                                                maxLines: 3,
-                                                style: TextStyle(fontSize: 11,
-                                                    color: AppTheme.textHighlight),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        Row(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-
-                                          children:  [
-                                            Text("•",style: TextStyle(color: AppTheme.textHighlight)),
-                                            SizedBox(
-                                              width: 5,
-                                            ),
-                                            Expanded(
-                                              child: Text("Advanced analytics capabilities suppressed, and opportunities lost due to entry barriers,"
-                                                  "high cost, probability of failures.",
-                                                maxLines: 3,
-                                                style: TextStyle(fontSize: 11,
-                                                    color: AppTheme.textHighlight),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        Row(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-
-                                          children:  [
-                                            Text("•",style: TextStyle(color: AppTheme.textHighlight)),
-                                            SizedBox(
-                                              width: 5,
-                                            ),
-                                            Expanded(
-                                              child: Text("Advanced analytics capabilities suppressed, and opportunities lost due to entry barriers,"
-                                                  "high cost, probability of failures.",
-                                                maxLines: 3,
-                                                style: TextStyle(fontSize: 11,
-                                                    color: AppTheme.textHighlight),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-
-                              ],
-                            ),
-                          ),
                         ),
                       ),
                     ],
