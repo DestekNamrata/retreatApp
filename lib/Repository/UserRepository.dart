@@ -43,6 +43,15 @@ class UserRepository {
     return await Api.getAgenta(params);
   }
 
+  Future<dynamic> fetchBoothDetails({String? userId}) async {
+    final params = {"user_id":userId};
+    return await Api.getBoothDetails(params);
+  }
+
+  Future<dynamic> fetchVotingQue() async {
+    return await Api.getVotingQue();
+  }
+
   //
   // //save image
   // Future<dynamic> saveImage(String image) async {
