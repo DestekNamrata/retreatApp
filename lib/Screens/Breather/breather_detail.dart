@@ -1,19 +1,61 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/Bloc/unconference/unconference_bloc.dart';
+import 'package:flutter_app/Bloc/unconference/unconference_event.dart';
 import 'package:flutter_app/Configs/image.dart';
 import 'package:flutter_app/Configs/theme.dart';
+import 'package:flutter_app/Models/model_agenda_unconference.dart';
+import 'package:flutter_app/Screens/GenerateQR/generateQrCode.dart';
 import 'package:flutter_app/Screens/Profile/profile_screen.dart';
+import 'package:flutter_app/Utils/application.dart';
+import 'package:flutter_app/Utils/connectivity_check.dart';
+import 'package:flutter_app/Widgets/app_dialogs.dart';
 import '../sos_screen.dart';
 import '../../Utils/translate.dart';
 import 'breather_screen.dart';
 
-
+import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 class BreatherDetail extends StatefulWidget{
+  String? eventType,roomNo;
+  BreatherDetail({Key? key, @required this.eventType,@required this.roomNo});
+
   BreatherDetailState createState()=> BreatherDetailState();
 }
 
 class BreatherDetailState extends State<BreatherDetail>{
+  UnconferenceBloc? unconferenceBloc;
+  final _controller = RefreshController(initialRefresh: false);
+  List<UnConfAgendaData> unconfAgendaList = [];
+  bool isconnectedToInternet = false;
+  bool flagNoAgendaAvailable = false;
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    unconferenceBloc = BlocProvider.of<UnconferenceBloc>(context);
+    setBlocData();
+  }
+  void setBlocData() async {
+    isconnectedToInternet = await ConnectivityCheck.checkInternetConnectivity();
+    if (isconnectedToInternet == true) {
+      unconferenceBloc!.add(GetAgendaList(
+          eventType: widget.eventType!,
+          userId: Application.user!.id.toString(),
+          roomNo: widget.roomNo!));
+    } else {
+      CustomDialogs.showDialogCustom(
+          "Internet", "Please check your Internet Connection!", context);
+    }
+  }
+
+  Future<void> _onRefresh() async {
+    await Future.delayed(Duration(milliseconds: 1000));
+    unconfAgendaList = [];
+    setBlocData();
+    _controller.refreshCompleted();
+  }
   final testData = ["Example1", "Example2", "Example3", "Example100"];
 
 
@@ -155,7 +197,11 @@ class BreatherDetailState extends State<BreatherDetail>{
               Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: ElevatedButton(
-                  onPressed: (){},
+                  onPressed: (){
+                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>
+                        GenerateQR(title: "Breather"
+                          , attendanceType: "4", roomNo: widget.roomNo!,flagQr: "1",)));
+                  },
                   child: Text("Exit Room",
                     style: TextStyle(
                         color: AppTheme.appColor,

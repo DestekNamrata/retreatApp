@@ -30,9 +30,7 @@ class _AttendanceState extends State<AttendanceHistory>{
     super.initState();
 
     _attendenceHistoryBloc = BlocProvider.of<AttendenceHistoryBloc>(context);
-    // _attendenceHistoryBloc!.add(OnLoadingAttendanceHistoryList(userid: Application.user!.id.toString()));
-    _attendenceHistoryBloc!.add(OnLoadingAttendanceHistoryList(userid: "2"));
-
+    _attendenceHistoryBloc!.add(OnLoadingAttendanceHistoryList(userid: Application.user!.id.toString()));
   }
 
   Widget data(){

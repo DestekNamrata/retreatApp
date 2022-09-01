@@ -36,7 +36,9 @@ apply plugin: 'com.google.gms.google-services'
 android {
     compileSdkVersion 31
 //    ndkVersion "20.1.5948944"
-
+    lintOptions {
+        checkReleaseBuilds false
+    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8

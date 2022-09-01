@@ -1,9 +1,11 @@
 import 'package:flutter_app/Bloc/agenda/agenda_bloc.dart';
 import 'package:flutter_app/Bloc/attendanceHistory/attendanceHistory_bloc.dart';
 import 'package:flutter_app/Bloc/authentication/authentication_bloc.dart';
+import 'package:flutter_app/Bloc/breather/breather_bloc.dart';
 import 'package:flutter_app/Bloc/login/login_bloc.dart';
 import 'package:flutter_app/Bloc/scanAndGetData/bloc.dart';
 import 'package:flutter_app/Bloc/theme/theme_bloc.dart';
+import 'package:flutter_app/Bloc/unconference/unconference_bloc.dart';
 import 'package:flutter_app/Repository/UserRepository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -17,6 +19,8 @@ class AppBloc {
   static final scanAndGetDataBloc = ScanAndGetDataBloc(userRepository: userRepository);
   static final attendenceHistoryBloc = AttendenceHistoryBloc(attendenceHistoryRepo: userRepository);
   static final agendaDataBloc = AgendaBloc(agendaRepo: userRepository);
+  static final unconferenceDataBloc = UnconferenceBloc(unconferenceRepo: userRepository);
+  static final breatherBloc = BreathersBloc(breatherRepo: userRepository);
   // //customer
   // static final userRegBloc = UserRegBloc(userRepository: userRepository);
   // static final homeBloc = HomeBloc(homeRepository: userRepository);
@@ -54,6 +58,15 @@ class AppBloc {
     BlocProvider<AgendaBloc>(
       create: (context) => agendaDataBloc,
     ),
+    BlocProvider<UnconferenceBloc>(
+      create: (context) => unconferenceDataBloc,
+    ),
+
+    BlocProvider<BreathersBloc>(
+      create: (context) => breatherBloc,
+    ),
+
+
 
   ];
   //
@@ -66,8 +79,8 @@ class AppBloc {
     scanAndGetDataBloc.close();
     attendenceHistoryBloc.close();
     agendaDataBloc.close();
-    // userRegBloc.close();
-    // homeBloc.close();
+    unconferenceDataBloc.close();
+    breatherBloc.close();
     // cartBloc.close();
     // addressBloc.close();
     // myOrdersBloc.close();

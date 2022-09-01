@@ -12,6 +12,7 @@ import 'package:flutter_app/Screens/Conference/conference_screen.dart';
 import 'package:flutter_app/Screens/Infobeats/infobeats_screen.dart';
 import 'package:flutter_app/Screens/Profile/profile_screen.dart';
 import 'package:flutter_app/Screens/Profile/ticket_screen.dart';
+import 'package:flutter_app/Screens/Profile/yours_ticket_screen.dart';
 import '../sos_screen.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -35,43 +36,43 @@ class _HomeScreenState extends State<HomeScreen> {
               return AlertDialog(
                 title: new Text('Do you want to exit ?'),
                 actions: <Widget>[
-                  Container(
-                    height: 60.0,
-                    decoration: BoxDecoration(
-                      color: Color(0xff8018BB),
-
-                      borderRadius: BorderRadius.only(
-                          bottomRight: Radius.circular(5), bottomLeft: Radius.circular(5)),
-                    ),
-                    child:
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(child: Text("Cancel",style: TextStyle(fontSize: 14,color: Colors.white,fontFamily: 'Inter-SemiBold',
-                        fontWeight: FontWeight.w600),)),
-                        // Text("|",style: TextStyle(fontSize: 14,color: Colors.white,fontWeight: FontWeight.bold),),
-                        Container(
-                          margin: EdgeInsets.only(top: 10,bottom: 10.0),
-                          child: VerticalDivider(
-
-                            color: Colors.white,
-                            thickness: 1,
-                          ),
-                        ),
-                        Expanded(child:Text("OK",style: TextStyle(fontSize: 14,color: Colors.white,fontFamily: 'Inter-SemiBold',
-                            fontWeight: FontWeight.w600),))
-                      ],
-                    ),
-                  )
-                  // FlatButton(
-                  //   onPressed: () => Navigator.of(context).pop(false),
-                  //   child: new Text('No'),
-                  // ),
-                  // FlatButton(
-                  //   // onPressed: () => Navigator.of(context).pop(true),
-                  //   onPressed: () => exit(0), //updated on 12/02/2021
-                  //   child: new Text('Yes'),
-                  // ),
+                  // Container(
+                  //   height: 60.0,
+                  //   decoration: BoxDecoration(
+                  //     color: Color(0xff8018BB),
+                  //
+                  //     borderRadius: BorderRadius.only(
+                  //         bottomRight: Radius.circular(5), bottomLeft: Radius.circular(5)),
+                  //   ),
+                  //   child:
+                  //   Row(
+                  //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //     children: [
+                  //       Expanded(child: Text("Cancel",style: TextStyle(fontSize: 14,color: Colors.white,fontFamily: 'Inter-SemiBold',
+                  //       fontWeight: FontWeight.w600),)),
+                  //       // Text("|",style: TextStyle(fontSize: 14,color: Colors.white,fontWeight: FontWeight.bold),),
+                  //       Container(
+                  //         margin: EdgeInsets.only(top: 10,bottom: 10.0),
+                  //         child: VerticalDivider(
+                  //
+                  //           color: Colors.white,
+                  //           thickness: 1,
+                  //         ),
+                  //       ),
+                  //       Expanded(child:Text("OK",style: TextStyle(fontSize: 14,color: Colors.white,fontFamily: 'Inter-SemiBold',
+                  //           fontWeight: FontWeight.w600),))
+                  //     ],
+                  //   ),
+                  // )
+                  FlatButton(
+                    onPressed: () => Navigator.of(context).pop(false),
+                    child: new Text('No'),
+                  ),
+                  FlatButton(
+                    // onPressed: () => Navigator.of(context).pop(true),
+                    onPressed: () => exit(0), //updated on 12/02/2021
+                    child: new Text('Yes'),
+                  ),
                 ],
               );
             }) ??
@@ -381,7 +382,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                              Navigator.push(context, MaterialPageRoute(builder: (context)=>BreatherScreen()));
 
                                          }else {
-                                           Navigator.push(context, MaterialPageRoute(builder: (context)=>TicketScreen()));
+                                           Navigator.push(context, MaterialPageRoute(builder: (context)=>YoursTicketScreen()));
 
                                          }
                                        },

@@ -2,549 +2,902 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:expand_widget/expand_widget.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_app/Bloc/agenda/agenda_state.dart';
+import 'package:flutter_app/Bloc/unconference/bloc.dart';
+import 'package:flutter_app/Bloc/unconference/unconference_bloc.dart';
+import 'package:flutter_app/Bloc/unconference/unconference_state.dart';
 import 'package:flutter_app/Configs/image.dart';
 import 'package:flutter_app/Configs/theme.dart';
+import 'package:flutter_app/Models/model_agenda_unconference.dart';
+import 'package:flutter_app/Models/model_live_polls.dart';
+import 'package:flutter_app/Screens/GenerateQR/generateQrCode.dart';
 import 'package:flutter_app/Screens/Profile/profile_screen.dart';
+import 'package:flutter_app/Utils/application.dart';
+import 'package:flutter_app/Utils/connectivity_check.dart';
 import 'package:flutter_app/Widgets/app_button.dart';
+import 'package:flutter_app/Widgets/app_dialogs.dart';
 import '../sos_screen.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:flutter_html/flutter_html.dart';
+import 'package:intl/intl.dart';
+import 'dart:io';
+import 'package:flutter_app/Screens/mainNavigation.dart';
+import 'package:readmore/readmore.dart';
 
 import '../../Utils/translate.dart';
 
-class ConferenceScreen extends StatefulWidget{
-  ConferenceState createState()=> ConferenceState();
+class ConferenceScreen extends StatefulWidget {
+  String? eventType;
+
+  ConferenceScreen({Key? key, @required this.eventType});
+
+  ConferenceState createState() => ConferenceState();
 }
 
-class ConferenceState extends State<ConferenceScreen>{
+class ConferenceState extends State<ConferenceScreen> {
+  UnconferenceBloc? unconferenceBloc;
+  final _controller = RefreshController(initialRefresh: false);
+  List<UnConfAgendaData> unconfAgendaList = [];
+  List<LivePollsModel> livePollList = [];
+  bool isconnectedToInternet = false;
+  bool flagNoAgendaAvailable = false;
+  bool flagNoLivePollAvailable = false;
+  String punchIn = "";
 
-  Widget getAgendaList() {
-    return
-      ListView.builder(
-          scrollDirection: Axis.vertical,
-        padding: EdgeInsets.all(5.0),
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    unconferenceBloc = BlocProvider.of<UnconferenceBloc>(context);
+    setBlocData();
+  }
 
+  void setBlocData() async {
+    isconnectedToInternet = await ConnectivityCheck.checkInternetConnectivity();
+    if (isconnectedToInternet == true) {
+      unconferenceBloc!.add(GetAgendaList(
+          eventType: widget.eventType!,
+          userId: Application.user!.id.toString(),
+      roomNo: ""));
+    } else {
+      CustomDialogs.showDialogCustom(
+          "Internet", "Please check your Internet Connection!", context);
+    }
+  }
+
+  Future<void> _onRefresh() async {
+    await Future.delayed(Duration(milliseconds: 1000));
+    unconfAgendaList = [];
+    setBlocData();
+    _controller.refreshCompleted();
+  }
+
+  Widget getAgendaList(List<UnConfAgendaData> unconfAgendaList, int index) {
+    if (unconfAgendaList.length <= 0) {
+
+      return ListView.builder(
+        padding: EdgeInsets.all(0),
+        shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
         itemBuilder: (context, index) {
-          return Container(
-            // margin: EdgeInsets.only(left:5,right: 5,bottom:8.0),
-
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-
-                // //description
-                // Text(
-                //  "aSSADD",
-                //   style: TextStyle(
-                //       fontSize: 14.0,
-                //       fontFamily: 'Sofia Pro',
-                //       fontWeight: FontWeight.w400,
-                //       color: Theme.of(context).unselectedWidgetColor),
-                // )
-                Card(
-                  elevation: 5,
-                  child: Padding(
-                    padding: EdgeInsets.all(8),
+          return Padding(
+            padding: EdgeInsets.only(bottom: 15),
+            child: Shimmer.fromColors(
+              child: Row(
+                children: <Widget>[
+                  Container(
+                    width: 80,
+                    height: 80,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      color: Colors.white,
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                      left: 10,
+                      right: 10,
+                      top: 5,
+                      bottom: 5,
+                    ),
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        // Row(
-                        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        //   children: [
-                        //     Text("Room No.1"),
-                        //     Text("August 31"),
-                        //   ],
-                        // ),
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                '23 Sep, 10:00am',
-                                style: TextStyle(fontSize: 18,fontWeight: FontWeight.w500,color: AppTheme.textHighlight),
-                              ),
-                              Text(
-                                'UnConference',
-                                style: Theme.of(context).textTheme.headline6,
-                              ),
-                            ]),
-                        SizedBox(height: 8),
-                        Text(
-                          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
-                              'Nullam suscipit risus pulvinar, hendrerit nisi quis, vehicula ante. Morbi ut diam elit. '
-                              'Praesent non justo sodales, auctor lacus id, congue massa. '
-                              'Duis ac odio dui. Sed sed egestas metus.',
-
+                        Container(
+                          height: 10,
+                          width: 180,
+                          color: Colors.white,
                         ),
-                        // RaisedButton(
-                        //   child: Text('Button0'),
-                        //   onPressed: () => print('Pressed button0'),
-                        // ),
-                        ExpandChild(
-                          child: Column(
-                            children: <Widget>[
-                              Text("Duis ac odio dui. Sed sed egestas metus. Donec hendrerit velit magna. ")
-                              // RaisedButton(
-                              //   child: Text('Button1'),
-                              //   onPressed: () => print('Pressed button1'),
-                              // ),
-                              // RaisedButton(
-                              //   child: Text('Button2'),
-                              //   onPressed: () => print('Pressed button2'),
-                              // ),
-                              // RaisedButton(
-                              //   child: Text('Button3'),
-                              //   onPressed: () => print('Pressed button3'),
-                              // ),
-                            ],
-                          ),
+                        Padding(
+                          padding: EdgeInsets.only(top: 5),
+                        ),
+                        Container(
+                          height: 10,
+                          width: 150,
+                          color: Colors.white,
                         ),
                       ],
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
+              baseColor: Theme.of(context).hoverColor,
+              highlightColor: Theme.of(context).highlightColor,
             ),
           );
         },
-        itemCount:6,
+        itemCount: 6,
       );
+    }
+    return Container(
+      // margin: EdgeInsets.only(left:5,right: 5,bottom:8.0),
+
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // //description
+          // Text(
+          //  "aSSADD",
+          //   style: TextStyle(
+          //       fontSize: 14.0,
+          //       fontFamily: 'Sofia Pro',
+          //       fontWeight: FontWeight.w400,
+          //       color: Theme.of(context).unselectedWidgetColor),
+          // )
+          Card(
+            elevation: 5,
+            child: Padding(
+              padding: EdgeInsets.all(8),
+              child: Column(
+                children: <Widget>[
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //   children: [
+                  //     Text("Room No.1"),
+                  //     Text("August 31"),
+                  //   ],
+                  // ),
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                            child: Text(
+                          unconfAgendaList[index].eventDate! +
+                              "," +
+                              unconfAgendaList[index].startTime!,
+              // DateFormat('d MMM').format(DateTime.parse(unconfAgendaList[index].eventDate!))+","+unconfAgendaList[index].startTime!,
+                          style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                              color: AppTheme.textHighlight),
+                        )),
+                        Expanded(
+                            child: Text(
+                          unconfAgendaList[index].activity!,
+                          style: TextStyle(
+                              fontSize: 16.0,
+                              fontFamily: 'Inter-Bold',
+                              fontWeight: FontWeight.w600),
+                        )),
+                      ]),
+                  SizedBox(height: 8),
+                  // ReadMoreText(
+                  //   widget.orderList[widget.position].productDesc,
+                  //   style: Theme.of(context).textTheme.button.copyWith(
+                  //       fontSize: 12.0,
+                  //       color: AppTheme.textColor,
+                  //       fontWeight: FontWeight.w600,
+                  //       fontFamily: "Poppins"),
+                  //   trimLines: 2,
+                  //   trimMode: TrimMode.Line,
+                  //   trimCollapsedText: 'Show more',
+                  //   trimExpandedText: 'Show less',
+                  // ),
+
+                  Html(data: unconfAgendaList[index].description!.toString()),
+                  // RaisedButton(
+                  //   child: Text('Button0'),
+                  //   onPressed: () => print('Pressed button0'),
+                  // ),
+                  // ExpandChild(
+                  //   child: Column(
+                  //     children: <Widget>[
+                  //       Text(
+                  //           "Duis ac odio dui. Sed sed egestas metus. Donec hendrerit velit magna. ")
+                  //       // RaisedButton(
+                  //       //   child: Text('Button1'),
+                  //       //   onPressed: () => print('Pressed button1'),
+                  //       // ),
+                  //       // RaisedButton(
+                  //       //   child: Text('Button2'),
+                  //       //   onPressed: () => print('Pressed button2'),
+                  //       // ),
+                  //       // RaisedButton(
+                  //       //   child: Text('Button3'),
+                  //       //   onPressed: () => print('Pressed button3'),
+                  //       // ),
+                  //     ],
+                  //   ),
+                  // ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget getLivePollList(List<LivePollsModel> livePollsList,int index){
+    if (livePollsList.length <= 0) {
+      return ListView.builder(
+        padding: EdgeInsets.all(0),
+        shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: EdgeInsets.only(bottom: 15),
+            child: Shimmer.fromColors(
+              child: Row(
+                children: <Widget>[
+                  Container(
+                    width: 80,
+                    height: 80,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      color: Colors.white,
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                      left: 10,
+                      right: 10,
+                      top: 5,
+                      bottom: 5,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Container(
+                          height: 10,
+                          width: 180,
+                          color: Colors.white,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: 5),
+                        ),
+                        Container(
+                          height: 10,
+                          width: 150,
+                          color: Colors.white,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              baseColor: Theme.of(context).hoverColor,
+              highlightColor: Theme.of(context).highlightColor,
+            ),
+          );
+        },
+        itemCount: 6,
+      );
+    }
+    return Card(
+      elevation: 6.0,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            //name,image,time
+            Row(
+              mainAxisAlignment:
+              MainAxisAlignment.spaceBetween,
+              children: [
+                // Row(
+                //   children: [
+                //     CachedNetworkImage(
+                //       filterQuality:
+                //       FilterQuality.medium,
+                //       // imageUrl: Api.PHOTO_URL + widget.users.avatar,
+                //       // imageUrl:
+                //       //     "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80",
+                //       imageUrl:
+                //       "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80",
+                //       placeholder: (context, url) {
+                //         return Shimmer.fromColors(
+                //           baseColor:
+                //           Theme.of(context)
+                //               .hoverColor,
+                //           highlightColor:
+                //           Theme.of(context)
+                //               .highlightColor,
+                //           enabled: true,
+                //           child: Container(
+                //             height: 80,
+                //             width: 80,
+                //             decoration:
+                //             BoxDecoration(
+                //               color: Colors.white,
+                //               borderRadius:
+                //               BorderRadius
+                //                   .circular(40),
+                //             ),
+                //           ),
+                //         );
+                //       },
+                //       imageBuilder:
+                //           (context, imageProvider) {
+                //         return Container(
+                //           height: 80,
+                //           width: 80,
+                //           decoration: BoxDecoration(
+                //             image: DecorationImage(
+                //               image: imageProvider,
+                //               fit: BoxFit.cover,
+                //             ),
+                //             borderRadius:
+                //             BorderRadius
+                //                 .circular(40),
+                //           ),
+                //         );
+                //       },
+                //       errorWidget:
+                //           (context, url, error) {
+                //         return Shimmer.fromColors(
+                //           baseColor:
+                //           Theme.of(context)
+                //               .hoverColor,
+                //           highlightColor:
+                //           Theme.of(context)
+                //               .highlightColor,
+                //           enabled: true,
+                //           child: Container(
+                //             height: 80,
+                //             width: 80,
+                //             decoration:
+                //             BoxDecoration(
+                //               color: Colors.white,
+                //               borderRadius:
+                //               BorderRadius
+                //                   .circular(40),
+                //             ),
+                //             child:
+                //             Icon(Icons.error),
+                //           ),
+                //         );
+                //       },
+                //     ),
+                //     SizedBox(
+                //       width: 10.0,
+                //     ),
+                //     Text("Name Surname")
+                //   ],
+                // ),
+                // Text("1 hr ago")
+              ],
+            ),
+            SizedBox(
+              height: 8.0,
+            ),
+
+            //desc
+            Text(
+                livePollsList[index].question!,style: TextStyle(fontSize: 16.0,fontWeight: FontWeight.w600,fontFamily:'Inter-Bold'),),
+            SizedBox(
+              height: 10.0,
+            ),
+            //image
+            if(livePollsList[index].imageUrl!=null)
+            CachedNetworkImage(
+              filterQuality: FilterQuality.medium,
+              // imageUrl: Api.PHOTO_URL + widget.users.avatar,
+              // imageUrl:
+              //     "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80",
+              imageUrl:livePollsList[index].imageUrl!,
+              placeholder: (context, url) {
+                return Shimmer.fromColors(
+                  baseColor:
+                  Theme.of(context).hoverColor,
+                  highlightColor: Theme.of(context)
+                      .highlightColor,
+                  enabled: true,
+                  child: Container(
+                    height: 180,
+                    width: MediaQuery.of(context)
+                        .size
+                        .width,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius:
+                      BorderRadius.circular(5),
+                    ),
+                  ),
+                );
+              },
+              imageBuilder:
+                  (context, imageProvider) {
+                return Container(
+                  height: 180,
+                  width: MediaQuery.of(context)
+                      .size
+                      .width,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: imageProvider,
+                      fit: BoxFit.cover,
+                    ),
+                    borderRadius:
+                    BorderRadius.circular(5),
+                  ),
+                );
+              },
+              errorWidget: (context, url, error) {
+                return Shimmer.fromColors(
+                  baseColor:
+                  Theme.of(context).hoverColor,
+                  highlightColor: Theme.of(context)
+                      .highlightColor,
+                  enabled: true,
+                  child: Container(
+                    height: 180,
+                    width: MediaQuery.of(context)
+                        .size
+                        .width,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius:
+                      BorderRadius.circular(5),
+                    ),
+                    child: Icon(Icons.error),
+                  ),
+                );
+              },
+            ),
+            SizedBox(
+              height: 10.0,
+            ),
+            Container(
+              height: 100.0,
+              padding: const EdgeInsets.all(8.0),
+              child:
+              GridView.builder(
+                  gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                      maxCrossAxisExtent: 100,
+                      childAspectRatio: 3/2,
+                      crossAxisSpacing: 5,
+                      mainAxisSpacing: 5),
+                  itemCount: livePollList[index].options!.length,
+                  itemBuilder: (BuildContext ctx, pos) {
+                    return
+                      Row(
+                        children: [
+                          Theme(
+                              data: ThemeData(
+                                unselectedWidgetColor: Colors.grey,
+                                // selectedRowColor: Theme.of(context).primaryColor
+                              ),
+                              child: Radio<int>(
+                                value: index,
+                                groupValue: livePollList[index].options![pos].id!,
+                                // groupValue: livePollList[index].options![index].id!,
+                                fillColor: MaterialStateColor.resolveWith(
+                                        (states) => AppTheme.appColor),
+                                onChanged: (int? value) {
+                                  setState(() {
+                                    livePollList[index].options![pos].id!=value;
+                                  });
+                                },
+                              )),
+                          Text(
+                            livePollList[index].options![pos].option!,
+                            style: TextStyle(
+                                fontFamily: 'Inter-SemiBold',
+                                fontWeight: FontWeight.w500,
+                                fontSize: 14,
+                                color: Colors.black),
+                          ),
+                        ],
+                      );
+
+
+                  }),
+            ),
+            //submit button
+            AppButton(
+              text: "Submit",
+              onPressed: () {},
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                    Radius.circular(50)),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-        appBar:
-        AppBar(
-          // automaticallyImplyLeading: false,
-          // toolbarHeight: 10.0,
-          backgroundColor: Colors.white,
-          elevation: 0,
-          leading: Icon(Icons.arrow_back_rounded,color: Colors.black,),
-          // title: Text(Translate.of(context)!.translate("conference"),style: TextStyle(color: Colors.black),),
-          // automaticallyImplyLeading: false,
-          actions: [
-            Row(
-              children: [
-                InkWell(
-                    onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>SOSScreen()));
-                    },
-                    child:Container(
-                        width: 40.0,
-                        decoration: BoxDecoration(
+      appBar: AppBar(
+        // automaticallyImplyLeading: false,
+        // toolbarHeight: 10.0,
+        backgroundColor: Colors.white,
+
+        elevation: 0,
+        leading: InkWell(
+            onTap: () {
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => MainNavigation(userType: "0")));
+            },
+            child: Icon(
+              Icons.arrow_back,
+              size: 20.0,
+              color: Colors.black,
+            )),
+        // title: Text(Translate.of(context)!.translate("conference"),style: TextStyle(color: Colors.black),),
+        // automaticallyImplyLeading: false,
+        actions: [
+          Row(
+            children: [
+              InkWell(
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => SOSScreen()));
+                  },
+                  child: Container(
+                      width: 40.0,
+                      decoration: BoxDecoration(
                           // border: Border.all(color: Colors.black),
-                            borderRadius:
-                            BorderRadius.circular(5.0),
-                            color: Theme.of(context)
-                                .dividerColor
-                        ),
-                        child: Padding(
-                            padding: EdgeInsets.all(3.0),
-                            child: Text(
-                              textAlign: TextAlign.center,
-                              "SOS",
-                              style: TextStyle(
-                                  color: AppTheme.appColor,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 14.0),
-                            )))
-                ),
-
-
-
-                SizedBox(
-                  width: 20.0,
-                ),
-                InkWell(
-                    onTap: () {
-                    },
-                    child: Stack(
-                      children: [
-                        // IconButton(
-                        //   icon:
-                        Image.asset(
-                          Images.notifi,
-                          width: 22.0,
-                          height: 22.0,
-                        ),
-                        // tooltip: "Save Todo and Retrun to List",
-                        //   onPressed: () {},
-                        // ),
-                        Positioned(
-                          right: 0,
-                          top: 0,
-                          child: new Container(
-                            padding: EdgeInsets.all(1),
-                            decoration: new BoxDecoration(
-                              color: Colors.red,
-                              borderRadius:
-                              BorderRadius.circular(8.5),
-                            ),
-                            constraints: BoxConstraints(
-                              minWidth: 15,
-                              minHeight: 4,
-                            ),
-                            child: Text(
-                              "0",
-                              style: new TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.w400,
-                                  fontFamily: 'Inter-Regular'),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ),
-                      ],
-                    )
-                ),
-
-                SizedBox(
-                  width: 20.0,
-                ),
-
-                //profile
-                InkWell(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  ProfileScreen()));
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.only(right: 5.0),
-                      child: Image.asset(
-                        Images.account,
-                        width: 25.0,
-                        height: 25.0,
-                      ),
-                    )),
-                SizedBox(width: 15,)
-
-              ],
-            )
-          ],
-
-
-        ),
-        body: Scaffold(
-          appBar: AppBar(
-            automaticallyImplyLeading: false,
-            backgroundColor: Colors.white,
-            title: Text(Translate.of(context)!.translate("conference"),style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 30,
-                fontFamily: 'Inter-Regular'),),
-            actions: [
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: ElevatedButton(
-                  onPressed: (){},
-                  child: Text("Exit Room",
-                    style: TextStyle(
-                        color: AppTheme.appColor,
-                    fontWeight: FontWeight.w600),),
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12), // <-- Radius
-                    ),
-                    side: BorderSide(
-
-                      width: 2.0,
-                      color: AppTheme.appColor,
-                    ),
-                  ),
-
-                ),
-              ),
+                          borderRadius: BorderRadius.circular(5.0),
+                          color: Theme.of(context).dividerColor),
+                      child: Padding(
+                          padding: EdgeInsets.all(3.0),
+                          child: Text(
+                            textAlign: TextAlign.center,
+                            "SOS",
+                            style: TextStyle(
+                                color: AppTheme.appColor,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 14.0),
+                          )))),
 
               SizedBox(
-                width: 20,
+                width: 20.0,
+              ),
+              InkWell(
+                  onTap: () {},
+                  child: Stack(
+                    children: [
+                      Image.asset(
+                        Images.notifi,
+                        width: 22.0,
+                        height: 22.0,
+                      ),
+                      Positioned(
+                        right: 0,
+                        top: 0,
+                        child: new Container(
+                          padding: EdgeInsets.all(1),
+                          decoration: new BoxDecoration(
+                            color: Colors.red,
+                            borderRadius: BorderRadius.circular(8.5),
+                          ),
+                          constraints: BoxConstraints(
+                            minWidth: 15,
+                            minHeight: 4,
+                          ),
+                          child: Text(
+                            "0",
+                            style: new TextStyle(
+                                color: Colors.white,
+                                fontSize: 10,
+                                fontWeight: FontWeight.w400,
+                                fontFamily: 'Inter-Regular'),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ),
+                    ],
+                  )),
+
+              SizedBox(
+                width: 20.0,
+              ),
+
+              //profile
+              InkWell(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ProfileScreen()));
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 5.0),
+                    child: Image.asset(
+                      Images.account,
+                      width: 25.0,
+                      height: 25.0,
+                    ),
+                  )),
+              SizedBox(
+                width: 15,
               )
             ],
+          )
+        ],
+      ),
+      body: SafeArea(child:
+      BlocBuilder<UnconferenceBloc, UnconferenceState>(
+        builder: (context, unconference) {
+          return BlocListener<UnconferenceBloc, UnconferenceState>(
+            listener: (context, state) {
+              if (state is AgendaListSuccess) {
+                flagNoAgendaAvailable = false;
+                unconfAgendaList = state.agendaList!;
+                punchIn = state.punchIn!;
+                unconferenceBloc!.add(GetLivePollList(
+                    eventType: widget.eventType!,
+                    userId: Application.user!.id.toString(),
+                    roomNo: ""));
+              }
 
-          ),
-          body: SafeArea(
-            child: SingleChildScrollView(
-              child:
-              Column(
-                children: [
-                  SizedBox(
-                    height: 10,
-                  ),
+              if (state is AgendaListFail) {
+                flagNoAgendaAvailable = true;
+              }
 
-                  //punch and duration
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: AppTheme.appColor,
-                      borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                    ),
+              if (state is AgendaListLoading) {
+                flagNoAgendaAvailable = false;
+              }
+              //for live polls
+              if(state is LivePollListSuccess){
+                livePollList=state.livePollList!;
+                flagNoLivePollAvailable=false;
+              }
 
-                      child: Row(
-                        children: [
-                          //punch in
-                          Expanded(child:Container(
-                            decoration: BoxDecoration(
-                                // color: AppTheme.appColor,
-                                borderRadius: BorderRadius.circular(8.0)
-                            ),
-                            child:
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                children: [
-                                  Text("Punch in" ,style: TextStyle(color: Colors.white)),
-                                  Text("12:30 pm", style: TextStyle(color: Colors.white,
-                                      fontWeight: FontWeight.w600,
-                                  fontSize: 18))
-                                ],
-                              ),
-                            ),
+              if(state is GetLivePolllsListLoading){
+                flagNoLivePollAvailable=false;
+              }
 
-
-                          )),
-                          // SizedBox(width: 5.0,),
-
-                          SizedBox(
-                            height: 50,
-                            child: VerticalDivider(
-                              thickness: 2,
-                              indent: 13,
-                              endIndent: 13,
-                              color: Colors.white,
-                            ),
-                          ),
-                          //duration
-                          Expanded(child: Container(
-
-                            decoration: BoxDecoration(
-                                // color: AppTheme.appColor,
-                                borderRadius: BorderRadius.circular(8.0)
-                            ),
-                            child:
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                children: [
-                                  Text("Duration", style: TextStyle(color: Colors.white),),
-                                  Text("01:56 hrs", style: TextStyle(color: Colors.white,
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 18))
-                                ],
-                              ),
-                            ),
-
-
-                          ))
-                        ],
-                      ),
-                    ),
-                  ),
-
-                  //agenda listing
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10.0)
-                      ),
-                      child:
+              if(state is LivePollListFail){
+                flagNoLivePollAvailable=true;
+              }
+            },
+            child: SmartRefresher(
+                enablePullDown: true,
+                onRefresh: _onRefresh,
+                controller: _controller,
+                child: SingleChildScrollView(
+                 child:
+                  Column(
+                    // mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.max, //Add this line onyour column
+                    children: [
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        padding: const EdgeInsets.all(10.0),
+                        child: Row(
+                          mainAxisAlignment:MainAxisAlignment.spaceBetween,
                           children: [
-                            Text("Agenda",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w600),),
-                            Container(
-                                height:400.0,child: getAgendaList())
+                            Text(Translate.of(context)!.translate("conference"),style: TextStyle(color: Colors.black,
+                                fontWeight: FontWeight.bold,fontSize: 18,
+                                fontFamily: 'Inter-Regular'),),
+                            Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: ElevatedButton(
+                                onPressed: (){
+                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>
+                                    GenerateQR(title: "Unconference"
+                                        , attendanceType: "3", roomNo: "",flagQr: "1",)));
+                                },
+                                child: Text("Exit Room",
+                                  style: TextStyle(
+                                      color: AppTheme.appColor,
+                                      fontWeight: FontWeight.w600),),
+                                style: ElevatedButton.styleFrom(
+                                  primary: Colors.white,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12), // <-- Radius
+                                  ),
+
+                                  side: BorderSide(
+                                    width: 2.0,
+                                    color: AppTheme.appColor,
+                                  ),
+                                ),
+
+                              ),
+                            ),
                           ],
                         ),
                       ),
-                    ),
-                  ),
-                  //live poll
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10.0)
-                      ),
-                      child:
+
+                      //punch and duration
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text("Live Poll",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w600)),
-                            Card(
-                              elevation: 6.0,
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Column(
-                                  children: [
-                                    //name,image,time
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            CachedNetworkImage(
-                                              filterQuality: FilterQuality.medium,
-                                              // imageUrl: Api.PHOTO_URL + widget.users.avatar,
-                                              // imageUrl:
-                                              //     "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80",
-                                              imageUrl:
-                                              "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80"
-                                              ,
-                                              placeholder: (context, url) {
-                                                return Shimmer.fromColors(
-                                                  baseColor: Theme.of(context).hoverColor,
-                                                  highlightColor:
-                                                  Theme.of(context).highlightColor,
-                                                  enabled: true,
-                                                  child: Container(
-                                                    height: 80,
-                                                    width: 80,
-                                                    decoration: BoxDecoration(
-                                                      color: Colors.white,
-                                                      borderRadius: BorderRadius.circular(40),
-                                                    ),
-                                                  ),
-                                                );
-                                              },
-                                              imageBuilder: (context, imageProvider) {
-                                                return Container(
-                                                  height: 80,
-                                                  width: 80,
-                                                  decoration: BoxDecoration(
-                                                    image: DecorationImage(
-                                                      image: imageProvider,
-                                                      fit: BoxFit.cover,
-                                                    ),
-                                                    borderRadius: BorderRadius.circular(40),
-                                                  ),
-                                                );
-                                              },
-                                              errorWidget: (context, url, error) {
-                                                return Shimmer.fromColors(
-                                                  baseColor: Theme.of(context).hoverColor,
-                                                  highlightColor:
-                                                  Theme.of(context).highlightColor,
-                                                  enabled: true,
-                                                  child: Container(
-                                                    height:80,
-                                                    width: 80,
-                                                    decoration: BoxDecoration(
-                                                      color: Colors.white,
-                                                      borderRadius: BorderRadius.circular(40),
-                                                    ),
-                                                    child: Icon(Icons.error),
-                                                  ),
-                                                );
-                                              },
-                                            ),
-                                            SizedBox(
-                                              width: 10.0,
-                                            ),
-                                            Text("Name Surname")
-                                          ],
-                                        ),
-                                        Text("1 hr ago")
-                                      ],
-                                    ),
-                                    SizedBox(height: 8.0,),
-
-                                    //desc
-                                    Text("Lorem ipsum color sit amet,consectur adipsing fdsgdgsdsgd sgdgsgdsfgdfsgf"),
-                                    SizedBox(height: 10.0,),
-                                    //image
-                                    CachedNetworkImage(
-                                      filterQuality: FilterQuality.medium,
-                                      // imageUrl: Api.PHOTO_URL + widget.users.avatar,
-                                      // imageUrl:
-                                      //     "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80",
-                                      imageUrl:
-                                      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80"
-                                      ,
-                                      placeholder: (context, url) {
-                                        return Shimmer.fromColors(
-                                          baseColor: Theme.of(context).hoverColor,
-                                          highlightColor:
-                                          Theme.of(context).highlightColor,
-                                          enabled: true,
-                                          child: Container(
-                                            height: 180,
-                                            width: MediaQuery.of(context).size.width,
-                                            decoration: BoxDecoration(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: AppTheme.appColor,
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(8.0)),
+                          ),
+                          child: Row(
+                            children: [
+                              //punch in
+                              Expanded(
+                                  child: Container(
+                                decoration: BoxDecoration(
+                                    // color: AppTheme.appColor,
+                                    borderRadius: BorderRadius.circular(8.0)),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Column(
+                                    children: [
+                                      Text("Punch in",
+                                          style:
+                                              TextStyle(color: Colors.white)),
+                                      Text(punchIn!.toString(),
+                                          style: TextStyle(
                                               color: Colors.white,
-                                              borderRadius: BorderRadius.circular(5),
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                      imageBuilder: (context, imageProvider) {
-                                        return Container(
-                                          height: 180,
-                                          width: MediaQuery.of(context).size.width,
-                                          decoration: BoxDecoration(
-                                            image: DecorationImage(
-                                              image: imageProvider,
-                                              fit: BoxFit.cover,
-                                            ),
-                                            borderRadius: BorderRadius.circular(5),
-                                          ),
-                                        );
-                                      },
-                                      errorWidget: (context, url, error) {
-                                        return Shimmer.fromColors(
-                                          baseColor: Theme.of(context).hoverColor,
-                                          highlightColor:
-                                          Theme.of(context).highlightColor,
-                                          enabled: true,
-                                          child: Container(
-                                            height: 180,
-                                            width: MediaQuery.of(context).size.width,
-                                            decoration: BoxDecoration(
-                                              color: Colors.white,
-                                              borderRadius: BorderRadius.circular(5),
-                                            ),
-                                            child: Icon(Icons.error),
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                    SizedBox(height: 10.0,),
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 18))
+                                    ],
+                                  ),
+                                ),
+                              )),
+                              // SizedBox(width: 5.0,),
 
-                                    //submit button
-                                    AppButton(
-                                      text: "Submit",
-                                      onPressed: (){},
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(50)),
+                              SizedBox(
+                                height: 50,
+                                child: VerticalDivider(
+                                  thickness: 2,
+                                  indent: 13,
+                                  endIndent: 13,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              //duration
+                              Expanded(
+                                  child: Container(
+                                decoration: BoxDecoration(
+                                    // color: AppTheme.appColor,
+                                    borderRadius: BorderRadius.circular(8.0)),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Column(
+                                    children: [
+                                      Text(
+                                        "Duration",
+                                        style: TextStyle(color: Colors.white),
                                       ),
-                                    )
-                                  ],
+                                      Text("01:56 hrs",
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 18))
+                                    ],
+                                  ),
+                                ),
+                              ))
+                            ],
+                          ),
+                        ),
+                      ),
+
+                      //agenda listing
+                      flagNoAgendaAvailable == false
+                          ?
+                      Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(10.0)),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "Agenda",
+                                        style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w600),
+                                      ),
+                                      SizedBox(height: 10.0,),
+                                      // Container(
+                                      //   height: 200.0,
+                                      //     child:
+                                          ListView.builder(
+                                            shrinkWrap: true,
+                                              physics: NeverScrollableScrollPhysics(),
+                                              scrollDirection: Axis.vertical,
+                                              padding: EdgeInsets.all(5.0),
+                                              itemCount:
+                                                  unconfAgendaList.length > 0
+                                                      ? unconfAgendaList.length
+                                                      : 3,
+                                              itemBuilder: (context, index) {
+                                                return getAgendaList(
+                                                    unconfAgendaList, index);
+                                              })
+                                      // )
+                                    ],
+                                  ),
                                 ),
                               ),
                             )
-                          ],
-                        ),
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ),
-        )
+                          : Text(
+                              "No Agenda Available",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  fontFamily: 'Inter-Bold',
+                                  fontSize: 20.0,
+                                  color: AppTheme.textColor),
+                            ),
+                      // live poll
+                      // if(flagNoLivePollAvailable==false)
+                      //
+                      // Padding(
+                      //   padding: const EdgeInsets.all(8.0),
+                      //   child: Container(
+                      //     width: MediaQuery.of(context).size.width,
+                      //     decoration: BoxDecoration(
+                      //         color: Colors.white,
+                      //         borderRadius: BorderRadius.circular(10.0)),
+                      //     child: Padding(
+                      //       padding: const EdgeInsets.all(8.0),
+                      //       child: Column(
+                      //         mainAxisAlignment: MainAxisAlignment.start,
+                      //         crossAxisAlignment: CrossAxisAlignment.start,
+                      //         children: [
+                      //           Text("Live Poll",
+                      //               style: TextStyle(
+                      //                   fontSize: 18,
+                      //                   fontWeight: FontWeight.w600)),
+                      //
+                      //           ListView.builder(
+                      //               shrinkWrap: true,
+                      //               physics: NeverScrollableScrollPhysics(),
+                      //               scrollDirection: Axis.vertical,
+                      //               padding: EdgeInsets.all(5.0),
+                      //               itemCount:
+                      //               livePollList.length > 0
+                      //                   ? livePollList.length
+                      //                   : 3,
+                      //               itemBuilder: (context, index) {
+                      //                 return getLivePollList(
+                      //                     livePollList, index);
+                      //               })
+                      //
+                      //         ],
+                      //       ),
+                      //     ),
+                      //   ),
+                      // )
 
+                    ],
+                  )
+                )
+
+
+            ),
+          );
+        },
+      )
+      ),
     );
   }
 

@@ -285,8 +285,9 @@ class _MainNavigationState extends State<MainNavigation> {
           children: <Widget>[
             HomeScreen(),
             AgendaScreen(),
-            GenerateQR(title: "UnConferrence", attendanceType: "2", roomNo: ""),//unconference
-            GenerateQR(title: "Inforte", attendanceType: "3", roomNo: ""),//inforte
+            // ConferenceScreen(eventType: "3",),//unconference
+            GenerateQR(title: "UnConferrence", attendanceType: "2", roomNo: "",flagQr: "0",),//unconference
+            GenerateQR(title: "Inforte", attendanceType: "3", roomNo: "",flagQr: "0",),//inforte
             BreatherScreen()
             // ConferenceScreen(),
             // // GenerateQR(),

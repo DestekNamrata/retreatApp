@@ -7,11 +7,13 @@ import 'package:flutter_app/Screens/Infobeats/detailsTab.dart';
 import 'package:flutter_app/Screens/Infobeats/stallTab.dart';
 import 'package:flutter_app/Screens/Profile/profile_screen.dart';
 import '../sos_screen.dart';
-
+import 'package:flutter_app/Screens/mainNavigation.dart';
 import '../../Utils/translate.dart';
 
 
 class InfobeatsScreen extends StatefulWidget{
+  String? eventType;
+  InfobeatsScreen({Key? key,@required this.eventType});
   InfobeatsState createState()=>InfobeatsState();
 }
 
@@ -151,16 +153,17 @@ class InfobeatsState extends State<InfobeatsScreen> with TickerProviderStateMixi
     return  DefaultTabController(
       length: 2,
       child: Scaffold(
-
-
         appBar: AppBar(
           // automaticallyImplyLeading: false,
           // toolbarHeight: 10.0,
           backgroundColor: Colors.white,
           elevation: 0,
-          leading: Icon(Icons.arrow_back_rounded,color: Colors.black,),
-          // title: Text(Translate.of(context)!.translate("conference"),style: TextStyle(color: Colors.black),),
-          // automaticallyImplyLeading: false,
+          leading: InkWell(
+              onTap: (){
+
+                Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>MainNavigation(userType: "0")));
+              },
+              child:Icon(Icons.arrow_back,size:20.0,color: Colors.black,)),
           actions: [
             Row(
               children: [
@@ -327,7 +330,7 @@ class InfobeatsState extends State<InfobeatsScreen> with TickerProviderStateMixi
               // Icon(Icons.camera_alt),
               // Icon(Icons.grade),
               // Icon(Icons.email),
-              DetailsTab(),
+              DetailsTab(eventType: widget.eventType!,),
               StallsTabScreen()
             ],
           ),

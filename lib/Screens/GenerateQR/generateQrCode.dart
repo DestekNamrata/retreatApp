@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/Configs/image.dart';
 import 'package:flutter_app/Configs/theme.dart';
+import 'package:flutter_app/Screens/Breather/breather_detail.dart';
+import 'package:flutter_app/Screens/Breather/breather_screen.dart';
 import 'package:flutter_app/Screens/Conference/conference_screen.dart';
 import 'package:flutter_app/Screens/Infobeats/infobeats_screen.dart';
 import 'package:flutter_app/Screens/Profile/profile_screen.dart';
@@ -17,8 +19,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 
 class GenerateQR extends StatefulWidget {
-  String? title,attendanceType,roomNo;
-  GenerateQR({Key? key,@required this.title,@required this.attendanceType,@required this.roomNo}):super(key: key);
+  String? title,attendanceType,roomNo,flagQr;
+  GenerateQR({Key? key,@required this.title,@required this.attendanceType,@required this.roomNo,@required this.flagQr}):super(key: key);
 
   @override
   _GenerateQRState createState() => _GenerateQRState();
@@ -46,7 +48,7 @@ class _GenerateQRState extends State<GenerateQR> {
   @override
   void dispose() {
     // TODO: implement dispose
-    timer!.cancel();
+    // timer!.cancel();
     super.dispose();
 
   }
@@ -54,6 +56,7 @@ class _GenerateQRState extends State<GenerateQR> {
   void setBlocData(Duration fiveSeconds) async {
     isconnectedToInternet = await ConnectivityCheck.checkInternetConnectivity();
     if (isconnectedToInternet == true) {
+
       timer=Timer.periodic(fiveSeconds, (Timer t) {
         scanAndGetDataBloc!.add(
             OnGetAttendanceData(attendanceType: widget.attendanceType.toString(),
@@ -80,7 +83,6 @@ class _GenerateQRState extends State<GenerateQR> {
               Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>MainNavigation(userType: "0")));
             },
             child:Icon(Icons.arrow_back,size:20.0,color: Colors.black,)),
-
         actions: [
           Row(
             children: [
@@ -108,9 +110,6 @@ class _GenerateQRState extends State<GenerateQR> {
                                 fontSize: 14.0),
                           )))
               ),
-
-
-
               SizedBox(
                 width: 20.0,
               ),
@@ -157,11 +156,9 @@ class _GenerateQRState extends State<GenerateQR> {
                     ],
                   )
               ),
-
               SizedBox(
                 width: 20.0,
               ),
-
               //profile
               InkWell(
                   onTap: () {
@@ -192,10 +189,15 @@ class _GenerateQRState extends State<GenerateQR> {
           if (state is GetAttendanceDataSuccess)
           {
             if(state.data!.checkOut==0){ //0=checked in and 1=checkout
-          if(widget.attendanceType=="2"){ //unconference
-          Navigator.push(context, MaterialPageRoute(builder: (context)=>ConferenceScreen()));
-          }else if(widget.attendanceType=="3"){//inforte
-            Navigator.push(context, MaterialPageRoute(builder: (context)=>InfobeatsScreen()));
+          if(widget.attendanceType=="2"){ //inforte
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>InfobeatsScreen(eventType:"2")));
+
+          }else if(widget.attendanceType=="3"){//unconference
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>ConferenceScreen(eventType:"3")));
+
+          }else{
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>BreatherDetail(eventType:"4",roomNo: widget.roomNo!,)));
+
           }
           }else{
                 Navigator.push(context, MaterialPageRoute(builder: (context)=>MainNavigation(userType: Application.user!.role.toString())));
@@ -216,27 +218,35 @@ class _GenerateQRState extends State<GenerateQR> {
               children: [
                 Text(widget.title.toString(),style: TextStyle(fontSize: 25,fontFamily: 'Inter-Bold',fontWeight: FontWeight.w600),),
                 SizedBox(height: 20.0,),
-                //venue
-                Row(
+                if(widget.flagQr!="1")
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Venue: ",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500,fontFamily: 'Inter-SemiBold',color: AppTheme.textColor),),
-                    Text("Deewan-E-Khas",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w400,fontFamily: 'Inter-Regular',color: AppTheme.textColor),),
+                    //venue
+                    Row(
+                      children: [
+                        Text("Venue: ",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500,fontFamily: 'Inter-SemiBold',color: AppTheme.textColor),),
+                        Text("Deewan-E-Khas",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w400,fontFamily: 'Inter-Regular',color: AppTheme.textColor),),
+                      ],
+                    ),
+                    //spoc
+                    Row(
+                      children: [
+                        Text("SPOC: ",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500,fontFamily: 'Inter-SemiBold',color: AppTheme.textColor),),
+                        Text("Tushar Matewar",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w400,fontFamily: 'Inter-Regular',color: AppTheme.textColor),),
+                      ],
+                    ),
+                    //contact
+                    Row(
+                      children: [
+                        Text("Contact: ",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500,fontFamily: 'Inter-SemiBold',color: AppTheme.textColor),),
+                        Text("9876543210",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w400,fontFamily: 'Inter-Regular',color: AppTheme.textColor),),
+                      ],
+                    ),
                   ],
                 ),
-                //spoc
-                Row(
-                  children: [
-                    Text("SPOC: ",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500,fontFamily: 'Inter-SemiBold',color: AppTheme.textColor),),
-                    Text("Tushar Matewar",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w400,fontFamily: 'Inter-Regular',color: AppTheme.textColor),),
-                  ],
-                ),
-                //contact
-                Row(
-                  children: [
-                    Text("Contact: ",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500,fontFamily: 'Inter-SemiBold',color: AppTheme.textColor),),
-                    Text("9876543210",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w400,fontFamily: 'Inter-Regular',color: AppTheme.textColor),),
-                  ],
-                ),
+
                 SizedBox(height: 70),
                 Align(
                   alignment: Alignment.center,
@@ -245,42 +255,9 @@ class _GenerateQRState extends State<GenerateQR> {
 
           Align(
             alignment: Alignment.center,
-            child:Text("Scan to enter",
-              style: TextStyle(fontSize: 16,fontWeight: FontWeight.w600,fontFamily: 'Inter-SemiBold',color: AppTheme.textColor),)),
-
-                // SizedBox(height: 20),
-                // Text("Generate QR Code",style: TextStyle(fontSize: 20),),
-                //
-                // //TextField for input link
-                // TextField(
-                //   decoration: InputDecoration(
-                //       hintText: "Enter your link here..."
-                //   ),
-                // ),
-                // Padding(
-                //   padding: const EdgeInsets.all(8.0),
-                //   //Button for generating QR code
-                //   child: FlatButton(
-                //     onPressed: () async {
-                //       //a little validation for the textfield
-                //       if (qrdataFeed.text.isEmpty) {
-                //         setState(() {
-                //           qrData = "";
-                //         });
-                //       } else {
-                //         setState(() {
-                //           qrData = qrdataFeed.text;
-                //         });
-                //       }
-                //     },
-                //     //Title given on Button
-                //     child: Text("Generate QR Code",style: TextStyle(color: Colors.indigo[900],),),
-                //     shape: RoundedRectangleBorder(
-                //       borderRadius: BorderRadius.circular(20),
-                //       side: BorderSide(color: Colors.black),
-                //     ),
-                //   ),
-                // ),
+            child:Text(widget.flagQr!="1"?"Scan to enter":"Scan to Exit",
+              style: TextStyle(fontSize: 16,fontWeight: FontWeight.w600,
+                  fontFamily: 'Inter-SemiBold',color: AppTheme.textColor),)),
               ],
             ),
           )
