@@ -34,6 +34,13 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
+  dio: ^4.0.6
+  file_picker: ^4.5.1
+  flutter_pdfview: ^1.2.2
+  http: ^0.13.4
+  path_provider: ^2.0.10
+  path: ^1.8.0
+  flutter_initicon: ^2.0.0
 
 dev_dependencies:
   flutter_test:
@@ -49,6 +56,8 @@ dev_dependencies:
 #  shared_preferences: 2.0.1
 
   cached_network_image: 3.1.0
+  image_picker: 0.8.2
+  image_cropper: 1.4.1
   shimmer: 2.0.0
   connectivity: ^3.0.6
   pull_to_refresh: ^2.0.0
@@ -71,8 +80,9 @@ dev_dependencies:
 #  in_app_webview: ^0.0.7
   flutter_inappwebview: ^5.4.3+7
   flutter_svg:
-
-
+  flutter_html: ^2.2.1
+  flutter_vector_icons: ^1.0.0
+  readmore: ^2.1.0
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your
@@ -122,11 +132,10 @@ flutter:
         - asset: assets/fonts/Inter-SemiBold.ttf
         - asset: assets/fonts/Inter-Black.ttf
 
-  #    - family: Trajan Pro
-#      fonts:
-#         - asset: fonts/TrajanPro.ttf
-#         - asset: fonts/TrajanPro_Bold.ttf
-#           weight: 700
+    - family: SquadeOne
+      fonts:
+        - asset: assets/fonts/SquadaOne-Regular.ttf
+          weight: 700
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

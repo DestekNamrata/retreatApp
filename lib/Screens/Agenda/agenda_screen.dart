@@ -20,32 +20,36 @@ class _AgendaState extends State<AgendaScreen>{
       appBar: AppBar(
         // toolbarHeight: 10.0,
         backgroundColor: Colors.white,
-        // elevation: 0,
-        title:
-         InkWell(
-           onTap: (){
-             Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>MainNavigation(userType: "0")));
-           },
-             child:Icon(Icons.arrow_back,size:20.0,color: Colors.black,)),
+        elevation: 0,
+        leading:InkWell(
+            onTap: (){
+              Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>MainNavigation(userType: "0")));
+            },
+            child:Icon(Icons.arrow_back,size:20.0,color: Colors.black,)),
+
+        // title:
+        //  InkWell(
+        //    onTap: (){
+        //      Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>MainNavigation(userType: "0")));
+        //    },
+        //      child:Icon(Icons.arrow_back,size:20.0,color: Colors.black,)),
         // automaticallyImplyLeading: false,
         actions: [
           Row(
             children: [
               InkWell(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => SOSScreen()));
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>SOSScreen()));
                   },
-                  child: Container(
+                  child:Container(
                       width: 40.0,
                       decoration: BoxDecoration(
                         // border: Border.all(color: Colors.black),
                           borderRadius:
                           BorderRadius.circular(5.0),
                           color: Theme.of(context)
-                              .dividerColor),
+                              .dividerColor
+                      ),
                       child: Padding(
                           padding: EdgeInsets.all(3.0),
                           child: Text(
@@ -55,12 +59,17 @@ class _AgendaState extends State<AgendaScreen>{
                                 color: AppTheme.appColor,
                                 fontWeight: FontWeight.w500,
                                 fontSize: 14.0),
-                          )))),
+                          )))
+              ),
+
+
+
               SizedBox(
-                width: 8.0,
+                width: 20.0,
               ),
               InkWell(
-                  onTap: () {},
+                  onTap: () {
+                  },
                   child: Stack(
                     children: [
                       // IconButton(
@@ -88,21 +97,24 @@ class _AgendaState extends State<AgendaScreen>{
                             minHeight: 4,
                           ),
                           child: Text(
-                            "1",
+                            "0",
                             style: new TextStyle(
                                 color: Colors.white,
-                                fontSize: 9,
-                                fontWeight: FontWeight.w500,
+                                fontSize: 10,
+                                fontWeight: FontWeight.w400,
                                 fontFamily: 'Inter-Regular'),
                             textAlign: TextAlign.center,
                           ),
                         ),
                       ),
                     ],
-                  )),
-              SizedBox(
-                width: 8.0,
+                  )
               ),
+
+              SizedBox(
+                width: 20.0,
+              ),
+
               //profile
               InkWell(
                   onTap: () {
@@ -120,6 +132,8 @@ class _AgendaState extends State<AgendaScreen>{
                       height: 25.0,
                     ),
                   )),
+              SizedBox(width: 15,)
+
             ],
           )
         ],
@@ -133,21 +147,21 @@ class _AgendaState extends State<AgendaScreen>{
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(width: 15.0,),
-            Text(Translate.of(context)!.translate("agenda"),style: TextStyle(fontSize:25.0,fontFamily:'Inter-SemiBold',
-                color: Colors.black,fontWeight: FontWeight.w600),),
+            Text(Translate.of(context)!.translate("agenda"),style: TextStyle(fontSize:25.0,fontFamily:'SquadaOne',
+                color: Colors.black,fontWeight: FontWeight.w700),),
             SizedBox(width: 15.0,),
 
             //23Sept
             InkWell(
               onTap: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context)=>DayWiseScreen(title: "Day 1",)));
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>DayWiseScreen(title: "Day 1",attendanceDay:"1")));
               },
               child:Image.asset(Images.day1),
             ),
              //24Sept
             InkWell(
               onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>DayWiseScreen(title: "Day 2",)));
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>DayWiseScreen(title: "Day 2",attendanceDay:"2")));
 
               },
               child:Image.asset(Images.day2),
@@ -155,7 +169,7 @@ class _AgendaState extends State<AgendaScreen>{
             //25Sept
             InkWell(
               onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>DayWiseScreen(title: "Day 3",)));
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>DayWiseScreen(title: "Day 3",attendanceDay:"3")));
 
               },
               child:Image.asset(Images.day3),

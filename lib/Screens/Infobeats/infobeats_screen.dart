@@ -3,15 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:expand_widget/expand_widget.dart';
 import 'package:flutter_app/Configs/image.dart';
 import 'package:flutter_app/Configs/theme.dart';
+import 'package:flutter_app/Screens/GenerateQR/generateQrCode.dart';
 import 'package:flutter_app/Screens/Infobeats/detailsTab.dart';
 import 'package:flutter_app/Screens/Infobeats/stallTab.dart';
 import 'package:flutter_app/Screens/Profile/profile_screen.dart';
 import '../sos_screen.dart';
-
+import 'package:flutter_app/Screens/mainNavigation.dart';
 import '../../Utils/translate.dart';
+import 'package:flutter_html/flutter_html.dart';
 
 
 class InfobeatsScreen extends StatefulWidget{
+  String? eventType;
+  InfobeatsScreen({Key? key,@required this.eventType});
   InfobeatsState createState()=>InfobeatsState();
 }
 
@@ -151,145 +155,193 @@ class InfobeatsState extends State<InfobeatsScreen> with TickerProviderStateMixi
     return  DefaultTabController(
       length: 2,
       child: Scaffold(
-
         appBar: AppBar(
-          title: Text(Translate.of(context)!.translate("infobeats"),style: TextStyle(color: Colors.black),),
-            // automaticallyImplyLeading: false,
-            actions: [
-              Row(
-                children: [
-                  InkWell(
-                      onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>SOSScreen()));
-                      },
-                      child:Container(
-                          width: 55.0,
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.black),
-                            borderRadius: BorderRadius.circular(35.0),
+          // automaticallyImplyLeading: false,
+          // toolbarHeight: 10.0,
+          backgroundColor: Colors.white,
+          elevation: 0,
+          leading: InkWell(
+              onTap: (){
 
-                          ),
-                          child:Padding(
-                              padding: EdgeInsets.all(3.0),
-                              child:Text(textAlign: TextAlign.center,"SOS",style: TextStyle(color: Colors.black,fontWeight: FontWeight.w500,fontSize: 14.0),))
-                      )),
+                Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>MainNavigation(userType: "0")));
+              },
+              child:Icon(Icons.arrow_back,size:20.0,color: Colors.black,)),
+          actions: [
+            Row(
+              children: [
+                InkWell(
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>SOSScreen()));
+                    },
+                    child:Container(
+                        width: 40.0,
+                        decoration: BoxDecoration(
+                          // border: Border.all(color: Colors.black),
+                            borderRadius:
+                            BorderRadius.circular(5.0),
+                            color: Theme.of(context)
+                                .dividerColor
+                        ),
+                        child: Padding(
+                            padding: EdgeInsets.all(3.0),
+                            child: Text(
+                              textAlign: TextAlign.center,
+                              "SOS",
+                              style: TextStyle(
+                                  color: AppTheme.appColor,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 14.0),
+                            )))
+                ),
 
-                  InkWell(
-                      onTap: () {
-                      },
-                      child: Stack(children: [
+
+
+                SizedBox(
+                  width: 20.0,
+                ),
+                InkWell(
+                    onTap: () {
+                    },
+                    child: Stack(
+                      children: [
                         // IconButton(
                         //   icon:
                         Image.asset(
                           Images.notifi,
-                          width: 37.0,
-                          height: 37.0,
+                          width: 22.0,
+                          height: 22.0,
                         ),
                         // tooltip: "Save Todo and Retrun to List",
                         //   onPressed: () {},
                         // ),
                         Positioned(
-                          right: 5,
-                          top: 1,
+                          right: 0,
+                          top: 0,
                           child: new Container(
                             padding: EdgeInsets.all(1),
                             decoration: new BoxDecoration(
                               color: Colors.red,
-                              borderRadius: BorderRadius.circular(8.5),
+                              borderRadius:
+                              BorderRadius.circular(8.5),
                             ),
                             constraints: BoxConstraints(
-                              minWidth: 17,
+                              minWidth: 15,
                               minHeight: 4,
                             ),
                             child: Text(
                               "0",
-                              style: const TextStyle(
+                              style: new TextStyle(
                                   color: Colors.white,
                                   fontSize: 10,
                                   fontWeight: FontWeight.w400,
-                                  fontFamily: 'Poppins'
-                              ),
+                                  fontFamily: 'Inter-Regular'),
                               textAlign: TextAlign.center,
                             ),
                           ),
                         ),
-                        // if(Application.user.userType=="1")//for fleet
-                        // Positioned(
-                        //   right: 5,
-                        //   top: 5,
-                        //   child: new Container(
-                        //     padding: EdgeInsets.all(1),
-                        //     decoration: new BoxDecoration(
-                        //       color: Colors.red,
-                        //       borderRadius: BorderRadius.circular(8.5),
-                        //     ),
-                        //     constraints: BoxConstraints(
-                        //       minWidth: 17,
-                        //       minHeight: 17,
-                        //     ),
-                        //     child: Text(
-                        //       "0",
-                        //       style: new TextStyle(
-                        //           color: Colors.white,
-                        //           fontSize: 10,
-                        //           fontWeight: FontWeight.w400,
-                        //           fontFamily: 'Poppins'
-                        //       ),
-                        //       textAlign: TextAlign.center,
-                        //     ),
-                        //   ),
-                        // )
                       ],
-                      )),
-                  //profile
-                  InkWell(
-                      onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>ProfileScreen()));
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.only(right: 5.0),
-                        child: Image.asset(
-                          Images.account,
-                          width: 37.0,
-                          height: 37.0,
-                        ),
-                      )
+                    )
+                ),
+
+                SizedBox(
+                  width: 20.0,
+                ),
+
+                //profile
+                InkWell(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  ProfileScreen()));
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 5.0),
+                      child: Image.asset(
+                        Images.account,
+                        width: 25.0,
+                        height: 25.0,
+                      ),
+                    )),
+                SizedBox(width: 15,)
+
+              ],
+            )
+          ],
+
+
+        ),
+        body: Scaffold(
+            appBar: AppBar(
+              automaticallyImplyLeading: false,
+              backgroundColor: Colors.white,
+              title: Text(Translate.of(context)!.translate("infobeats"),style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 30,
+                  fontFamily: 'SquadaOne'),),
+              actions: [
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: ElevatedButton(
+                    onPressed: (){
+                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>
+                          GenerateQR(title: "Unconference"
+                            , attendanceType: "2", roomNo: "",flagQr: "1",)));
+                    },
+                    child: Text("Exit Room",
+                      style: TextStyle(
+                          color: AppTheme.appColor,
+                          fontWeight: FontWeight.w600),),
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12), // <-- Radius
+                      ),
+
+                      side: BorderSide(
+                        width: 2.0,
+                        color: AppTheme.appColor,
+                      ),
+                    ),
 
                   ),
+                ),
 
+                SizedBox(
+                  width: 20,
+                )
+              ],
+              bottom:  TabBar(
+                labelColor: AppTheme.appColor,
+                unselectedLabelColor: Colors.black,
+                indicatorColor: AppTheme.appColor,
+                tabs: [
+                  Tab(
+                    text: "Details",
+                  ),
+                  Tab(
+                    text: "Voting",
+                  ),
+                  // Tab(icon: Icon(Icons.camera_alt)),
+                  // Tab(icon: Icon(Icons.grade)),
+                  // Tab(icon: Icon(Icons.email)),
                 ],
-              )
+              ),
+
+
+            ),
+          body: TabBarView(
+            children: [
+              // Icon(Icons.music_note),
+              // Icon(Icons.music_video),
+              // Icon(Icons.camera_alt),
+              // Icon(Icons.grade),
+              // Icon(Icons.email),
+              DetailsTab(),
+              StallsTabScreen()
             ],
-          bottom: const TabBar(
-            labelColor: Colors.white,
-                  unselectedLabelColor: Colors.black,
-            tabs: [
-            Tab(
-                      text: "Details",
-                    ),
-                    Tab(
-                      text: "Stalls",
-                    ),
-              // Tab(icon: Icon(Icons.camera_alt)),
-              // Tab(icon: Icon(Icons.grade)),
-              // Tab(icon: Icon(Icons.email)),
-            ],
-          ), // TabBar
-          // toolbarHeight: 10.0,
-          backgroundColor: Colors.grey,
-          elevation: 0,
-        ), // AppBar
-        body:TabBarView(
-          children: [
-            // Icon(Icons.music_note),
-            // Icon(Icons.music_video),
-            // Icon(Icons.camera_alt),
-            // Icon(Icons.grade),
-            // Icon(Icons.email),
-            DetailsTab(),
-            StallsTabScreen()
-          ],
-        ), // TabBarView
+          ),
+        )
+        , // TabBarView
       ), // Scaffold
     );
   }

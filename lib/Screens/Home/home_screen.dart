@@ -7,10 +7,12 @@ import 'package:flutter_app/Configs/theme.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_app/Screens/Agenda/agenda_screen.dart';
 import 'package:flutter_app/Screens/Agenda/agenda_screen_old.dart';
+import 'package:flutter_app/Screens/Breather/breather_screen.dart';
 import 'package:flutter_app/Screens/Conference/conference_screen.dart';
 import 'package:flutter_app/Screens/Infobeats/infobeats_screen.dart';
 import 'package:flutter_app/Screens/Profile/profile_screen.dart';
 import 'package:flutter_app/Screens/Profile/ticket_screen.dart';
+import 'package:flutter_app/Screens/Profile/yours_ticket_screen.dart';
 import '../sos_screen.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -32,8 +34,36 @@ class _HomeScreenState extends State<HomeScreen> {
             context: context,
             builder: (context) {
               return AlertDialog(
-                title: new Text('Do you want to exit this application?'),
+                title: new Text('Do you want to exit ?'),
                 actions: <Widget>[
+                  // Container(
+                  //   height: 60.0,
+                  //   decoration: BoxDecoration(
+                  //     color: Color(0xff8018BB),
+                  //
+                  //     borderRadius: BorderRadius.only(
+                  //         bottomRight: Radius.circular(5), bottomLeft: Radius.circular(5)),
+                  //   ),
+                  //   child:
+                  //   Row(
+                  //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //     children: [
+                  //       Expanded(child: Text("Cancel",style: TextStyle(fontSize: 14,color: Colors.white,fontFamily: 'Inter-SemiBold',
+                  //       fontWeight: FontWeight.w600),)),
+                  //       // Text("|",style: TextStyle(fontSize: 14,color: Colors.white,fontWeight: FontWeight.bold),),
+                  //       Container(
+                  //         margin: EdgeInsets.only(top: 10,bottom: 10.0),
+                  //         child: VerticalDivider(
+                  //
+                  //           color: Colors.white,
+                  //           thickness: 1,
+                  //         ),
+                  //       ),
+                  //       Expanded(child:Text("OK",style: TextStyle(fontSize: 14,color: Colors.white,fontFamily: 'Inter-SemiBold',
+                  //           fontWeight: FontWeight.w600),))
+                  //     ],
+                  //   ),
+                  // )
                   FlatButton(
                     onPressed: () => Navigator.of(context).pop(false),
                     child: new Text('No'),
@@ -234,7 +264,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 color: AppTheme.appColor,
                                                 fontWeight: FontWeight.w500,
                                                 fontSize: 14.0),
-                                          )))),
+                                          )))
+                              ),
                               SizedBox(
                                 width: 8.0,
                               ),
@@ -278,7 +309,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                         ),
                                       ),
                                     ],
-                                  )),
+                                  )
+                              ),
                               SizedBox(
                                 width: 8.0,
                               ),
@@ -313,11 +345,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text("CONNECT",style: TextStyle(fontWeight: FontWeight.w600,fontFamily: 'Inter-Bold',
+                          Text("CONNECT",style: TextStyle(fontWeight: FontWeight.w600,fontFamily: 'SquadaOne-Regular',
                           fontSize: 25.0,color: Colors.white),),
-                          Text("COLLABORATE",style: TextStyle(fontWeight: FontWeight.w600,fontFamily: 'Inter-Bold',
+                          Text("COLLABORATE",style: TextStyle(fontWeight: FontWeight.w600,fontFamily: 'SquadaOne-Regular',
                               fontSize: 25.0,color: Colors.white),),
-                          Text("CELEBRATE",style: TextStyle(fontWeight: FontWeight.w600,fontFamily: 'Inter-Bold',
+                          Text("CELEBRATE",style: TextStyle(fontWeight: FontWeight.w600,fontFamily: 'SquadaOne-Regular',
                               fontSize: 25.0,color: Colors.white),),
                         ],
                       )
@@ -347,7 +379,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                            Navigator.push(context, MaterialPageRoute(builder: (context)=>InfobeatsScreen()));
 
                                          }else if(index==3){
-                                             Navigator.push(context, MaterialPageRoute(builder: (context)=>TicketScreen()));
+                                             Navigator.push(context, MaterialPageRoute(builder: (context)=>BreatherScreen()));
+
+                                         }else {
+                                           Navigator.push(context, MaterialPageRoute(builder: (context)=>YoursTicketScreen()));
 
                                          }
                                        },

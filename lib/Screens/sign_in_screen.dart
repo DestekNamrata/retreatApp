@@ -91,7 +91,11 @@ class _SignInScreenState extends State<SignInScreen>{
             // scaffoldKey.currentState.showSnackBar(SnackBar(
             //   content: Text(authStatus),
             // ));
-            Fluttertoast.showToast(msg: authStatus);
+            setState((){
+              loading=false;
+              Fluttertoast.showToast(msg: authStatus);
+
+            });
 
           }
         },
@@ -155,7 +159,7 @@ class _SignInScreenState extends State<SignInScreen>{
               padding: const EdgeInsets.only(left: 20.0),
               child: Text(
                 "Login",
-                style: TextStyle(fontFamily: 'Inter-Bold',fontWeight:FontWeight.w600,fontSize: 30.0,color: AppTheme.appColor),
+                style: TextStyle(fontFamily: 'SquadaOne',fontWeight:FontWeight.w600,fontSize: 30.0,color: AppTheme.appColor),
               ),
             ),
             SizedBox(height: 40.0,),
@@ -163,7 +167,7 @@ class _SignInScreenState extends State<SignInScreen>{
               padding: const EdgeInsets.only(left: 20.0),
               child: Text(
                 Translate.of(context)!.translate('input_mobile'),
-                style: TextStyle(fontFamily: 'Inter-Regular',fontWeight:FontWeight.normal,fontSize: 14.0,color: Colors.black),
+                style: TextStyle(fontFamily: 'Inter',fontWeight:FontWeight.w500,fontSize: 14.0,color: Colors.black),
               ),
             ),
             // Row(
@@ -225,7 +229,8 @@ class _SignInScreenState extends State<SignInScreen>{
                                   TextFormField(
                                     controller:_mobilecontroller,
                                     style: TextStyle(
-                                        fontFamily: 'Poppins-Regular',color: Colors.black,fontSize: 14.0
+                                        fontFamily: 'Inter',color: Colors.black,fontSize: 14.0,
+                                      fontWeight: FontWeight.w600
                                     ),
                                     keyboardType: TextInputType.phone,
                                     decoration: InputDecoration(

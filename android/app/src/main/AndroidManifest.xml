@@ -2,9 +2,15 @@
     package="com.retreat_app">
     <!--        android:name="${applicationName}"-->
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
    <application
-        android:label="Retreat App"
-       android:icon="@drawable/ic_launcher">
+        android:label="InfoCepts Retreat 2022"
+        android:requestLegacyExternalStorage="true"
+        android:icon="@drawable/ic_launcher">
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -31,5 +37,9 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+       <activity
+           android:name="com.yalantis.ucrop.UCropActivity"
+           android:screenOrientation="portrait"
+           android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
     </application>
 </manifest>

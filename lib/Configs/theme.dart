@@ -16,12 +16,15 @@ class AppTheme {
   static Color bgColor=Color(0xFF00000029);
   static const dayColor=Color(0xFFFB7723);
   static Color appColor=Color(0xffEA357C);
+  static Color textHighlight=Color(0xff889DAC);
+  static Color backgroundColor=Color(0xFFE2E7EE);
+
 
   ///Default font
   static String currentFont = "Inter";
 
   ///List Font support
-  static List<String> fontSupport = ["Raleway", "Roboto", "Merriweather"];
+  static List<String> fontSupport = ["SquadaOne", "Roboto", "Merriweather"];
 
   ///Default Theme
   static ThemeModel currentTheme = ThemeModel.fromJson({

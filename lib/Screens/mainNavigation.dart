@@ -13,6 +13,8 @@ import 'package:flutter_app/Screens/Home/home_screen.dart';
 import 'package:flutter_app/Screens/Infobeats/infobeats_screen.dart';
 import 'package:flutter_app/Screens/Profile/profile_screen.dart';
 import 'package:flutter_app/Utils/translate.dart';
+import 'package:flutter_app/Utils/util_preferences.dart';
+import 'Breather/breather_screen.dart';
 import 'sos_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -80,6 +82,7 @@ class _MainNavigationState extends State<MainNavigation> {
           Images.inforte1,
           width: 20.0,
           height: 20.0,
+          color: Theme.of(context).unselectedWidgetColor,
         ),
         activeIcon: Image.asset(
           Images.inforte1,
@@ -283,10 +286,23 @@ class _MainNavigationState extends State<MainNavigation> {
           children: <Widget>[
             HomeScreen(),
             AgendaScreen(),
-            GenerateQR(),
-            // ScanQR(),
-            InfobeatsScreen(),
-            HomeScreen()
+            UtilPreferences.getString("qrFlag")=="0" //checkedout out i.e exit room
+             ?
+            GenerateQR(title: "UnConferrence", attendanceType: "2", roomNo: "",flagQr: "0",)
+            :
+            ConferenceScreen(eventType: "3",),//unconference 1==checked in flag
+            UtilPreferences.getString("qrFlag")=="0" //checkedout out i.e exit room
+                ?
+            GenerateQR(title: "Inforte", attendanceType: "3", roomNo: "",flagQr: "0",)
+            :
+            //inforte
+            InfobeatsScreen(eventType: "2"),
+
+            BreatherScreen()
+            // ConferenceScreen(),
+            // // GenerateQR(),
+            // // ScanQR(),
+            // BreatherScreen()
 
 
           ],

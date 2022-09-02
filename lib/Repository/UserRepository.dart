@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_app/Api/api.dart';
 import 'package:flutter_app/Models/model_login.dart';
+import 'package:flutter_app/Utils/application.dart';
 import 'package:flutter_app/Utils/preferences.dart';
 import 'package:flutter_app/Utils/util_preferences.dart';
 
@@ -14,16 +15,7 @@ class UserRepository {
     final params = {"mobile":mobile,"password":password};
     return await Api.login(params);
   }
-  // //fleet login
-  // Future<dynamic> fleetlogin({String fbId,String mobile,String fcmId,String deviceId}) async {
-  //   final params = {"fb_id":fbId,"mobile":mobile,"fcm_id":fcmId,"device_id":deviceId};
-  //   return await Api.fleetlogin(params);
-  // }
-  //
-  // Future<dynamic> userReg({String api_token,String mobile, String otp}) async {
-  //   final params = {"api_token":api_token,"mobile": mobile, "otp": otp};
-  //   return await Api.login(params);
-  // }
+
   //
   // ///Save Storage
   Future<dynamic> saveUser(User user) async {
@@ -32,6 +24,27 @@ class UserRepository {
       jsonEncode(user.toJson()),
     );
   }
+
+  //Payment History
+  Future<dynamic> fetchAttendanceHistory({String? userId}) async {
+    final params = {"user_id":userId};
+    return await Api.getAttendanceHistory(params);
+  }
+
+  Future<dynamic> fetchAgendaList({String? agendaDay}) async {
+    final params = {"agenda_day":agendaDay};
+    return await Api.getAgenta(params);
+  }
+
+  Future<dynamic> fetchBoothDetails({String? userId}) async {
+    final params = {"user_id":userId};
+    return await Api.getBoothDetails(params);
+  }
+
+  Future<dynamic> fetchVotingQue() async {
+    return await Api.getVotingQue();
+  }
+
   //
   // //save image
   // Future<dynamic> saveImage(String image) async {
@@ -131,29 +144,33 @@ class UserRepository {
   // }
   //
   // ///Get from Storage
+  Future<dynamic> fetchUnconfAgendaList({String? eventType,String? userId,String? roomNo}) async {
+    final params = {"event_type":eventType,"user_id":userId,"room_no":roomNo};
+    return await Api.getAgendaUnconf(params);
+  }
+
+  Future<dynamic> fetchLivePollList({String? eventType,String? userId,String? roomNo}) async {
+    final params = {"event_type":eventType,"user_id":userId,"room_no":roomNo};
+    return await Api.getLivePoll(params);
+  }
+
+  Future<dynamic> fetchRoomList() async {
+    return await Api.getRoomList();
+  }
   dynamic getUser() {
     return UtilPreferences.getString(Preferences.user);
   }
-  //
-  // dynamic getProfile() {
-  //   return UtilPreferences.getString(Preferences.profilePic);
-  // }
-  //
-  //
-  // //get cart details
-  // ///Get from Storage
-  // dynamic getCart() {
-  //   return UtilPreferences.getString(Preferences.cart);
-  // }
-  //
+
   // ///Delete Storage
   Future<dynamic> deleteUser() async {
     return await UtilPreferences.remove(Preferences.user);
   }
-  //
-  // Future<dynamic> deleteCart() async {
-  //   return await UtilPreferences.remove(Preferences.cart);
-  // }
+
+  //get attendance data
+  Future<dynamic> getAttendanceData({String? attendanceType,String? roomNo,}) async {
+    final params = {"user_id":Application.user!.id.toString(),"attendance_type":attendanceType,"room_no":roomNo};
+    return await Api.getAttendanceDeta(params);
+  }
 
 }
 
