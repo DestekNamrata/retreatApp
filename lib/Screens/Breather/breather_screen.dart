@@ -27,6 +27,7 @@ import 'package:intl/intl.dart';
 import 'dart:io';
 import 'package:flutter_app/Screens/mainNavigation.dart';
 import 'package:readmore/readmore.dart';
+import 'package:flutter_app/Screens/Breather/breather_detail.dart';
 
 import '../../Utils/translate.dart';
 
@@ -133,6 +134,8 @@ class BreatherScreenState extends State<BreatherScreen> {
       onTap: (){
         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>GenerateQR(title: "Breather",attendanceType: "4",
         roomNo: roomList[index].id!.toString(),flagQr: "0",)));
+        // Navigator.push(context, MaterialPageRoute(builder: (context)=>BreatherDetail(eventType:"4",roomNo: "1",)));
+
 
       },
       child: Card(
@@ -282,7 +285,9 @@ class BreatherScreenState extends State<BreatherScreen> {
             //   Padding(
             //     padding: const EdgeInsets.all(10.0),
             //     child: ElevatedButton(
-            //       onPressed: (){},
+            //       onPressed: (){
+            //
+            //       },
             //       child: Text("Exit Room",
             //         style: TextStyle(
             //             color: AppTheme.appColor,

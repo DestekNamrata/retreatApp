@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/Bloc/agenda/agenda_state.dart';
 import 'package:flutter_app/Bloc/unconference/unconference_bloc.dart';
 import 'package:flutter_app/Bloc/unconference/unconference_event.dart';
+import 'package:flutter_app/Bloc/unconference/unconference_state.dart';
 import 'package:flutter_app/Configs/image.dart';
 import 'package:flutter_app/Configs/theme.dart';
 import 'package:flutter_app/Models/model_agenda_unconference.dart';
@@ -64,7 +66,6 @@ class BreatherDetailState extends State<BreatherDetail>{
 
   Widget getAgendaList(List<UnConfAgendaData> unconfAgendaList, int index){
     if (unconfAgendaList.length <= 0) {
-
       return ListView.builder(
         padding: EdgeInsets.all(0),
         shrinkWrap: true,
@@ -459,48 +460,72 @@ class BreatherDetailState extends State<BreatherDetail>{
 
           ),
           body: SafeArea(
-              child: Container(
-                child:
-                Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Column(
+              child: BlocBuilder<UnconferenceBloc, UnconferenceState>(
+                builder: (context, unconference) {
+                  return BlocListener<UnconferenceBloc, UnconferenceState>(
+                    listener: (context, state) {
+                      if (state is AgendaListSuccess) {
+                        flagNoAgendaAvailable = false;
+                        unconfAgendaList = state.agendaList!;
 
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Container(
 
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5.0),
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey,
-                                offset: Offset(0.0, 1.0), //(x,y)
-                                blurRadius: 6.0,
-                              ),
-                            ],
+                      }
+
+                      if (state is AgendaListFail) {
+                        flagNoAgendaAvailable = true;
+                      }
+
+                      if (state is AgendaListLoading) {
+                        flagNoAgendaAvailable = false;
+                      }
+
+                    },
+                    child: SmartRefresher(
+                        enablePullDown: true,
+                        onRefresh: _onRefresh,
+                        controller: _controller,
+                        child:
+                        Container(
+                          child:
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5.0),
+                                  color: Colors.white,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey,
+                                      offset: Offset(0.0, 1.0), //(x,y)
+                                      blurRadius: 6.0,
+                                    ),
+                                  ],
+                                ),
+                                child:ListView.builder(
+                                    shrinkWrap: true,
+                                    physics: NeverScrollableScrollPhysics(),
+                                    scrollDirection: Axis.vertical,
+                                    padding: EdgeInsets.all(5.0),
+                                    itemCount:
+                                    unconfAgendaList.length > 0
+                                        ? unconfAgendaList.length
+                                        : 3,
+                                    itemBuilder: (context, index) {
+                                      return getAgendaList(
+                                          unconfAgendaList, index);
+                                    })
+
+                            ),
                           ),
-                          child:ListView.builder(
-                              shrinkWrap: true,
-                              physics: NeverScrollableScrollPhysics(),
-                              scrollDirection: Axis.vertical,
-                              padding: EdgeInsets.all(5.0),
-                              itemCount:
-                              unconfAgendaList.length > 0
-                                  ? unconfAgendaList.length
-                                  : 3,
-                              itemBuilder: (context, index) {
-                                return getAgendaList(
-                                    unconfAgendaList, index);
-                              })
+                        )
 
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+
+                    ),
+                  );
+                },
               )
+
           ),
         )
 

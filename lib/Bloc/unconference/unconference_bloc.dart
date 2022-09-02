@@ -28,7 +28,8 @@ class UnconferenceBloc extends Bloc<UnconferenceEvent, UnconferenceState> {
       final UnconferenceAgendaResp response = await unconferenceRepo!
           .fetchUnconfAgendaList(
        eventType: event.eventType,
-        userId: Application.user!.id.toString()
+        userId: Application.user!.id.toString(),
+        roomNo:event.roomNo!
       );
 
       final Iterable refactorAgendUnconf = response.data ?? [];
