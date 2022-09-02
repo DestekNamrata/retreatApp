@@ -52,6 +52,10 @@ class UserRepository {
     return await Api.getVotingQue();
   }
 
+  Future<dynamic> fetchVotingAns() async {
+    return await Api.getVotingAns();
+  }
+
   //
   // //save image
   // Future<dynamic> saveImage(String image) async {

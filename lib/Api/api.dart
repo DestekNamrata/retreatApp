@@ -8,6 +8,7 @@ import 'package:http/http.dart' as http;
 
 import 'dart:convert';
 
+import '../Models/model_VotingAnswer.dart';
 import '../Models/model_boothDetails.dart';
 import '../Models/model_votingQues.dart';
 
@@ -24,6 +25,7 @@ class Api {
   static const GET_AGENDA_DETAIL=HOST_URL+"get_agenda";
   static const GET_BOOTH_DETAILS=HOST_URL+"get_booth_details";
   static const GET_VOTING_QUESTIONS=HOST_URL+"get_voting_questions";
+  static const GET_VOTING_ANSWERS=HOST_URL+"get_booth_list";
   static const GET_SOS=HOST_URL+"sos_emergency";
 
 
@@ -72,7 +74,7 @@ class Api {
       Uri.parse(GET_ATTENDANCE_HISTORY),
       body: params,
       headers: {
-        "Authorization": "Bearer"+
+        "Authorization": "Bearer "+
         UtilPreferences.getString("token").toString(),
       },
       //
@@ -108,7 +110,7 @@ class Api {
       Uri.parse(GET_BOOTH_DETAILS),
       body: params,
       headers: {
-        "Authorization": "Bearer"+
+        "Authorization": "Bearer "+
         UtilPreferences.getString("token").toString(),
       },
       //
@@ -125,7 +127,7 @@ class Api {
     final response = await http.get(
       Uri.parse(GET_VOTING_QUESTIONS),
       headers: {
-        "Authorization": "Bearer"+
+        "Authorization": "Bearer "+
             UtilPreferences.getString("token").toString(),
       },
       //
@@ -134,6 +136,23 @@ class Api {
     final responseJson = json.decode(response.body);
     print(responseJson);
     return VotingQueRepo.fromJson(responseJson);
+    // }
+  }
+
+  //Get Voting Answer
+  static Future<dynamic> getVotingAns() async {
+    final response = await http.get(
+      Uri.parse(GET_VOTING_ANSWERS),
+      headers: {
+        "Authorization": "Bearer "+
+            UtilPreferences.getString("token").toString(),
+      },
+      //
+    );
+    // if (response.statusCode == 200) {
+    final responseJson = json.decode(response.body);
+    print(responseJson);
+    return VotingAnsRepo.fromJson(responseJson);
     // }
   }
 

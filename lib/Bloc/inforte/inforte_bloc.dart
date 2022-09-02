@@ -3,6 +3,7 @@
 import 'package:flutter_app/Bloc/attendanceHistory/attendenceHistory_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../Models/model_VotingAnswer.dart';
 import '../../Models/model_boothDetails.dart';
 import '../../Models/model_paymentHistory.dart';
 import '../../Models/model_votingQues.dart';
@@ -48,6 +49,33 @@ class EnforteBloc extends Bloc<EnforteEvent, EnforteState> {
     }
 
 
+    ///Event for Voting Answer List
+    if (event is OnLoadingVotingAnsList) {
+      ///Notify loading to UI
+      yield VotingQueListLoading();
+
+      ///Fetch API via repository
+      final VotingAnsRepo response = await enforteRepo!
+          .fetchVotingAns();
+
+      final Iterable refactorProduct = response.data ?? [];
+      final votingAns = refactorProduct.map((item) {
+        return VotingAnsModel.fromJson(item);
+      }).toList();
+      if(refactorProduct.length>0){
+        yield VotingAnsSuccess(
+            votingAnsList: votingAns,
+        );
+
+      }else{
+        yield VotingAnsFail();
+
+      }
+
+
+    }
+
+
     ///Event for Voting Question List
     if (event is OnLoadingVoitingQueList) {
       ///Notify loading to UI
@@ -63,7 +91,7 @@ class EnforteBloc extends Bloc<EnforteEvent, EnforteState> {
       }).toList();
       if(refactorProduct.length>0){
         yield VotingQueSuccess(
-            votingQueList: votingQues,
+          votingQueList: votingQues,
         );
 
       }else{

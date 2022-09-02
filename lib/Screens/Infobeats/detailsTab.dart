@@ -223,9 +223,12 @@ class _DetailsState extends State<DetailsTab>{
                         // ),
                         ExpandChild(
                           child: Column(
+
                             children: <Widget>[
                               SizedBox(height: 10,),
-                              Text(boothDetailsList[index].description.toString())
+                              Align(
+                                alignment: Alignment.topLeft,
+                                  child: Text(boothDetailsList[index].description.toString()))
                               // RaisedButton(
                               //   child: Text('Button1'),
                               //   onPressed: () => print('Pressed button1'),

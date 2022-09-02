@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_app/Bloc/inforte/inforte_event.dart';
 import 'package:flutter_app/Configs/theme.dart';
+import 'package:flutter_app/Models/model_VotingAnswer.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -20,6 +21,8 @@ class _StallsTabState extends State<StallsTabScreen>{
 
   EnforteBloc? _boothDetails;
   List<VotingQueModel> votingQueList=[];
+  List<VotingAnsModel> votingAnsList=[];
+  VotingAnsModel? selectedVotingAns;
   String _value = 'Select Booth';
 
   var items =  ['Select Booth','Booth 1','Booth 2','Booth 3','Booth 4','Booth 5'];
@@ -36,7 +39,7 @@ class _StallsTabState extends State<StallsTabScreen>{
   }
 
 
-  Widget getStallList(List<VotingQueModel> votingQueList){
+  Widget getStallList(List<VotingQueModel> votingQueList,List<VotingAnsModel> votingAnsList){
     if(votingQueList.length <= 0) {
       return
         ListView.builder(
@@ -176,6 +179,7 @@ class _StallsTabState extends State<StallsTabScreen>{
       ListView.builder(
         padding: EdgeInsets.all(15.0),
         itemBuilder: (context, index) {
+
           return Container(
             // margin: EdgeInsets.only(left:5,right: 5,bottom:8.0),
 
@@ -278,50 +282,67 @@ class _StallsTabState extends State<StallsTabScreen>{
                 SizedBox(
                   height: 5,
                 ),
-                Card(
-                  elevation: 5,
-                  child: DropdownButtonHideUnderline(
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        // decoration: BoxDecoration(
-                        //   // color: Theme.of(context).dividerColor,
-                        //     color: Colors.white,
-                        //     borderRadius: BorderRadius.circular(20.0),
-                        //     border: Border.all(
-                        //         color: AppTheme.textHighlight)),
-                        child: Padding(
-                          padding: EdgeInsets.only(
-                              left: 15.0, top: 0.0, right: 5.0, bottom: 0.0),
-                          child:
-                          //updated on 15/06/2021 to change background colour of dropdownbutton
-                          new Theme(
-                              data: Theme.of(context)
-                                  .copyWith(canvasColor: Colors.white),
-                              child: DropdownButton(
-                                  items:items.map((String items) {
-                                    return DropdownMenuItem(
-                                        value: items,
-                                        child: Text(items)
-                                    );
-                                  }
-                                  ).toList(),
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.w600),
-                                  isExpanded: true,
-                                  hint: Text('Select Category',
-                                      style: TextStyle(
-                                          color: Color(0xFF3F4141))),
-                                  value: _value,
-                                  onChanged:(String? value){
-                                    setState(() {
-                                      _value = value!;
-                                    });
-                                  }
-                                ,
-                              )),
-                        ),
-                      )),
+                InkWell(
+                  onTap: (){
+                    _boothDetails!.add(OnLoadingVotingAnsList());
+
+
+                  },
+                  child: Card(
+                    elevation: 5,
+                    child: DropdownButtonHideUnderline(
+                        child: Container(
+                          width: MediaQuery.of(context).size.width,
+                          // decoration: BoxDecoration(
+                          //   // color: Theme.of(context).dividerColor,
+                          //     color: Colors.white,
+                          //     borderRadius: BorderRadius.circular(20.0),
+                          //     border: Border.all(
+                          //         color: AppTheme.textHighlight)),
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                                left: 15.0, top: 0.0, right: 5.0, bottom: 0.0),
+                            child:
+                            //updated on 15/06/2021 to change background colour of dropdownbutton
+                            new Theme(
+                                data: Theme.of(context)
+                                    .copyWith(canvasColor: Colors.white),
+                                child: DropdownButton(
+                                    items:votingAnsList.map(( category)=>
+                                       DropdownMenuItem<VotingAnsModel>(
+                                          value: category,
+                                           // value: votingAnsList[index].id,
+                                          //
+                                           child: Text(category.stallName.toString())
+                                      )
+
+                                    ).toList(),
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.w600),
+                                    isExpanded: true,
+                                    hint: Text('Select booth',
+                                        style: TextStyle(
+                                            color: Color(0xFF3F4141))),
+                                    value: selectedVotingAns == null
+                                  ? selectedVotingAns
+                                  : votingAnsList
+                                        .where((i) =>
+                                    i.stallName ==
+                                     selectedVotingAns!.stallName)
+                                  .first as VotingAnsModel,
+
+                                    onChanged:(VotingAnsModel? category){
+
+                                      setState(() {
+                                        selectedVotingAns = category;
+                                      });
+                                    }
+                                  ,
+                                )),
+                          ),
+                        )),
+                  ),
                 ),
                 SizedBox(
                   height: 12,
@@ -343,6 +364,9 @@ class _StallsTabState extends State<StallsTabScreen>{
         // pageCount = (productList.length / rowsPerPage).ceilToDouble();
         // _productBloc!.add(OnUpdatePageCnt(productList: productList, rowsPerPage: rowsPerPage));
       }
+      if(state is VotingAnsSuccess){
+        votingAnsList = state.votingAnsList!;
+      }
 
       return
         SafeArea(
@@ -350,7 +374,7 @@ class _StallsTabState extends State<StallsTabScreen>{
               children: [
                 Container(
                   height: 480,
-                  child: getStallList(votingQueList),),
+                  child: getStallList(votingQueList, votingAnsList),),
                 Center(
                   child: SizedBox(
                       width: 300,

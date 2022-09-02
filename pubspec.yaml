@@ -132,6 +132,10 @@ flutter:
         - asset: assets/fonts/Inter-SemiBold.ttf
         - asset: assets/fonts/Inter-Black.ttf
 
+    - family: Squada One
+      fonts:
+        - assets/fonts/SquadaOne-Regular.ttf
+
   #    - family: Trajan Pro
 #      fonts:
 #         - asset: fonts/TrajanPro.ttf

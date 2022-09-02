@@ -14,3 +14,8 @@ class OnLoadingVoitingQueList extends EnforteEvent {
 
   OnLoadingVoitingQueList();
 }
+
+class OnLoadingVotingAnsList extends EnforteEvent {
+
+  OnLoadingVotingAnsList();
+}
