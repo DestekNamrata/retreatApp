@@ -5,6 +5,7 @@ import 'package:flutter_app/Bloc/theme/theme_bloc.dart';
 import 'package:flutter_app/Repository/UserRepository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'Bloc/Sos/sos_bloc.dart';
 import 'Bloc/inforte/inforte_bloc.dart';
 
 
@@ -16,6 +17,8 @@ class AppBloc {
   static final loginBloc = LoginBloc(userRepository: userRepository);
   static final attendenceHistoryBloc = AttendenceHistoryBloc(attendenceHistoryRepo: userRepository);
   static final inforteBloc = EnforteBloc(enforteRepo: userRepository);
+  static final sosBLOC = SOSBloc(userRepository: userRepository);
+
   // //customer
   // static final userRegBloc = UserRegBloc(userRepository: userRepository);
   // static final homeBloc = HomeBloc(homeRepository: userRepository);
@@ -49,7 +52,9 @@ class AppBloc {
     BlocProvider<EnforteBloc>(
       create: (context) => inforteBloc,
     ),
-
+    BlocProvider<SOSBloc>(
+      create: (context) => sosBLOC,
+    ),
 
   ];
   //
@@ -61,6 +66,8 @@ class AppBloc {
     loginBloc.close();
     attendenceHistoryBloc.close();
     inforteBloc.close();
+    sosBLOC.close();
+
     // userRegBloc.close();
     // homeBloc.close();
     // cartBloc.close();

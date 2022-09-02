@@ -304,10 +304,17 @@ class _DetailsState extends State<DetailsTab>{
                               child: Column(
                                 children: [
                                   Text("Punch in" ,style: TextStyle(color: Colors.white)),
+                                  (punchInTime!=null)
+                                  ?
                                   Text(punchInTime.toString(),
                                       style: TextStyle(color: Colors.white,
                                       fontWeight: FontWeight.w600,
                                       fontSize: 18))
+                                      :
+                                  Text("00:00",
+                                      style: TextStyle(color: Colors.white,
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 18))
                                 ],
                               ),
                             ),

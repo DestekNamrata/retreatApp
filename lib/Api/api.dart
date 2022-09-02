@@ -24,6 +24,8 @@ class Api {
   static const GET_AGENDA_DETAIL=HOST_URL+"get_agenda";
   static const GET_BOOTH_DETAILS=HOST_URL+"get_booth_details";
   static const GET_VOTING_QUESTIONS=HOST_URL+"get_voting_questions";
+  static const GET_SOS=HOST_URL+"sos_emergency";
+
 
 
   ///Login api
