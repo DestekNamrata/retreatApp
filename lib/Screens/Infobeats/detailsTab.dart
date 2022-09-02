@@ -12,6 +12,7 @@ import '../../Bloc/inforte/inforte_bloc.dart';
 import '../../Bloc/inforte/inforte_state.dart';
 import '../../Configs/theme.dart';
 import '../../Models/model_boothDetails.dart';
+import 'package:flutter_html/flutter_html.dart';
 
 class DetailsTab extends StatefulWidget{
   _DetailsState createState()=>_DetailsState();
@@ -223,9 +224,11 @@ class _DetailsState extends State<DetailsTab>{
                         // ),
                         ExpandChild(
                           child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               SizedBox(height: 10,),
-                              Text(boothDetailsList[index].description.toString())
+                              Html(data:boothDetailsList[index].description.toString())
                               // RaisedButton(
                               //   child: Text('Button1'),
                               //   onPressed: () => print('Pressed button1'),

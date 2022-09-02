@@ -228,8 +228,8 @@ class _DayWiseState extends State<DayWiseScreen>{
                 Padding(
                   padding: const EdgeInsets.all(15.0),
                   child: Text(widget.title.toString(),style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontFamily: 'Inter-Bold',
+                      fontWeight: FontWeight.w700,
+                      fontFamily: 'SquadaOne',
                       fontSize: 20.0,
                       color: Colors.black
                   ),),
@@ -237,8 +237,8 @@ class _DayWiseState extends State<DayWiseScreen>{
                 Padding(
                   padding: EdgeInsets.all(15.0),
                   child: Text(dayString.toString(),style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontFamily: 'Inter-Bold',
+                      fontWeight: FontWeight.w700,
+                      fontFamily: 'SquadaOne',
                       fontSize: 20.0,
                       color: AppTheme.dayColor
                   ),),

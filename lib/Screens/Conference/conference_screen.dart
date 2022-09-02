@@ -690,7 +690,7 @@ class ConferenceState extends State<ConferenceScreen> {
                           children: [
                             Text(Translate.of(context)!.translate("conference"),style: TextStyle(color: Colors.black,
                                 fontWeight: FontWeight.bold,fontSize: 18,
-                                fontFamily: 'Inter-Regular'),),
+                                fontFamily: 'SquadaOne'),),
                             Padding(
                               padding: const EdgeInsets.all(10.0),
                               child: ElevatedButton(

@@ -55,7 +55,7 @@ class AppButton extends StatelessWidget {
             style: Theme.of(context)
                 .textTheme
                 .button!
-                .copyWith(color: Colors.white, fontWeight: FontWeight.w600,fontFamily: 'Inter-SemiBold'),
+                .copyWith(color: Colors.white, fontWeight: FontWeight.w600,fontFamily: 'Inter'),
           ),
           _buildLoading(context)
         ],

@@ -24,7 +24,7 @@ class AppTheme {
   static String currentFont = "Inter";
 
   ///List Font support
-  static List<String> fontSupport = ["Raleway", "Roboto", "Merriweather"];
+  static List<String> fontSupport = ["SquadaOne", "Roboto", "Merriweather"];
 
   ///Default Theme
   static ThemeModel currentTheme = ThemeModel.fromJson({

@@ -16,6 +16,7 @@ import 'package:flutter_app/Screens/GenerateQR/generateQrCode.dart';
 import 'package:flutter_app/Screens/Profile/profile_screen.dart';
 import 'package:flutter_app/Utils/application.dart';
 import 'package:flutter_app/Utils/connectivity_check.dart';
+import 'package:flutter_app/Utils/util_preferences.dart';
 import 'package:flutter_app/Widgets/app_button.dart';
 import 'package:flutter_app/Widgets/app_dialogs.dart';
 import '../sos_screen.dart';
@@ -132,9 +133,12 @@ class BreatherScreenState extends State<BreatherScreen> {
     }
     return InkWell(
       onTap: (){
+        UtilPreferences.getString("qrFlag")=="0" //checkedout out i.e exit room
+            ?
         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>GenerateQR(title: "Breather",attendanceType: "4",
-        roomNo: roomList[index].id!.toString(),flagQr: "0",)));
-        // Navigator.push(context, MaterialPageRoute(builder: (context)=>BreatherDetail(eventType:"4",roomNo: "1",)));
+        roomNo: roomList[index].id!.toString(),flagQr: "0",)))
+            :
+        Navigator.push(context, MaterialPageRoute(builder: (context)=>BreatherDetail(eventType:"4",roomNo: "1",)));
 
 
       },
@@ -280,7 +284,7 @@ class BreatherScreenState extends State<BreatherScreen> {
             automaticallyImplyLeading: false,
             backgroundColor: Colors.white,
             title: Text(Translate.of(context)!.translate("breakout"),style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 30,
-                fontFamily: 'Inter-Regular'),),
+                fontFamily: 'SquadaOne'),),
             // actions: [
             //   Padding(
             //     padding: const EdgeInsets.all(10.0),

@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:expand_widget/expand_widget.dart';
 import 'package:flutter_app/Configs/image.dart';
 import 'package:flutter_app/Configs/theme.dart';
+import 'package:flutter_app/Screens/GenerateQR/generateQrCode.dart';
 import 'package:flutter_app/Screens/Infobeats/detailsTab.dart';
 import 'package:flutter_app/Screens/Infobeats/stallTab.dart';
 import 'package:flutter_app/Screens/Profile/profile_screen.dart';
 import '../sos_screen.dart';
 import 'package:flutter_app/Screens/mainNavigation.dart';
 import '../../Utils/translate.dart';
+import 'package:flutter_html/flutter_html.dart';
 
 
 class InfobeatsScreen extends StatefulWidget{
@@ -275,12 +277,16 @@ class InfobeatsState extends State<InfobeatsScreen> with TickerProviderStateMixi
               automaticallyImplyLeading: false,
               backgroundColor: Colors.white,
               title: Text(Translate.of(context)!.translate("infobeats"),style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 30,
-                  fontFamily: 'Inter-Regular'),),
+                  fontFamily: 'SquadaOne'),),
               actions: [
                 Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: ElevatedButton(
-                    onPressed: (){},
+                    onPressed: (){
+                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>
+                          GenerateQR(title: "Unconference"
+                            , attendanceType: "2", roomNo: "",flagQr: "1",)));
+                    },
                     child: Text("Exit Room",
                       style: TextStyle(
                           color: AppTheme.appColor,
@@ -330,7 +336,7 @@ class InfobeatsState extends State<InfobeatsScreen> with TickerProviderStateMixi
               // Icon(Icons.camera_alt),
               // Icon(Icons.grade),
               // Icon(Icons.email),
-              DetailsTab(eventType: widget.eventType!,),
+              DetailsTab(),
               StallsTabScreen()
             ],
           ),

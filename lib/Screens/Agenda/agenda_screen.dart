@@ -147,8 +147,8 @@ class _AgendaState extends State<AgendaScreen>{
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(width: 15.0,),
-            Text(Translate.of(context)!.translate("agenda"),style: TextStyle(fontSize:25.0,fontFamily:'Inter-SemiBold',
-                color: Colors.black,fontWeight: FontWeight.w600),),
+            Text(Translate.of(context)!.translate("agenda"),style: TextStyle(fontSize:25.0,fontFamily:'SquadaOne',
+                color: Colors.black,fontWeight: FontWeight.w700),),
             SizedBox(width: 15.0,),
 
             //23Sept

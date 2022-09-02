@@ -7,7 +7,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
    <application
-        android:label="Retreat App"
+        android:label="InfoCepts Retreat 2022"
         android:requestLegacyExternalStorage="true"
         android:icon="@drawable/ic_launcher">
 

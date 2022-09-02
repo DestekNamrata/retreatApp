@@ -423,8 +423,8 @@ class BreatherDetailState extends State<BreatherDetail>{
           appBar: AppBar(
             automaticallyImplyLeading: false,
             backgroundColor: Colors.white,
-            title: Text(Translate.of(context)!.translate("breakout"),style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 30,
-                fontFamily: 'Inter-Regular'),),
+            title: Text(Translate.of(context)!.translate("breakout"),style: TextStyle(color: Colors.black,fontWeight: FontWeight.w700,fontSize: 30,
+                fontFamily: 'SquadaOne'),),
             actions: [
               Padding(
                 padding: const EdgeInsets.all(10.0),

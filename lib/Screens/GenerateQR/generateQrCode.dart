@@ -11,6 +11,7 @@ import 'package:flutter_app/Screens/Profile/profile_screen.dart';
 import 'package:flutter_app/Screens/mainNavigation.dart';
 import 'package:flutter_app/Screens/sos_screen.dart';
 import 'package:flutter_app/Utils/connectivity_check.dart';
+import 'package:flutter_app/Utils/util_preferences.dart';
 import 'package:flutter_app/Widgets/app_dialogs.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:flutter_app/Utils/application.dart';
@@ -34,15 +35,15 @@ class _GenerateQRState extends State<GenerateQR> {
   ScanAndGetDataBloc? scanAndGetDataBloc;
   bool isconnectedToInternet = false;
   Timer? timer;
-
+  Duration? fiveSeconds;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     scanAndGetDataBloc = BlocProvider.of<ScanAndGetDataBloc>(context);
-    const fiveSeconds = const Duration(seconds: 10);
+     fiveSeconds = const Duration(seconds: 10);
     // _fetchData() is your function to fetch data
-  setBlocData(fiveSeconds);
+  // setBlocData(fiveSeconds);
   }
 
   @override
@@ -57,11 +58,11 @@ class _GenerateQRState extends State<GenerateQR> {
     isconnectedToInternet = await ConnectivityCheck.checkInternetConnectivity();
     if (isconnectedToInternet == true) {
 
-      timer=Timer.periodic(fiveSeconds, (Timer t) {
+      // timer=Timer.periodic(fiveSeconds, (Timer t) {
         scanAndGetDataBloc!.add(
             OnGetAttendanceData(attendanceType: widget.attendanceType.toString(),
                 room_no: widget.roomNo.toString()));
-      });
+      // });
 
 
     } else {
@@ -189,6 +190,7 @@ class _GenerateQRState extends State<GenerateQR> {
           if (state is GetAttendanceDataSuccess)
           {
             if(state.data!.checkOut==0){ //0=checked in and 1=checkout
+              UtilPreferences.setString("qrFlag", widget.flagQr!); //1=exit room so checked out
           if(widget.attendanceType=="2"){ //inforte
             Navigator.push(context, MaterialPageRoute(builder: (context)=>InfobeatsScreen(eventType:"2")));
 
@@ -200,7 +202,9 @@ class _GenerateQRState extends State<GenerateQR> {
 
           }
           }else{
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>MainNavigation(userType: Application.user!.role.toString())));
+              UtilPreferences.setString("qrFlag", widget.flagQr!); //0=checked out flag
+
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>MainNavigation(userType: Application.user!.role.toString())));
 
 
             }
@@ -255,9 +259,15 @@ class _GenerateQRState extends State<GenerateQR> {
 
           Align(
             alignment: Alignment.center,
-            child:Text(widget.flagQr!="1"?"Scan to enter":"Scan to Exit",
+            child:
+                InkWell(
+                  onTap:(){
+                    setBlocData(fiveSeconds!);
+                 },
+                    child:
+            Text(widget.flagQr!="1"?"Scan to enter":"Scan to Exit",
               style: TextStyle(fontSize: 16,fontWeight: FontWeight.w600,
-                  fontFamily: 'Inter-SemiBold',color: AppTheme.textColor),)),
+                  fontFamily: 'Inter-SemiBold',color: AppTheme.textColor),))),
               ],
             ),
           )

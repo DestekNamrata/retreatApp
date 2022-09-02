@@ -233,7 +233,7 @@ class _OtpScreenState extends State<OtpScreen>{
         child:
         Container(
             width: MediaQuery.of(context).size.width,
-            height: 40.0,
+            height: 45.0,
             margin: EdgeInsets.all(4.0),
             alignment: Alignment.center,
             child: Text(
@@ -241,12 +241,12 @@ class _OtpScreenState extends State<OtpScreen>{
               style: TextStyle(
                   fontSize: 18.0,
                   color:Theme.of(context).cardColor,
-                  fontFamily: 'Inter-SemiBold',
+                  fontFamily: 'Inter',
                 fontWeight: FontWeight.w600
               ),
             ),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(5),
+            borderRadius: BorderRadius.circular(10),
             border: Border.all(
               color: digit==null?
               AppTheme.appColor
@@ -495,12 +495,12 @@ class _OtpScreenState extends State<OtpScreen>{
       children: [
         Image.asset(Images.retreatImage,height: 150.0,width:150.0),
 
-        Text(Translate.of(context)!.translate('otp_verification_text'),style: TextStyle(color:Colors.black,
-            fontFamily: 'Inter-SemiBold',fontWeight:FontWeight.w600,fontSize: 18.0),),
+        Text(Translate.of(context)!.translate('otp_verification_text'),style: TextStyle(color:AppTheme.appColor,
+            fontFamily: 'SquadaOne',fontWeight:FontWeight.w700,fontSize: 18.0,),),
         SizedBox(height: 40.0,),
 
         Text(Translate.of(context)!.translate('otp_verification'),style: TextStyle(color:Colors.black,
-            fontFamily: 'Inter-Regular',fontWeight:FontWeight.w500,fontSize: 12.0),),
+            fontFamily: 'Inter',fontWeight:FontWeight.w500,fontSize: 12.0),),
         Text("+91 "+widget.mobileNum.toString()+" number",style: TextStyle(color:Colors.black,
             fontFamily: 'Inter-Regular',fontWeight:FontWeight.w500,fontSize: 12.0),),
         SizedBox(height: 10.0,),
@@ -547,7 +547,7 @@ class _OtpScreenState extends State<OtpScreen>{
                     }
                   },
                   shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
-                  text: 'Verify',
+                  text: 'VERIFY',
                   loading: login is LoginLoading,
                   disableTouchWhenLoading: true,
                 )

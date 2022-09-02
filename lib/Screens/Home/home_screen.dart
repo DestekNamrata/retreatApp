@@ -345,11 +345,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text("CONNECT",style: TextStyle(fontWeight: FontWeight.w600,fontFamily: 'Inter-Bold',
+                          Text("CONNECT",style: TextStyle(fontWeight: FontWeight.w600,fontFamily: 'SquadaOne-Regular',
                           fontSize: 25.0,color: Colors.white),),
-                          Text("COLLABORATE",style: TextStyle(fontWeight: FontWeight.w600,fontFamily: 'Inter-Bold',
+                          Text("COLLABORATE",style: TextStyle(fontWeight: FontWeight.w600,fontFamily: 'SquadaOne-Regular',
                               fontSize: 25.0,color: Colors.white),),
-                          Text("CELEBRATE",style: TextStyle(fontWeight: FontWeight.w600,fontFamily: 'Inter-Bold',
+                          Text("CELEBRATE",style: TextStyle(fontWeight: FontWeight.w600,fontFamily: 'SquadaOne-Regular',
                               fontSize: 25.0,color: Colors.white),),
                         ],
                       )
