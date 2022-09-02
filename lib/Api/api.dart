@@ -13,6 +13,9 @@ import 'package:http/http.dart' as http;
 
 import 'dart:convert';
 
+import '../Models/model_boothDetails.dart';
+import '../Models/model_votingQues.dart';
+
 
 class Api {
 
@@ -24,6 +27,11 @@ class Api {
   static const GET_ATTENDANCE=HOST_URL+"get_attendance";
   static const GET_ATTENDANCE_HISTORY=HOST_URL+"get_attendance_history";
   static const GET_AGENDA_DETAIL=HOST_URL+"get_agenda";
+  static const GET_BOOTH_DETAILS=HOST_URL+"get_booth_details";
+  static const GET_VOTING_QUESTIONS=HOST_URL+"get_voting_questions";
+  static const GET_SOS=HOST_URL+"sos_emergency";
+
+
   static const GET_AGENDA_UNCONF=HOST_URL+"get_event_agenda";
   static const GET_LIVE_POLLS=HOST_URL+"get_polls";
   static const GET_ROOM_LIST=HOST_URL+"get_room_details";
@@ -144,5 +152,40 @@ class Api {
     // }
   }
 
+
+  //Get Booth Details
+  static Future<dynamic> getBoothDetails(params) async {
+    final response = await http.post(
+      Uri.parse(GET_BOOTH_DETAILS),
+      body: params,
+      headers: {
+        "Authorization": "Bearer"+
+        UtilPreferences.getString("token").toString(),
+      },
+      //
+    );
+    // if (response.statusCode == 200) {
+    final responseJson = json.decode(response.body);
+    print(responseJson);
+    return BoothDetailsRepo.fromJson(responseJson);
+    // }
+  }
+
+  //Get Voting Questions
+  static Future<dynamic> getVotingQue() async {
+    final response = await http.get(
+      Uri.parse(GET_VOTING_QUESTIONS),
+      headers: {
+        "Authorization": "Bearer"+
+            UtilPreferences.getString("token").toString(),
+      },
+      //
+    );
+    // if (response.statusCode == 200) {
+    final responseJson = json.decode(response.body);
+    print(responseJson);
+    return VotingQueRepo.fromJson(responseJson);
+    // }
+  }
 
 }

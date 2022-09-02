@@ -9,6 +9,9 @@ import 'package:flutter_app/Bloc/unconference/unconference_bloc.dart';
 import 'package:flutter_app/Repository/UserRepository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'Bloc/Sos/sos_bloc.dart';
+import 'Bloc/inforte/inforte_bloc.dart';
+
 
 class AppBloc {
   static final userRepository = UserRepository();
@@ -18,6 +21,9 @@ class AppBloc {
   static final loginBloc = LoginBloc(userRepository: userRepository);
   static final scanAndGetDataBloc = ScanAndGetDataBloc(userRepository: userRepository);
   static final attendenceHistoryBloc = AttendenceHistoryBloc(attendenceHistoryRepo: userRepository);
+  static final inforteBloc = EnforteBloc(enforteRepo: userRepository);
+  static final sosBLOC = SOSBloc(userRepository: userRepository);
+
   static final agendaDataBloc = AgendaBloc(agendaRepo: userRepository);
   static final unconferenceDataBloc = UnconferenceBloc(unconferenceRepo: userRepository);
   static final breatherBloc = BreathersBloc(breatherRepo: userRepository);
@@ -67,6 +73,12 @@ class AppBloc {
     ),
 
 
+    BlocProvider<EnforteBloc>(
+      create: (context) => inforteBloc,
+    ),
+    BlocProvider<SOSBloc>(
+      create: (context) => sosBLOC,
+    ),
 
   ];
   //
@@ -81,6 +93,11 @@ class AppBloc {
     agendaDataBloc.close();
     unconferenceDataBloc.close();
     breatherBloc.close();
+    inforteBloc.close();
+    sosBLOC.close();
+
+    // userRegBloc.close();
+    // homeBloc.close();
     // cartBloc.close();
     // addressBloc.close();
     // myOrdersBloc.close();
